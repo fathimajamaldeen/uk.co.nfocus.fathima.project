@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+	<!-- configuration elements -->
+	<RunConfiguration>
+		<EnvironmentVariables>
+			<BROWSER>edge</BROWSER>
+		</EnvironmentVariables>
+	</RunConfiguration>
+	<TestRunParameters>
+		<!--NUnit config parameters as an alternative-->
+		<Parameter name="WebAppURL" value="https://www.edgewordstraining.co.uk/demo-site"/>
+		<Parameter name="WebAppUsername" value="hello@example.com"/>
+		<Parameter name="WebAppPassword" value="Helloworld123!"/>
+	</TestRunParameters>
+</RunSettings>

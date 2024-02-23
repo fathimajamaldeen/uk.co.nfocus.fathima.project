@@ -20,8 +20,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Finding elements on the page
         public IWebElement Home => _driver.FindElement(By.LinkText("Home"));
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
-        public IWebElement Myaccount => _driver.FindElement(By.LinkText("My account"));
+        public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
+
+       
 
 
     }

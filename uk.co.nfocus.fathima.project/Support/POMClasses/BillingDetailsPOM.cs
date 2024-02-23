@@ -61,7 +61,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing postcode");
             return this;
         }
-        public BillingDetailsPOM setPhoneNumber(string phoneNumber)
+        public BillingDetailsPOM SetPhoneNumber(string phoneNumber)
         {
             _phoneNumberField.Clear();
             _phoneNumberField.SendKeys(phoneNumber);

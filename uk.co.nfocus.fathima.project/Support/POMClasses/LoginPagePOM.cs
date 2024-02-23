@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
@@ -39,11 +40,12 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _loginButton.Click();
             return this;
         }
-        private void NavigateToLoginPage()
+        public void NavigateToLoginPage()
         {
-            _driver.Url = "https://edgewordstraining.co.uk/demo-site";
+            string startURL = "https://edgewordstraining.co.uk/demo-site";
+            _driver.Url = startURL;
             NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.Myaccount.Click();
+            navbar.MyAccount.Click();
             _driver.FindElement(By.LinkText("Dismiss")).Click();
         }
 

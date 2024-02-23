@@ -25,11 +25,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             _scenarioContext["myDriver"] = _driver; //When putting stuff in to scenario context we lose the type information
         }
 
-        [After]
-        public void TearDown()
-        {
-            Thread.Sleep(3000);
-            _driver.Quit();
-        }
+        //[After]
+        //public void TearDown()
+        //{
+        //    Thread.Sleep(3000);
+        //    _driver.Quit();
+        //}
     }
 }

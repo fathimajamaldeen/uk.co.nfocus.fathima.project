@@ -22,6 +22,32 @@ namespace uk.co.nfocus.fathima.project.Support
             myWait.Until(drv => drv.FindElement(locator).Enabled);
         }
 
-        //More helper methods to be added as needed
+        public bool WaitForElementDisabled(By locator, int timeoutInSeconds)
+        {
+            WebDriverWait myWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            try
+            {
+                return myWait.Until(drv =>
+                {
+                    try
+                    {
+                        var element = drv.FindElement(locator);
+                        return !element.Enabled;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return true;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return true;
+                    }
+                });
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return false;
+            }
+        }
     }
 }

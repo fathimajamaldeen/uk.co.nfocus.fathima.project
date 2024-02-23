@@ -10,4 +10,3 @@ The test will login to an e-commerce site as a registered user, purchase an item
 through checkout. It will capture the order number and check the order is also present in the ‘My 
 Orders’ section of the site.
 
-Note: This code is based off Steve Powell's code that was demonstrated in meetings during Feb 2024

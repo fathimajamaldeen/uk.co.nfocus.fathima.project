@@ -26,7 +26,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoToMyOrders()
         {
             NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.MyAccount.Click();
+            navbar.goMyAccountPage();
             _driver.FindElement(By.LinkText("Orders")).Click();
     }
         public int GetOrderNumberInAccountValue()

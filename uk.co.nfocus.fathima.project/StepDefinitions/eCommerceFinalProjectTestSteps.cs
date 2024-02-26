@@ -31,7 +31,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Going to shop
             NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.Shop.Click();
+            navbar.goShopPage();
             //Adding belt to cart
             _driver.FindElement(By.CssSelector("#main > ul > li.product.type-product.post-28.status-publish.instock.product_cat-accessories.has-post-thumbnail.sale.shipping-taxable.purchasable.product-type-simple > a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart")).Click();
             Console.WriteLine("Added belt to cart");
@@ -55,8 +55,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Then(@"I should see the discount applied correctly")]
         public void ThenIShouldSeeTheDiscountAppliedCorrectly()
         {
-            HelperLib myHelper = new HelperLib(_driver); //Instantiate HelperLib class and pass the driver to the constructor
-            //Waiting for the details with pop up to come to avoid stale elements
+            HelperLib myHelper = new HelperLib(_driver); 
             myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
             DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
             //Checking to see that discount is 15% of total value
@@ -100,25 +99,19 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             HelperLib myHelper = new HelperLib(_driver);
-            //Placing order - first wait for the button to appear as it loads a couple of times when filling the form out
-            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 5);
+            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 3);
             billing.PlaceOrder();
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {
-            //Sanitising initial order number
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"), 10);
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             int orderNumberValue = orderDetails.GetOrderNumberValue();
-
-            //Navigate to my orders
             orderDetails.GoToMyOrders();
-
-            int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue();
-
+            int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue(); 
             //Check if both values are equal or not and output correct line in console
             try
             {
@@ -130,5 +123,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 Console.WriteLine(":( The order numbers are not the same");
             }
         }
+        [Then(@"Log out")]
+        public void ThenLogOut()
+        {
+            LoginPagePOM login = new LoginPagePOM(_driver);
+            login.LoggingOut();
+        }
+
     }
 }

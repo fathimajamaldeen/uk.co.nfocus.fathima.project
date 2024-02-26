@@ -42,11 +42,23 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
         public void NavigateToLoginPage()
         {
-            string startURL = "https://edgewordstraining.co.uk/demo-site";
+            string startURL = "https://edgewordstraining.co.uk/demo-site"; //TO DO: add envirnomental variables
             _driver.Url = startURL;
             NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.MyAccount.Click();
+            navbar.goMyAccountPage();
             _driver.FindElement(By.LinkText("Dismiss")).Click();
+        }
+
+        public void LoggingOut()
+        {
+            //Going to log out
+            NavbarPOM navbar = new NavbarPOM(_driver);
+            navbar.goMyAccountPage();
+            //Logging out of the page
+            HelperLib myHelper = new HelperLib(_driver); //Instantiate HelperLib class and pass the driver to the constructor
+            myHelper.WaitForElement(By.LinkText("Log out"), 7);//Wait for the logout link
+            _driver.FindElement(By.LinkText("Log out")).Click();
+            Console.WriteLine("Completed Log out process");
         }
 
     }

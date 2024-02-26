@@ -23,7 +23,23 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
 
-       
+        public void goHomePage()
+        {
+            Home.Click();
+        }
+        public void goShopPage()
+        {
+            Shop.Click();
+        }
+        public void goMyAccountPage()
+        {
+            MyAccount.Click();
+        }
+        public void goCartPage()
+        {
+            Cart.Click();
+        }
+
 
 
     }

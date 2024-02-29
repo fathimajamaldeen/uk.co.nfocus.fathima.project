@@ -1,6 +1,7 @@
 ﻿Feature: eCommerceFinalProject
 
-Behavior-driven tests validating functionality of the eCommerce website.
+Behavior-driven tests validating functionality 
+of the edgewords demo training eCommerce website.
 
 Scenario: Applying discount code to the cart
     Given I am logged in on the shopping website

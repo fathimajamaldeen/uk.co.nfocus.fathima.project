@@ -11,5 +11,5 @@ through checkout. It will capture the order number and check the order is also p
 Orders’ section of the site.
 
 To generate a livingdoc 
-On command prompt, go into the bin/debug/net6.0 folder and execute the following line
-livingdoc test-assembly uk.co.nfocus.fathima.project.dll -t TestExecution.json
+On command prompt, do 'cd bin/Debug/net6.0' and then execute the following line
+'livingdoc test-assembly uk.co.nfocus.fathima.project.dll -t TestExecution.json'

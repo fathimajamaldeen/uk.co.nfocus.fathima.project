@@ -20,23 +20,26 @@ namespace uk.co.nfocus.fathima.project.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("eCommerceFinalProject")]
-    public partial class ECommerceFinalProjectFeature
+    [NUnit.Framework.DescriptionAttribute("Applying Discount Code")]
+    public partial class ApplyingDiscountCodeFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-#line 1 "eCommerceFinalProject.feature"
+#line 1 "ApplyingDiscountCode.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "eCommerceFinalProject", "Behavior-driven tests validating functionality of the edgewords demo training eCo" +
-                    "mmerce website.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Applying Discount Code", @"This feature enables users to apply discount codes during 
+the checkout process on the eCommerce website. It ensures 
+that users logged into the platform can successfully apply 
+a discount code to their cart, resulting in the correct 
+deduction applied.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +84,7 @@ namespace uk.co.nfocus.fathima.project.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Applying discount code to the cart", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -91,74 +94,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
+#line 10
     testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 7
+#line 11
     testRunner.When("I add a belt to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
+#line 12
         testRunner.And("I view my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 9
+#line 13
         testRunner.And("I apply a discount code \'edgewords\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 10
-    testRunner.Then("I should see the discount applied correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Checking if order numbers are consistent")]
-        public void CheckingIfOrderNumbersAreConsistent()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
- this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 13
-    testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 14
-    testRunner.When("I add a belt to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 15
-        testRunner.And("I proceed to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "First Name",
-                            "Last Name",
-                            "Address",
-                            "City",
-                            "Postcode",
-                            "Phone Number"});
-                table1.AddRow(new string[] {
-                            "hello",
-                            "example",
-                            "64 zoo lane",
-                            "Zootopia",
-                            "SW1A 1AA",
-                            "555 564 2211"});
-#line 16
-        testRunner.And("I fill in billing details with", ((string)(null)), table1, "And ");
-#line hidden
-#line 19
-        testRunner.And("I place the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 20
-    testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
-                        "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("I should see the discount applied correctly", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

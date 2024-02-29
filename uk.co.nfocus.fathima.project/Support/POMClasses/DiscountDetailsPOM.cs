@@ -9,11 +9,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class DiscountDetailsPOM
     {
-        private IWebDriver _driver; //Field that will hold a driver for service methods in this test to work with
-
-        public DiscountDetailsPOM(IWebDriver driver) //Constructor to get the driver from the test
+        private IWebDriver _driver; 
+        public DiscountDetailsPOM(IWebDriver driver) 
         {
-            _driver = driver; //Assigns passed driver in to private field in this class
+            _driver = driver; 
         }
 
         public decimal GetPreviousTotalValue()

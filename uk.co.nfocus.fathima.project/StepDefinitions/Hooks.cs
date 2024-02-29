@@ -1,17 +1,20 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using uk.co.nfocus.fathima.project.Support.POMClasses;
+using uk.co.nfocus.fathima.project.Support;
 
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
     public class Hooks
     {
-        private IWebDriver _driver; //Hackish way to share the browser with other classes
+        private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
         public Hooks(ScenarioContext scenarioContext)
         {
@@ -28,7 +31,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [After]
         public void TearDown()
         {
-            Thread.Sleep(3000);
+            LoginPagePOM loginpage = new LoginPagePOM(_driver);
+            loginpage.LogOut();
             _driver.Quit();
         }
     }

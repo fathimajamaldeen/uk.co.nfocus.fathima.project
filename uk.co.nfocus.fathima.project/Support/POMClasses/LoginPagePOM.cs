@@ -10,11 +10,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class LoginPagePOM
     {
-        private IWebDriver _driver; //Field that will hold a driver for service methods in this test to work with
-
-        public LoginPagePOM(IWebDriver driver) //Constructor to get the driver from the test
-        {
-            _driver = driver; //Assigns passed driver in to private field in this class
+        private IWebDriver _driver; 
+        public LoginPagePOM(IWebDriver driver) 
+        { 
+            _driver = driver; 
         }
 
         //Locators - finding elements on the page
@@ -42,20 +41,20 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
         public void NavigateToLoginPage()
         {
-            string startURL = "https://edgewordstraining.co.uk/demo-site"; //TO DO: add envirnomental variables
+            string startURL = TestContext.Parameters["WebAppURL"]; 
             _driver.Url = startURL;
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.goMyAccountPage();
-            _driver.FindElement(By.LinkText("Dismiss")).Click();
+            _driver.FindElement(By.LinkText("Dismiss")).Click(); // Dismisses the label that comes at the start 
         }
 
-        public void LoggingOut()
+        public void LogOut()
         {
             //Going to log out
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.goMyAccountPage();
             //Logging out of the page
-            HelperLib myHelper = new HelperLib(_driver); //Instantiate HelperLib class and pass the driver to the constructor
+            HelperLib myHelper = new HelperLib(_driver); 
             myHelper.WaitForElement(By.LinkText("Log out"), 7);//Wait for the logout link
             _driver.FindElement(By.LinkText("Log out")).Click();
             Console.WriteLine("Completed Log out process");

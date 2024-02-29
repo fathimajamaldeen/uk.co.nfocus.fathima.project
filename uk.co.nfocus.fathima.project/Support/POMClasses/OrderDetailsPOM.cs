@@ -9,17 +9,20 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class OrderDetailsPOM
     {
-        private IWebDriver _driver; //Field that will hold a driver for service methods in this test to work with
-
-        public OrderDetailsPOM(IWebDriver driver) //Constructor to get the driver from the test
+        private IWebDriver _driver; 
+        public OrderDetailsPOM(IWebDriver driver) 
         {
-            _driver = driver; //Assigns passed driver in to private field in this class
+            _driver = driver; 
         }
 
+        //Locators - Finding elements on the page
+        private IWebElement orderNumber => _driver.FindElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"));
+        private IWebElement orderNumberInAccount => _driver.FindElement(By.CssSelector("#post-7 > div > div > div > table > tbody > tr:nth-child(1) > td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number > a"));
+
+        //Service method - doing things with elemenet on the page
         public int GetOrderNumberValue()
         {
-            string orderNumber = _driver.FindElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong")).Text;
-            int orderNumberValue = int.Parse(orderNumber);
+            int orderNumberValue = int.Parse(orderNumber.Text);
             return orderNumberValue;
         }
 
@@ -31,8 +34,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     }
         public int GetOrderNumberInAccountValue()
         {
-            string orderNumberInAccount = _driver.FindElement(By.CssSelector("#post-7 > div > div > div > table > tbody > tr:nth-child(1) > td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number > a")).Text;
-            int orderNumberInAccountValue = int.Parse(orderNumberInAccount.Replace("#", ""));
+            int orderNumberInAccountValue = int.Parse(orderNumberInAccount.Text.Replace("#", ""));
             return orderNumberInAccountValue;
         }
     }

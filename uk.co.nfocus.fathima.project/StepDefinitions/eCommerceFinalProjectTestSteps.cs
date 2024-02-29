@@ -21,25 +21,29 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
+            //Going to login page
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.NavigateToLoginPage();
-            loginpage.SetUsername("hello@example.com").SetPassword("Helloworld123!").SubmitForm();
+            //Logging into the wbesite
+            loginpage.SetUsername(TestContext.Parameters["WebAppUsername"]).SetPassword(TestContext.Parameters["WebAppPassword"]).SubmitForm();
         }
 
         [When(@"I add a belt to my cart")]
         public void WhenIAddABeltToMyCart()
         {
-            //Going to shop
+            //Going to shop page
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.goShopPage();
             //Adding belt to cart
-            _driver.FindElement(By.CssSelector("#main > ul > li.product.type-product.post-28.status-publish.instock.product_cat-accessories.has-post-thumbnail.sale.shipping-taxable.purchasable.product-type-simple > a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart")).Click();
+            ProductPagePOM product = new ProductPagePOM(_driver);
+            product.AddBeltToCart();
             Console.WriteLine("Added belt to cart");
         }
 
         [When(@"I view my cart")]
         public void WhenIViewMyCart()
         {
+            //Going to view the cart
             CartPOM cart = new CartPOM(_driver);
             cart.ViewCart();
         }
@@ -47,6 +51,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [When(@"I apply a discount code '(.*)'")]
         public void WhenIApplyADiscountCode(string discountCode)
         { 
+            //Applying the discount code set in the test
             CartPOM cart = new CartPOM(_driver);
             cart.ApplyDiscountCode(discountCode);
             Console.WriteLine("Applied discount code");
@@ -55,6 +60,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Then(@"I should see the discount applied correctly")]
         public void ThenIShouldSeeTheDiscountAppliedCorrectly()
         {
+            //Waiting for the discount to be applied succesfully
             HelperLib myHelper = new HelperLib(_driver); 
             myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
             DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
@@ -67,6 +73,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             catch (AssertionException)
             {
                 Console.WriteLine(":( The discount code does not work");
+                //Taking a screenshot of where the error occured
+                HelperLib helper = new HelperLib(_driver);
+                string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
+                helper.TakeScreenshot(_driver, screenshotName);
             }
             //Checking to see if new total value is correctly calculated
             try
@@ -77,12 +87,17 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             catch (AssertionException)
             {
                 Console.WriteLine(":( The total is not correctly calculated");
+                //Taking a screenshot of where the error occured
+                HelperLib helper = new HelperLib(_driver);
+                string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
+                helper.TakeScreenshot(_driver, screenshotName);
             }
         }
 
         [When(@"I proceed to checkout")]
         public void WhenIProceedToCheckout()
         {
+            //Proceeding to checkout
             CartPOM cart = new CartPOM(_driver);
             cart.ProceedToCheckout();
         }
@@ -90,6 +105,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [When(@"I fill in billing details with")]
         public void WhenIFillInBillingDetailsWith(Table table)
         {
+            //Filling in the billing details with the table details from the test
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             billing.SetFirstName(table.Rows[0]["First Name"]).SetLastName(table.Rows[0]["Last Name"]).SetAddress(table.Rows[0]["Address"]).SetCity(table.Rows[0]["City"]).SetPostcode(table.Rows[0]["Postcode"]).SetPhoneNumber(table.Rows[0]["Phone Number"]);
         }
@@ -98,19 +114,23 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIPlaceTheOrder()
         {
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
+            //Waiting for the place order button to be clickable
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 3);
+            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             billing.PlaceOrder();
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {
+            //Waiting for the order number to be available 
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"), 10);
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
+            //Getting order number from order recieved post ordering item
             int orderNumberValue = orderDetails.GetOrderNumberValue();
             orderDetails.GoToMyOrders();
+            //Getting order number from orders in account
             int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue(); 
             //Check if both values are equal or not and output correct line in console
             try
@@ -118,17 +138,16 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue));
                 Console.WriteLine(":) The order numbers are the same");
             }
-            catch (AssertionException)
+            catch (AssertionException ex)
             {
+                HelperLib helper = new HelperLib(_driver);
                 Console.WriteLine(":( The order numbers are not the same");
+                // Exception occurred, capture screenshot
+                string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
+                helper.TakeScreenshot(_driver, screenshotName);
             }
         }
-        [Then(@"Log out")]
-        public void ThenLogOut()
-        {
-            LoginPagePOM login = new LoginPagePOM(_driver);
-            login.LoggingOut();
-        }
+
 
     }
 }

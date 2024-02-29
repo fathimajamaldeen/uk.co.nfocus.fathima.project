@@ -9,20 +9,20 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class NavbarPOM
     {
-        private IWebDriver _driver; //Field that will hold a driver for service methods in this test to work with
-
-        public NavbarPOM(IWebDriver driver) //Constructor to get the driver from the test
+        private IWebDriver _driver; 
+        public NavbarPOM(IWebDriver driver) 
         {
-            _driver = driver; //Assigns passed driver in to private field in this class
+            _driver = driver; 
 
         }
 
-        //Finding elements on the page
+        //Locators - Finding elements on the page
         public IWebElement Home => _driver.FindElement(By.LinkText("Home"));
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
 
+        //Service method - doing things with elemenet on the page
         public void goHomePage()
         {
             Home.Click();

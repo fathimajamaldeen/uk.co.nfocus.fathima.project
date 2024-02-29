@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gherkin.CucumberMessages.Types;
+
 
 namespace uk.co.nfocus.fathima.project.Support
 {
@@ -16,6 +18,8 @@ namespace uk.co.nfocus.fathima.project.Support
         {
             _driver = driver; //Put it in to this classes field
         }
+
+
         public void WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
         {
             WebDriverWait myWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
@@ -48,6 +52,21 @@ namespace uk.co.nfocus.fathima.project.Support
             {
                 return false;
             }
+        }
+
+        public void TakeScreenshot(IWebDriver driver, string screenshotName)
+        {
+            // Take screenshot and save to a file
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+
+            // Get the directory path where the executable is located
+            string directoryPath = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Construct the full file path for the screenshot
+            string screenshotFilePath = Path.Combine(directoryPath, screenshotName);
+
+            // Save the screenshot
+            screenshot.SaveAsFile(screenshotFilePath);
         }
     }
 }

@@ -9,16 +9,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class CartPOM
     {
-        private IWebDriver _driver; //Field that will hold a driver for service methods in this test to work with
-
-        public CartPOM(IWebDriver driver) //Constructor to get the driver from the test
+        private IWebDriver _driver; 
+        public CartPOM(IWebDriver driver)
         {
-            _driver = driver; //Assigns passed driver in to private field in this class
+            _driver = driver; 
         }
         public void ViewCart()
         {
-            //Viewing cart
-            HelperLib myHelper = new HelperLib(_driver); //Instantiate HelperLib class and pass the driver to the constructor
+            HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElement(By.LinkText("View cart"), 10);
             _driver.FindElement(By.LinkText("View cart")).Click();
         }

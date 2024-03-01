@@ -8,12 +8,12 @@ using uk.co.nfocus.fathima.project.Support.POMClasses;
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
-    public class StepDefinitions
+    public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver;
 
-        public StepDefinitions(ScenarioContext scenarioContext)
+        public TestStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["myDriver"];
@@ -33,7 +33,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Going to shop page
             NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.goShopPage();
+            navbar.GoShopPage();
             //Adding belt to cart
             ProductPagePOM product = new ProductPagePOM(_driver);
             product.AddBeltToCart();

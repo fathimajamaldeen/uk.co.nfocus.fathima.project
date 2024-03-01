@@ -9,10 +9,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
     internal class BillingDetailsPOM
     {
-        private IWebDriver _driver; 
-        public BillingDetailsPOM(IWebDriver driver) 
+        private IWebDriver _driver; //Field to store WebDriver instance
+        public BillingDetailsPOM(IWebDriver driver) //Constructor to intitalise the WebDriver instance
         {
-            _driver = driver; 
+            _driver = driver; //Assign the WebDriver instance passed into the field
         }
 
         //Locators - finding elements on the page
@@ -25,13 +25,17 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
 
         //Service method - doing things with elemenet on the page
+
+        //Method to set the first name field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetFirstName(string firstName)
         {
             _firstNameField.Clear();
             _firstNameField.SendKeys(firstName);
             Console.WriteLine("Added first name");
-            return this;
+            return this; 
         }
+
+        //Method to set the last name field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetLastName(string lastName)
         {
             _lastNameField.Clear();
@@ -39,6 +43,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added last name");
             return this;
         }
+
+        //Method to set the address field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetAddress(string address)
         {
             _addressField.Clear();
@@ -46,6 +52,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing addres");
             return this;
         }
+
+        //Method to set the city field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetCity(string city)
         {
             _cityField.Clear();
@@ -53,6 +61,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing city");
             return this;
         }
+
+        //Method to set the postcode field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetPostcode(string postcode)
         {
             _postcodeField.Clear();
@@ -60,6 +70,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing postcode");
             return this;
         }
+
+        //Method to set the phone number field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetPhoneNumber(string phoneNumber)
         {
             _phoneNumberField.Clear();
@@ -67,7 +79,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing phone number");
             return this;
         }
-
+        
+        //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
             _placeOrderButton.Click();

@@ -69,7 +69,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Create an instance of the HelperLib
             HelperLib myHelper = new HelperLib(_driver);
             //Wait for the logout link to appear
-            myHelper.WaitForElement(By.LinkText("Log out"), 7);
+            myHelper.WaitForElement(By.LinkText("Log out"), 10);
             _driver.FindElement(By.LinkText("Log out")).Click();
             Console.WriteLine("Completed Log out process");
         }

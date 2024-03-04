@@ -27,10 +27,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Method to recieve the discount value
-        public decimal GetDiscountValue()
+        public decimal GetDiscountValue(string discountName)
         {
             //Locate the element containing the discount value and turn it into text
-            string discount = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-edgewords > td > span")).Text;
+            string discount = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-" + discountName + " > td > span")).Text;
+            Console.WriteLine(discount);
             //Break the text down and convert it to decimal value and removes the pound sign
             decimal discountValue = decimal.Parse(discount.Replace("£", ""));
             //Returns the value extracted

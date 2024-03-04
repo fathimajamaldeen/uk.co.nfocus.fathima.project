@@ -50,24 +50,32 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
         [When(@"I apply a discount code '(.*)'")]
         public void WhenIApplyADiscountCode(string discountCode)
-        { 
+        {
+            //Storing the discount code
+            _scenarioContext["DiscountCode"] = discountCode;
             //Applying the discount code set in the test
             CartPOM cart = new CartPOM(_driver);
             cart.ApplyDiscountCode(discountCode);
             Console.WriteLine("Applied discount code");
         }
 
-        [Then(@"I should see the discount applied correctly")]
-        public void ThenIShouldSeeTheDiscountAppliedCorrectly()
+        [Then(@"I should see the discount of (.*)% is applied correctly")]
+        public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
         {
             //Waiting for the discount to be applied succesfully
             HelperLib myHelper = new HelperLib(_driver); 
             myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
             DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
+
+            //Getting the discount code from ScenarioContext
+            string discountName = (string)_scenarioContext["DiscountCode"];
             //Checking to see that discount is 15% of total value
             try
+                //TO DO: figure this outtttttttttt
             {
-                Assert.That(discountDetails.GetDiscountValue(), Is.EqualTo(discountDetails.GetPreviousTotalValue() * 0.15m));
+                decimal discountDecimal = (decimal) discount / 100m;//Casting 100 to decimal for accurate division
+                Console.WriteLine(discountDecimal);
+                Assert.That(discountDetails.GetDiscountValue(discountName), Is.EqualTo((discountDetails.GetPreviousTotalValue() * discountDecimal)));
                 Console.WriteLine(":) The discount code works");
             }
             catch (AssertionException)
@@ -81,7 +89,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Checking to see if new total value is correctly calculated
             try
             {
-                Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(discountDetails.GetPreviousTotalValue() - discountDetails.GetDiscountValue() + discountDetails.GetShippingCostValue()));
+                Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(discountDetails.GetPreviousTotalValue() - discountDetails.GetDiscountValue(discountName) + discountDetails.GetShippingCostValue()));
                 Console.WriteLine(":) The total is correctly calculated");
             }
             catch (AssertionException)

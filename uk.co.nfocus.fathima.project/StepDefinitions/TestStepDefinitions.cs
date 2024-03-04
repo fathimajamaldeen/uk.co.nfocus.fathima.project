@@ -6,25 +6,25 @@ using TechTalk.SpecFlow;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 
+//TODO: Make dotnet test work and make the test report work
+
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
     public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
-        //private readonly ExtentTest _test;
         private IWebDriver _driver;
 
         public TestStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["myDriver"];
-            //_test = test;
         }
+
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
-            //_test.Info("In the starting page and logging in with credentials from mysettings");
             //Going to login page
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.NavigateToLoginPage();
@@ -73,7 +73,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
             //Getting the discount code from ScenarioContext
             string discountName = (string)_scenarioContext["DiscountCode"];
-            //_test.Info($"Verifying discount of {discount}% is applied correctly");
             //Checking to see that discount is 15% of total value
             try
             {
@@ -90,7 +89,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
-                //_test.Fail("Assertion Failed");
             }
             //Checking to see if new total value is correctly calculated
             try
@@ -105,7 +103,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
-                //_test.Fail("Assertion Failed");
             }
         }
 
@@ -148,20 +145,18 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Getting order number from orders in account
             int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue();
             //Check if both values are equal or not and output correct line in console
-            //_test.Info($"Verifying if order numbers are the same");
             try
             {
                 Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue));
                 Console.WriteLine(":) The order numbers are the same");
             }
-            catch (AssertionException ex)
+            catch (AssertionException)
             {
                 HelperLib helper = new HelperLib(_driver);
                 Console.WriteLine(":( The order numbers are not the same");
                 // Exception occurred, capture screenshot
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
-                //_test.Fail("Assertion Failed");
             }
         }
 

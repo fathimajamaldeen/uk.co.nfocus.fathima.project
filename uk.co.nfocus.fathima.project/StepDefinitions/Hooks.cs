@@ -1,4 +1,6 @@
-﻿using TechTalk.SpecFlow;
+﻿using System;
+using System.IO;
+using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 using AventStack.ExtentReports;
@@ -12,36 +14,70 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
-        private static ExtentReports _extent;
-        private static ExtentTest _test;
+
+        [ThreadStatic]
+        static AventStack.ExtentReports.ExtentReports extent;
+        AventStack.ExtentReports.ExtentTest scenario, step;
+        static AventStack.ExtentReports.ExtentTest feature;
+        static string reportpath = System.IO.Directory.GetParent(@"../../../").FullName
+            + Path.DirectorySeparatorChar + "Result"
+            + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss");
 
         public Hooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
-        //[BeforeTestRun]
-        //public static void BeforeTestRun()
-        //{
-        //    // Initialise ExtentReports and create a report
-        //    _extent = new ExtentReports();
-        //    ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extent-report.html");
-        //    _extent.AttachReporter(htmlReporter);
-        //}
+        [BeforeTestRun]
+        public static void BeforeTestRun()
+        {
+            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportpath);
+            extent = new AventStack.ExtentReports.ExtentReports();
+            extent.AttachReporter(htmlReporter);
+        }
 
-        //[BeforeScenario]
-        //public void BeforeScenario()
-        //{
-        //    // Create a test node in the report for each scenario
-        //    _test = _extent.CreateTest(_scenarioContext.ScenarioInfo.Title);
-        //}
+        [BeforeFeature]
+        public static void BeforeFeature(FeatureContext context)
+        {
+            feature = extent.CreateTest(context.FeatureInfo.Title);
+        }
 
         [BeforeScenario]
-        public void SetUp()
+        public void BeforeScenario(ScenarioContext context)
         {
+            scenario = feature.CreateNode(context.ScenarioInfo.Title);
+
             _driver = new EdgeDriver();
             _driver.Manage().Window.Maximize();
             _scenarioContext["myDriver"] = _driver;
+        }
+
+        [BeforeStep]
+        public void BeforeStep(ScenarioContext context)
+        {
+            step = scenario.CreateNode(context.StepContext.StepInfo.Text);
+        }
+
+
+        [AfterStep]
+        public void AfterStep(ScenarioContext context)
+        {
+            if (context.TestError == null)
+            {
+                step.Log(Status.Pass, context.StepContext.StepInfo.Text);
+            }
+            else if (context.TestError != null)
+            {
+                step.Log(Status.Fail, context.StepContext.StepInfo.Text);
+            }
+        }
+
+
+        [AfterFeature]
+        public static void AfterFeature()
+        {
+            // Flush the report after all scenarios are executed
+            extent.Flush();
         }
 
         [AfterScenario]
@@ -51,12 +87,5 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             loginpage.LogOut();
             _driver.Quit();
         }
-
-        //[AfterTestRun]
-        //public static void AfterTestRun()
-        //{
-        //    // Flush the report after all scenarios are executed
-        //    _extent.Flush();
-        //}
     }
 }

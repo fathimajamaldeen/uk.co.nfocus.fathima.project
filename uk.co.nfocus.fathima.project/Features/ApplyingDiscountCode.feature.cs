@@ -79,7 +79,7 @@ deduction applied.", ProgrammingLanguage.CSharp, featureTags);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Applying different discount codes to the cart")]
-        [NUnit.Framework.TestCaseAttribute("edgewords", "10", null)]
+        [NUnit.Framework.TestCaseAttribute("edgewords", "15", null)]
         [NUnit.Framework.TestCaseAttribute("nfocus", "25", null)]
         public void ApplyingDifferentDiscountCodesToTheCart(string code, string percentage, string[] exampleTags)
         {

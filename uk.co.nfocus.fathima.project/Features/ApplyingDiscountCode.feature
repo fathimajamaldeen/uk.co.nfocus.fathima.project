@@ -14,5 +14,5 @@ Scenario: Applying different discount codes to the cart
     Then I should see the discount of <Percentage>% is applied correctly 
 Examples: 
     | Code      | Percentage |
-    | edgewords | 10         |
+    | edgewords | 15         |
     | nfocus    | 25         |

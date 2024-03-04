@@ -56,6 +56,9 @@ namespace uk.co.nfocus.fathima.project.Support
 
         public void TakeScreenshot(IWebDriver driver, string screenshotName)
         {
+            // Convert driver to ITakesScreenshot interface
+            ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
+
             // Take screenshot and save to a file
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
 

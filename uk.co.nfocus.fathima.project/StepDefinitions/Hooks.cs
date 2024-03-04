@@ -1,13 +1,9 @@
-﻿using OpenQA.Selenium;
+﻿using TechTalk.SpecFlow;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
-using uk.co.nfocus.fathima.project.Support;
 
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
@@ -16,24 +12,51 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
+        private static ExtentReports _extent;
+        private static ExtentTest _test;
+
         public Hooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
-        [Before]
+
+        //[BeforeTestRun]
+        //public static void BeforeTestRun()
+        //{
+        //    // Initialise ExtentReports and create a report
+        //    _extent = new ExtentReports();
+        //    ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extent-report.html");
+        //    _extent.AttachReporter(htmlReporter);
+        //}
+
+        //[BeforeScenario]
+        //public void BeforeScenario()
+        //{
+        //    // Create a test node in the report for each scenario
+        //    _test = _extent.CreateTest(_scenarioContext.ScenarioInfo.Title);
+        //}
+
+        [BeforeScenario]
         public void SetUp()
         {
             _driver = new EdgeDriver();
             _driver.Manage().Window.Maximize();
-            _scenarioContext["myDriver"] = _driver; //When putting stuff in to scenario context we lose the type information
+            _scenarioContext["myDriver"] = _driver;
         }
 
-        [After]
+        [AfterScenario]
         public void TearDown()
         {
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();
             _driver.Quit();
         }
+
+        //[AfterTestRun]
+        //public static void AfterTestRun()
+        //{
+        //    // Flush the report after all scenarios are executed
+        //    _extent.Flush();
+        //}
     }
 }

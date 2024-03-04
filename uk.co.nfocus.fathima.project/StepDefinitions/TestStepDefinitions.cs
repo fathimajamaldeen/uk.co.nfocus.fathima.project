@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AventStack.ExtentReports;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using TechTalk.SpecFlow;
@@ -11,16 +12,19 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
+        //private readonly ExtentTest _test;
         private IWebDriver _driver;
 
         public TestStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
             this._driver = (IWebDriver)_scenarioContext["myDriver"];
+            //_test = test;
         }
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
+            //_test.Info("In the starting page and logging in with credentials from mysettings");
             //Going to login page
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.NavigateToLoginPage();
@@ -69,9 +73,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
             //Getting the discount code from ScenarioContext
             string discountName = (string)_scenarioContext["DiscountCode"];
+            //_test.Info($"Verifying discount of {discount}% is applied correctly");
             //Checking to see that discount is 15% of total value
             try
-                //TO DO: figure this outtttttttttt
             {
                 decimal discountDecimal = (decimal) discount / 100m;//Casting 100 to decimal for accurate division
                 Console.WriteLine(discountDecimal);
@@ -81,10 +85,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             catch (AssertionException)
             {
                 Console.WriteLine(":( The discount code does not work");
+
                 //Taking a screenshot of where the error occured
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                //_test.Fail("Assertion Failed");
             }
             //Checking to see if new total value is correctly calculated
             try
@@ -99,6 +105,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                //_test.Fail("Assertion Failed");
             }
         }
 
@@ -139,8 +146,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             int orderNumberValue = orderDetails.GetOrderNumberValue();
             orderDetails.GoToMyOrders();
             //Getting order number from orders in account
-            int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue(); 
+            int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue();
             //Check if both values are equal or not and output correct line in console
+            //_test.Info($"Verifying if order numbers are the same");
             try
             {
                 Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue));
@@ -153,6 +161,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 // Exception occurred, capture screenshot
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                //_test.Fail("Assertion Failed");
             }
         }
 

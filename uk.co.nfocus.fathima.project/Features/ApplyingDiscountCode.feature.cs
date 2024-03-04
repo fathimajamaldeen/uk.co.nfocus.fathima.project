@@ -78,16 +78,16 @@ deduction applied.", ProgrammingLanguage.CSharp, featureTags);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Applying discount code to the cart")]
+        [NUnit.Framework.DescriptionAttribute("Applying different discount codes to the cart")]
         [NUnit.Framework.TestCaseAttribute("edgewords", "10", null)]
         [NUnit.Framework.TestCaseAttribute("nfocus", "25", null)]
-        public void ApplyingDiscountCodeToTheCart(string discountCode, string percentage, string[] exampleTags)
+        public void ApplyingDifferentDiscountCodesToTheCart(string code, string percentage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("DiscountCode", discountCode);
+            argumentsOfScenario.Add("Code", code);
             argumentsOfScenario.Add("Percentage", percentage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Applying discount code to the cart", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Applying different discount codes to the cart", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -108,7 +108,7 @@ this.ScenarioInitialize(scenarioInfo);
         testRunner.And("I view my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 13
-        testRunner.And(string.Format("I apply a discount code \'{0}\'", discountCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And(string.Format("I apply a discount code \'{0}\'", code), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 14
     testRunner.Then(string.Format("I should see the discount of {0}% is applied correctly", percentage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

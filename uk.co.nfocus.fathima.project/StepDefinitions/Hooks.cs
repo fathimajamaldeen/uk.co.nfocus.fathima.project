@@ -6,6 +6,7 @@ using OpenQA.Selenium.Edge;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
+using NUnit.Framework.Interfaces;
 
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
@@ -21,32 +22,39 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         static AventStack.ExtentReports.ExtentTest feature;
         static string reportpath = System.IO.Directory.GetParent(@"../../../").FullName
             + Path.DirectorySeparatorChar + "Result"
-            + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss");
+            + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 
         public Hooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
 
+        //Runs once before all tests
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
+            //Configures ExtentReports
             ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportpath);
             extent = new AventStack.ExtentReports.ExtentReports();
             extent.AttachReporter(htmlReporter);
         }
 
+        //Runs before each feature
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext context)
         {
+            //Create a new ExtentTest for the feature 
             feature = extent.CreateTest(context.FeatureInfo.Title);
         }
 
+        //Runs before each scenario
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext context)
         {
+            //Create a new ExtentTest for the scenario
             scenario = feature.CreateNode(context.ScenarioInfo.Title);
 
+            //Initialise WebDriver
             _driver = new EdgeDriver();
             _driver.Manage().Window.Maximize();
             _scenarioContext["myDriver"] = _driver;
@@ -55,6 +63,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [BeforeStep]
         public void BeforeStep(ScenarioContext context)
         {
+            //Create a new ExtentTest node for the step
             step = scenario.CreateNode(context.StepContext.StepInfo.Text);
         }
 
@@ -62,17 +71,32 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [AfterStep]
         public void AfterStep(ScenarioContext context)
         {
-            if (context.TestError == null)
+            //Log the status of the step based on the scenario execution status
+            var stepStatus = context.ScenarioExecutionStatus;
+            switch (stepStatus)
             {
-                step.Log(Status.Pass, context.StepContext.StepInfo.Text);
-            }
-            else if (context.TestError != null)
-            {
-                step.Log(Status.Fail, context.StepContext.StepInfo.Text);
+                case ScenarioExecutionStatus.OK:
+                    step.Log(Status.Pass, context.StepContext.StepInfo.Text);
+                    break;
+                case ScenarioExecutionStatus.TestError:
+                    step.Log(Status.Fail, context.StepContext.StepInfo.Text);
+                    break;
+                case ScenarioExecutionStatus.UndefinedStep:
+                    step.Log(Status.Warning, $"Step status: {stepStatus}");
+                    break;
+                case ScenarioExecutionStatus.BindingError:
+                    step.Log(Status.Error, $"Step status: {stepStatus}");
+                    break;
+                case ScenarioExecutionStatus.StepDefinitionPending:
+                    step.Log(Status.Skip, $"Step status: {stepStatus}");
+                    break;
+                default:
+                    step.Log(Status.Info, $"Step status: {stepStatus}");
+                    break;
             }
         }
 
-
+        //Runs after each feature
         [AfterFeature]
         public static void AfterFeature()
         {
@@ -80,9 +104,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             extent.Flush();
         }
 
+        //Runs after each scenario
         [AfterScenario]
         public void TearDown()
         {
+            //Perform cleanup actions
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();
             _driver.Quit();

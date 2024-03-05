@@ -6,8 +6,6 @@ using TechTalk.SpecFlow;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 
-//TODO: Make dotnet test work and make the test report work
-
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
@@ -89,6 +87,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
             //Checking to see if new total value is correctly calculated
             try
@@ -103,6 +102,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 HelperLib helper = new HelperLib(_driver);
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
         }
 
@@ -114,18 +114,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.ProceedToCheckout();
         }
 
-        [When(@"I fill in billing details with")]
-        public void WhenIFillInBillingDetailsWith(Table table)
+        [When(@"I fill in billing details, to place the order, with")]
+        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table table)
         {
             //Filling in the billing details with the table details from the test
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             billing.SetFirstName(table.Rows[0]["First Name"]).SetLastName(table.Rows[0]["Last Name"]).SetAddress(table.Rows[0]["Address"]).SetCity(table.Rows[0]["City"]).SetPostcode(table.Rows[0]["Postcode"]).SetPhoneNumber(table.Rows[0]["Phone Number"]);
-        }
-
-        [When(@"I place the order")]
-        public void WhenIPlaceTheOrder()
-        {
-            BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             //Waiting for the place order button to be clickable
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
@@ -157,6 +151,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 // Exception occurred, capture screenshot
                 string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
                 helper.TakeScreenshot(_driver, screenshotName);
+                throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
         }
 

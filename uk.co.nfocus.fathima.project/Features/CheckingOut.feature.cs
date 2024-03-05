@@ -122,12 +122,9 @@ the one stored in their account orders.", ProgrammingLanguage.CSharp, featureTag
                             "SW1A 1AA",
                             "555 564 2211"});
 #line 17
-        testRunner.And("I fill in billing details with", ((string)(null)), table1, "And ");
+        testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
 #line 20
-        testRunner.And("I place the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 21
     testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
                         "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

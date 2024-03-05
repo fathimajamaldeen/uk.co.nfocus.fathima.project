@@ -7,6 +7,7 @@ using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 using NUnit.Framework.Interfaces;
+using uk.co.nfocus.fathima.project.Support;
 
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
@@ -15,6 +16,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
+        private ExtentTest test;
+        
 
         [ThreadStatic]
         static AventStack.ExtentReports.ExtentReports extent;
@@ -80,6 +83,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     break;
                 case ScenarioExecutionStatus.TestError:
                     step.Log(Status.Fail, context.StepContext.StepInfo.Text);
+                    Screenshots screenshotHelper = new Screenshots(_driver, test);
+                    string screenshotName = $"{context.StepContext.StepInfo.Text}_{DateTime.Now:yyyyMMddHHmm}.png";
+                    string screenshotPath = Path.Combine(reportpath, screenshotName);
+                    screenshotHelper.TakeScreenshot(screenshotPath);
+                    step.AddScreenCaptureFromPath(screenshotPath);
                     break;
                 case ScenarioExecutionStatus.UndefinedStep:
                     step.Log(Status.Warning, $"Step status: {stepStatus}");

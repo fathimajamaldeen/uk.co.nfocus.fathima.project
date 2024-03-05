@@ -30,7 +30,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public decimal GetDiscountValue(string discountName)
         {
             //Locate the element containing the discount value and turn it into text
-                                         
+            HelperLib helper = new HelperLib(_driver);
+            helper.WaitForElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-" + discountName + " > td > span"), 5);
             string discount = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-" + discountName + " > td > span")).Text;
             Console.WriteLine(discount);
             //Break the text down and convert it to decimal value and removes the pound sign

@@ -57,5 +57,18 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _driver.FindElement(By.LinkText("Proceed to checkout")).Click();
 
         }
+
+        //Method to Remove the coupon code from cart
+        public void RemoveCouponCode()
+        {
+            _driver.FindElement(By.LinkText("[Remove]")).Click();
+        }
+
+        //Method to remove the item from cart
+        public void RemoveItemFromCart()
+        {
+            _driver.FindElement(By.LinkText("×")).Click();
+        }
+
     }
 }

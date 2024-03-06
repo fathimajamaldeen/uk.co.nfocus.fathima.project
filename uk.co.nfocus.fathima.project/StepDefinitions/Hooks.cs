@@ -8,7 +8,7 @@ using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 using NUnit.Framework.Interfaces;
 using uk.co.nfocus.fathima.project.Support;
-
+//TODO: make the mouse scroll before screenshotting 
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
@@ -16,15 +16,15 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
-        private ExtentTest test;
-        
+        private ExtentTest _test;
+
 
         [ThreadStatic]
-        static AventStack.ExtentReports.ExtentReports extent;
-        AventStack.ExtentReports.ExtentTest scenario, step;
-        static AventStack.ExtentReports.ExtentTest feature;
-        static string reportpath = System.IO.Directory.GetParent(@"../../../").FullName
-            + Path.DirectorySeparatorChar + "Result"
+        static AventStack.ExtentReports.ExtentReports s_extent;
+        AventStack.ExtentReports.ExtentTest s_scenario, s_step;
+        static AventStack.ExtentReports.ExtentTest s_feature;
+        static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
+            + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 
         public Hooks(ScenarioContext scenarioContext)
@@ -37,17 +37,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public static void BeforeTestRun()
         {
             //Configures ExtentReports
-            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportpath);
-            extent = new AventStack.ExtentReports.ExtentReports();
-            extent.AttachReporter(htmlReporter);
-        }
-
-        //Runs before each feature
-        [BeforeFeature]
-        public static void BeforeFeature(FeatureContext context)
-        {
-            //Create a new ExtentTest for the feature 
-            feature = extent.CreateTest(context.FeatureInfo.Title);
+            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(s_reportpath);
+            s_extent = new AventStack.ExtentReports.ExtentReports();
+            s_extent.AttachReporter(htmlReporter);
         }
 
         //Runs before each scenario
@@ -55,7 +47,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void BeforeScenario(ScenarioContext context)
         {
             //Create a new ExtentTest for the scenario
-            scenario = feature.CreateNode(context.ScenarioInfo.Title);
+            s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
 
             //Initialise WebDriver
             _driver = new EdgeDriver();
@@ -67,7 +59,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void BeforeStep(ScenarioContext context)
         {
             //Create a new ExtentTest node for the step
-            step = scenario.CreateNode(context.StepContext.StepInfo.Text);
+            s_step = s_scenario.CreateNode(context.StepContext.StepInfo.Text);
         }
 
 
@@ -79,27 +71,33 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             switch (stepStatus)
             {
                 case ScenarioExecutionStatus.OK:
-                    step.Log(Status.Pass, context.StepContext.StepInfo.Text);
+                    s_step.Log(Status.Pass, context.StepContext.StepInfo.Text);
                     break;
                 case ScenarioExecutionStatus.TestError:
-                    step.Log(Status.Fail, context.StepContext.StepInfo.Text);
-                    Screenshots screenshotHelper = new Screenshots(_driver, test);
+                    //When the test fails 
+                    s_step.Log(Status.Fail, $"{context.StepContext.StepInfo.Text}. Test failure reason: {context.TestError.Message}");
+                    //Creates a screenshot instance
+                    Screenshots screenshotHelper = new Screenshots(_driver, _test);
+                    //Make a unique name for the screenshot
                     string screenshotName = $"{context.StepContext.StepInfo.Text}_{DateTime.Now:yyyyMMddHHmm}.png";
-                    string screenshotPath = Path.Combine(reportpath, screenshotName);
+                    //Constructs full path for saving screenshot to the same folder as where the report is
+                    string screenshotPath = Path.Combine(s_reportpath, screenshotName);
+                    //Actually captures the screenshot
                     screenshotHelper.TakeScreenshot(screenshotPath);
-                    step.AddScreenCaptureFromPath(screenshotPath);
+                    //Adds the screenshot to the Extent Report
+                    s_step.AddScreenCaptureFromPath(screenshotPath);
                     break;
                 case ScenarioExecutionStatus.UndefinedStep:
-                    step.Log(Status.Warning, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Warning, $"Step status: {stepStatus}");
                     break;
                 case ScenarioExecutionStatus.BindingError:
-                    step.Log(Status.Error, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Error, $"Step status: {stepStatus}");
                     break;
                 case ScenarioExecutionStatus.StepDefinitionPending:
-                    step.Log(Status.Skip, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Skip, $"Step status: {stepStatus}");
                     break;
                 default:
-                    step.Log(Status.Info, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Info, $"Step status: {stepStatus}");
                     break;
             }
         }
@@ -109,7 +107,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public static void AfterFeature()
         {
             // Flush the report after all scenarios are executed
-            extent.Flush();
+            s_extent.Flush();
         }
 
         //Runs after each scenario

@@ -67,6 +67,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to remove the item from cart
         public void RemoveItemFromCart()
         {
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForElement(By.LinkText("×"), 5);
             _driver.FindElement(By.LinkText("×")).Click();
         }
 

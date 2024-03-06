@@ -63,6 +63,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to log out from the website
         public void LogOut()
         {
+            // Scroll to the top of the page again
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
+            executor.ExecuteScript("window.scrollTo(0, 0);");
             //Navigate to my account page
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();

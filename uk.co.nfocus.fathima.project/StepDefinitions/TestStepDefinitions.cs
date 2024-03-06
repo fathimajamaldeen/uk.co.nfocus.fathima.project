@@ -82,11 +82,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             catch (AssertionException)
             {
                 Console.WriteLine(":( The discount code does not work");
-
-                //Taking a screenshot of where the error occured
-                //HelperLib helper = new HelperLib(_driver);
-                //string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
-                //helper.TakeScreenshot(_driver, screenshotName);
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
             //Checking to see if new total value is correctly calculated
@@ -98,12 +93,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             catch (AssertionException)
             {
                 Console.WriteLine(":( The total is not correctly calculated");
-                //Taking a screenshot of where the error occured
-                //HelperLib helper = new HelperLib(_driver);
-                //string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
-                //helper.TakeScreenshot(_driver, screenshotName);
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
+
+            //Removes the coupon and item from the cart 
             CartPOM cart = new CartPOM(_driver);
             cart.RemoveCouponCode();
             cart.RemoveItemFromCart();
@@ -150,11 +143,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             }
             catch (AssertionException)
             {
-                //HelperLib helper = new HelperLib(_driver);
                 Console.WriteLine(":( The order numbers are not the same");
-                //// Exception occurred, capture screenshot
-                //string screenshotName = "failure_screenshot_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
-                //helper.TakeScreenshot(_driver, screenshotName);
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
         }

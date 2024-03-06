@@ -55,26 +55,5 @@ namespace uk.co.nfocus.fathima.project.Support
                 return false;
             }
         }
-
-        //public void TakeScreenshot(IWebDriver driver, string screenshotName)
-        //{
-        //    // Convert driver to ITakesScreenshot interface
-        //    ITakesScreenshot screenshotDriver = (ITakesScreenshot)driver;
-
-        //    // Take screenshot and save to a file
-        //    Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-
-        //    // Get the directory path where the executable is located
-        //    string directoryPath = System.IO.Directory.GetParent(@"../../../").FullName + Path.DirectorySeparatorChar + "Result"
-        //    + Path.DirectorySeparatorChar ;
-
-        //    // Construct the full file path for the screenshot
-        //    string screenshotFilePath = Path.Combine(directoryPath, screenshotName);
-
-        //    // Save the screenshot
-        //    screenshot.SaveAsFile(screenshotFilePath);
-        //    _test.Fail("screenshot:", MediaEntityBuilder.CreateScreenCaptureFromPath(directoryPath).Build());
-
-        //}
     }
 }

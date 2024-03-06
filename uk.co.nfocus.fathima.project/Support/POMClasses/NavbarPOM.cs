@@ -40,6 +40,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to get to my account page
         public void GoMyAccountPage()
         {
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForElement(By.PartialLinkText("My account"), 5);
             MyAccount.Click();
         }
 

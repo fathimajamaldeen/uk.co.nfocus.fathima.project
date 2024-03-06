@@ -75,7 +75,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             try
             {
                 decimal discountDecimal = (decimal) discount / 100m;//Casting 100 to decimal for accurate division
-                Console.WriteLine(discountDecimal);
                 Assert.That(discountDetails.GetDiscountValue(discountName), Is.EqualTo((discountDetails.GetPreviousTotalValue() * discountDecimal)));
                 Console.WriteLine(":) The discount code works");
             }
@@ -117,18 +116,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Filling in the billing details with the table details from the test
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             billing.SetFirstName(table.Rows[0]["First Name"]).SetLastName(table.Rows[0]["Last Name"]).SetAddress(table.Rows[0]["Address"]).SetCity(table.Rows[0]["City"]).SetPostcode(table.Rows[0]["Postcode"]).SetPhoneNumber(table.Rows[0]["Phone Number"]);
-            //Waiting for the place order button to be clickable
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             billing.PlaceOrder();
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {
-            //Waiting for the order number to be available 
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"), 10);
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             //Getting order number from order recieved post ordering item
             int orderNumberValue = orderDetails.GetOrderNumberValue();

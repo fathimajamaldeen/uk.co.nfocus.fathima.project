@@ -23,8 +23,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
 
-        //Service method - doing things with elemenet on the page
-
         //Method to get to the home page
         public void GoHomePage()
         {

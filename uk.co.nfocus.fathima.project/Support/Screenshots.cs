@@ -36,7 +36,6 @@ namespace uk.co.nfocus.fathima.project.Support
                 // Add screenshot to extent report
                 _test.Fail("Screenshot:", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotFilePath).Build());
 
-                Console.WriteLine("HEllo" + File.Exists(screenshotFilePath));
             }
             catch (Exception ex)
             {

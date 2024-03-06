@@ -17,6 +17,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _driver = driver; //Assigning the WebDriver instance passed in to the field
         }
 
+        //Locators - finding elements on the page
+        private IWebElement _viewCart => _driver.FindElement(By.LinkText("View cart"));
+        private IWebElement _couponCodeField => _driver.FindElement(By.CssSelector("#coupon_code"));
+        private IWebElement _applyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
+        private IWebElement _proceedToCheckout => _driver.FindElement(By.LinkText("Proceed to checkout"));
+        private IWebElement _removeCode => _driver.FindElement(By.LinkText("[Remove]"));
+        private IWebElement _removeItem => _driver.FindElement(By.LinkText("×"));
+
         //Method to navigate to the cart page
         public void ViewCart()
         {
@@ -25,22 +33,22 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 
             //Wait for the 'View cart' link to appear and then click it
             myHelper.WaitForElement(By.LinkText("View cart"), 10);
-            _driver.FindElement(By.LinkText("View cart")).Click();
+            _viewCart.Click();
         }
 
         //Method to apply a discount code in the cart
         public void ApplyDiscountCode(string discountCode)
         {
             //Clear the discount code input field and enter the provided code
-            _driver.FindElement(By.CssSelector("#coupon_code")).Clear();
-            _driver.FindElement(By.CssSelector("#coupon_code")).SendKeys(discountCode);
+            _couponCodeField.Clear();
+            _couponCodeField.SendKeys(discountCode);
 
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
 
             //Wait for the 'Apply coupon' button to appear then click it
             myHelper.WaitForElement(By.Name("apply_coupon"), 15);
-            _driver.FindElement(By.Name("apply_coupon")).Click();
+            _applyCouponButton.Click();
         }
 
         //Method to proceed to checkout from the cart
@@ -48,28 +56,27 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Navigate to the cart page 
             ViewCart();
-
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
-            
             //Wait for the 'Proceed to checkout' to appear then click it
             myHelper.WaitForElement(By.LinkText("Proceed to checkout"), 10);
-            _driver.FindElement(By.LinkText("Proceed to checkout")).Click();
+            _proceedToCheckout.Click();
 
         }
 
         //Method to Remove the coupon code from cart
         public void RemoveCouponCode()
         {
-            _driver.FindElement(By.LinkText("[Remove]")).Click();
+            _removeCode.Click();
         }
 
         //Method to remove the item from cart
         public void RemoveItemFromCart()
         {
+            //Wait for the remove button to appear
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElement(By.LinkText("×"), 5);
-            _driver.FindElement(By.LinkText("×")).Click();
+            _removeItem.Click();
         }
 
     }

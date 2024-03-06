@@ -21,10 +21,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Locators - finding elements on the page
         private IWebElement _usernameField => _driver.FindElement(By.CssSelector("#username"));
         private IWebElement _passwordField => _driver.FindElement(By.CssSelector("#password"));
-        private IWebElement _loginButton => _driver.FindElement(By.CssSelector("#customer_login > div.u-column1.col-1 > form > p:nth-child(3) > button"));
+        private IWebElement _loginButton => _driver.FindElement(By.Name("login"));
+        private IWebElement _logoutButton => _driver.FindElement(By.LinkText("Log out"));
+        private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
 
-        //Service method - doing things with elemenet on the page
-
+        
         //Method to set the username by clearing the field and setting the input and returning the instance
         public LoginPagePOM SetUsername(string username)
         {
@@ -57,7 +58,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Navigate to my account page
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();
-            _driver.FindElement(By.LinkText("Dismiss")).Click(); // Dismisses the label that comes at the start 
+            _dismissButton.Click(); // Dismisses the label that comes at the start 
         }
 
         //Method to log out from the website
@@ -72,8 +73,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Create an instance of the HelperLib
             HelperLib myHelper = new HelperLib(_driver);
             //Wait for the logout link to appear
-            myHelper.WaitForElement(By.LinkText("Log out"), 10);
-            _driver.FindElement(By.LinkText("Log out")).Click();
+            myHelper.WaitForElement(By.LinkText("Log out"), 15);
+            _logoutButton.Click();
             Console.WriteLine("Completed Log out process");
         }
 

@@ -15,11 +15,16 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _driver = driver; //Assign the WebDriver instance passed into the field
         }
 
+        //Locators - finding elements on the page
+        private IWebElement _previousTotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-subtotal > td > span > bdi"));
+        private IWebElement _newTotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span"));
+        private IWebElement _shippingCost => _driver.FindElement(By.CssSelector("#shipping_method > li > label > span > bdi"));
+
         //Method to recieve the previous total value
         public decimal GetPreviousTotalValue()
         {
             //Locate the element containing the previous total value and turn it into text
-            string previousTotal = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-subtotal > td > span > bdi")).Text;
+            string previousTotal = _previousTotal.Text;
             //Break the text down and convert it to decimal value and removes the pound sign
             decimal previousTotalValue = decimal.Parse(previousTotal.Replace("£", ""));
             //Returns the value extracted
@@ -29,11 +34,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve the discount value
         public decimal GetDiscountValue(string discountName)
         {
-            //Locate the element containing the discount value and turn it into text
             HelperLib helper = new HelperLib(_driver);
             helper.WaitForElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-" + discountName + " > td > span"), 5);
+            //Locate the element containing the discount value and turn it into text
             string discount = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-" + discountName + " > td > span")).Text;
-            Console.WriteLine(discount);
             //Break the text down and convert it to decimal value and removes the pound sign
             decimal discountValue = decimal.Parse(discount.Replace("£", ""));
             //Returns the value extracted
@@ -44,7 +48,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public decimal GetNewTotalValue()
         {
             //Locate the element containing the new total value and turn it into text
-            string newTotal = _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span")).Text;
+            string newTotal = _newTotal.Text;
             //Break the text down and convert it to decimal value and removes the pound sign
             decimal newTotalValue = decimal.Parse(newTotal.Replace("£", ""));
             //Returns the value extracted
@@ -55,7 +59,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public decimal GetShippingCostValue()
         {
             //Locate the element containing the shipping cost value and turn it into text
-            string shippingCost = _driver.FindElement(By.CssSelector("#shipping_method > li > label > span > bdi")).Text;
+            string shippingCost = _shippingCost.Text;
             //Break the text down and convert it to decimal value and removes the pound sign
             decimal shippingCostValue = decimal.Parse(shippingCost.Replace("£", ""));
             //Returns the value extracted

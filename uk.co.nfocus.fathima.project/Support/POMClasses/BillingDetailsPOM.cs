@@ -24,8 +24,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
         private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
 
-        //Service method - doing things with elemenet on the page
-
         //Method to set the first name field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetFirstName(string firstName)
         {
@@ -83,6 +81,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
+            //Waiting for the place order button to be clickable
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             _placeOrderButton.Click();
             return this;
         }

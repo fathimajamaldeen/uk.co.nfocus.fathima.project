@@ -1,15 +1,12 @@
 ﻿Feature: Checking Out
 
-This feature focuses on the checkout process of 
-the eCommerce website, ensuring that users can 
-successfully complete their purchases and that 
-order information remains consistent throughout 
-the process. It verifies that after adding items 
-to the cart, proceeding to checkout, providing 
-billing details, and placing the order, the 
-order number displayed to the user matches 
-the one stored in their account orders.
+This feature will login to an e-commerce site 
+as a registered user, purchase an item of clothing and go 
+through checkout. It will capture the order number and 
+check the order is also present in the ‘My 
+Orders’ section of the site.
 
+@Test2
  Scenario: Checking if order numbers are consistent
    Given I am logged in on the shopping website
    When I add a belt to my cart

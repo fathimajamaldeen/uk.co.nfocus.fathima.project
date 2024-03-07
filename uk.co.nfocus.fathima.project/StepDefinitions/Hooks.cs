@@ -8,7 +8,7 @@ using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 using NUnit.Framework.Interfaces;
 using uk.co.nfocus.fathima.project.Support;
-//TODO: make the mouse scroll before screenshotting 
+using OpenQA.Selenium.Support.UI;
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
@@ -16,9 +16,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
-        private ExtentTest _test;
-
-
+       
         [ThreadStatic]
         static AventStack.ExtentReports.ExtentReports s_extent;
         AventStack.ExtentReports.ExtentTest s_scenario, s_step;
@@ -48,13 +46,13 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
-
             //Initialise WebDriver
             _driver = new EdgeDriver();
             _driver.Manage().Window.Maximize();
             _scenarioContext["myDriver"] = _driver;
         }
 
+        //Runs before each step
         [BeforeStep]
         public void BeforeStep(ScenarioContext context)
         {
@@ -77,24 +75,30 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     //When the test fails 
                     s_step.Log(Status.Fail, $"{context.StepContext.StepInfo.Text}. Test failure reason: {context.TestError.Message}");
                     //Creates a screenshot instance
-                    Screenshots screenshotHelper = new Screenshots(_driver, _test);
+                    Screenshots screenshotHelper = new Screenshots(_driver);
                     //Make a unique name for the screenshot
                     string screenshotName = $"{context.StepContext.StepInfo.Text}_{DateTime.Now:yyyyMMddHHmm}.png";
                     //Constructs full path for saving screenshot to the same folder as where the report is
                     string screenshotPath = Path.Combine(s_reportpath, screenshotName);
+                    HelperLib myHelper = new HelperLib(_driver);
+                    //Move the page down to get a clearer screenshot
+                    myHelper.ScrollOnPage(250);
+                    // Wait until scrolling action is completed
+                    myHelper.WaitForPageToScroll(10);
                     //Actually captures the screenshot
                     screenshotHelper.TakeScreenshot(screenshotPath);
-                    //Adds the screenshot to the Extent Report
+                    //Add the screenshot to the Extent Report
                     s_step.AddScreenCaptureFromPath(screenshotPath);
+                    Console.WriteLine($"Screenshot saved to: {screenshotPath}");
                     break;
                 case ScenarioExecutionStatus.UndefinedStep:
-                    s_step.Log(Status.Warning, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Warning, $"{context.StepContext.StepInfo.Text} - Step status: {stepStatus}");
                     break;
                 case ScenarioExecutionStatus.BindingError:
-                    s_step.Log(Status.Error, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Error, $"{context.StepContext.StepInfo.Text} - Step status: {stepStatus}");
                     break;
                 case ScenarioExecutionStatus.StepDefinitionPending:
-                    s_step.Log(Status.Skip, $"Step status: {stepStatus}");
+                    s_step.Log(Status.Skip, $"{context.StepContext.StepInfo.Text} - Step status: {stepStatus}");
                     break;
                 default:
                     s_step.Log(Status.Info, $"Step status: {stepStatus}");
@@ -110,14 +114,28 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             s_extent.Flush();
         }
 
+        //Runs after Test 1 only to clean up the cart
+        [AfterScenario("@Test1")]
+        public void Cleanup()
+        {
+            //Removes the coupon and item from the cart 
+            CartPOM cart = new CartPOM(_driver);
+            cart.RemoveCouponCode();
+            cart.RemoveItemFromCart();
+        }
+
         //Runs after each scenario
         [AfterScenario]
         public void TearDown()
         {
+            //Waits for page to fully load
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForPageToLoad(15);
             //Perform cleanup actions
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();
             _driver.Quit();
         }
+
     }
 }

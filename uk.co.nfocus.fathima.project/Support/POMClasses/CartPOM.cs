@@ -30,9 +30,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
-
             //Wait for the 'View cart' link to appear and then click it
-            myHelper.WaitForElement(By.LinkText("View cart"), 10);
+            myHelper.WaitForElement(By.LinkText("View cart"), 15);
             _viewCart.Click();
         }
 
@@ -67,6 +66,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to Remove the coupon code from cart
         public void RemoveCouponCode()
         {
+            //Wait for the remove button to appear
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
             _removeCode.Click();
         }
 

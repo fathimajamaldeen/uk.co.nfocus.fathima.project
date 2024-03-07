@@ -6,12 +6,10 @@ namespace uk.co.nfocus.fathima.project.Support
     internal class Screenshots
     {
         private IWebDriver _driver;
-        private ExtentTest _test;
 
-        public Screenshots(IWebDriver driver, ExtentTest test)
+        public Screenshots(IWebDriver driver)
         {
             _driver = driver;
-            _test = test; // Assign the test instance passed from the calling test
         }
 
         public void TakeScreenshot(string screenshotName)
@@ -32,9 +30,6 @@ namespace uk.co.nfocus.fathima.project.Support
 
                 // Save the screenshot
                 screenshot.SaveAsFile(screenshotFilePath);
-
-                // Add screenshot to extent report
-                _test.Fail("Screenshot:", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotFilePath).Build());
 
             }
             catch (Exception ex)

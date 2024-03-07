@@ -22,6 +22,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
+        private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
 
         //Method to get to the home page
         public void GoHomePage()
@@ -39,7 +40,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoMyAccountPage()
         {
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.PartialLinkText("My account"), 5);
+            myHelper.WaitForElement(By.LinkText("My account"), 10);
             MyAccount.Click();
         }
 
@@ -47,6 +48,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoCartPage()
         {
             Cart.Click();
+        }
+
+        public void DismissPopup()
+        {
+            _dismissButton.Click();
         }
     }
 }

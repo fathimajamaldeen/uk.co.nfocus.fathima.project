@@ -93,13 +93,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             {
                 Console.WriteLine(":( The total is not correctly calculated");
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
-            }
-
-            //Removes the coupon and item from the cart 
-            CartPOM cart = new CartPOM(_driver);
-            cart.RemoveCouponCode();
-            cart.RemoveItemFromCart();
-
+            }    
         }
 
         [When(@"I proceed to checkout")]

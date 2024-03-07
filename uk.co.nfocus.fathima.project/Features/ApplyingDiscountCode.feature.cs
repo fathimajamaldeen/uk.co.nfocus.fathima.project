@@ -35,11 +35,9 @@ namespace uk.co.nfocus.fathima.project.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Applying Discount Code", @"This feature enables users to apply discount codes during 
-the checkout process on the eCommerce website. It ensures 
-that users logged into the platform can successfully apply 
-a discount code to their cart, resulting in the correct 
-deduction applied.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Applying Discount Code", "This feature will login to an e-commerce site as a registered user, \r\npurchase an" +
+                    " item of clothing, apply a \r\ndiscount code and check that the total is correct \r" +
+                    "\nafter the discount & shipping is applied.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,11 +77,18 @@ deduction applied.", ProgrammingLanguage.CSharp, featureTags);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Applying different discount codes to the cart")]
+        [NUnit.Framework.CategoryAttribute("Test1")]
         [NUnit.Framework.TestCaseAttribute("edgewords", "15", null)]
         [NUnit.Framework.TestCaseAttribute("nfocus", "25", null)]
         public void ApplyingDifferentDiscountCodesToTheCart(string code, string percentage, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "Test1"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("Code", code);
             argumentsOfScenario.Add("Percentage", percentage);

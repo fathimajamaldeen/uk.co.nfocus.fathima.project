@@ -82,6 +82,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public BillingDetailsPOM PlaceOrder()
         {
             //Waiting for the place order button to be clickable
+            
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             _placeOrderButton.Click();

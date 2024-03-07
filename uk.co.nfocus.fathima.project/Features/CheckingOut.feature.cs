@@ -35,15 +35,9 @@ namespace uk.co.nfocus.fathima.project.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Checking Out", @"This feature focuses on the checkout process of 
-the eCommerce website, ensuring that users can 
-successfully complete their purchases and that 
-order information remains consistent throughout 
-the process. It verifies that after adding items 
-to the cart, proceeding to checkout, providing 
-billing details, and placing the order, the 
-order number displayed to the user matches 
-the one stored in their account orders.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Checking Out", "This feature will login to an e-commerce site \r\nas a registered user, purchase an" +
+                    " item of clothing and go \r\nthrough checkout. It will capture the order number an" +
+                    "d \r\ncheck the order is also present in the ‘My \r\nOrders’ section of the site.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,12 +77,14 @@ the one stored in their account orders.", ProgrammingLanguage.CSharp, featureTag
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Checking if order numbers are consistent")]
+        [NUnit.Framework.CategoryAttribute("Test2")]
         public void CheckingIfOrderNumbersAreConsistent()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Test2"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 10
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,13 +94,13 @@ the one stored in their account orders.", ProgrammingLanguage.CSharp, featureTag
             else
             {
                 this.ScenarioStart();
-#line 14
+#line 11
    testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 15
+#line 12
    testRunner.When("I add a belt to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 13
         testRunner.And("I proceed to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -121,10 +117,10 @@ the one stored in their account orders.", ProgrammingLanguage.CSharp, featureTag
                             "Zootopia",
                             "SW1A 1AA",
                             "555 564 2211"});
-#line 17
+#line 14
         testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
-#line 20
+#line 17
     testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
                         "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

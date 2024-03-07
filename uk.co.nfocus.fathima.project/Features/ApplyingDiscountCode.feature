@@ -1,11 +1,11 @@
 ﻿Feature: Applying Discount Code
 
-This feature enables users to apply discount codes during 
-the checkout process on the eCommerce website. It ensures 
-that users logged into the platform can successfully apply 
-a discount code to their cart, resulting in the correct 
-deduction applied.
+This feature will login to an e-commerce site as a registered user, 
+purchase an item of clothing, apply a 
+discount code and check that the total is correct 
+after the discount & shipping is applied.
 
+@Test1
 Scenario: Applying different discount codes to the cart
     Given I am logged in on the shopping website 
     When I add a belt to my cart

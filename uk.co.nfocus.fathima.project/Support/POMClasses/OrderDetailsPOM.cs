@@ -18,8 +18,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Locators - Finding elements on the page
-        private IWebElement _orderNumber => _driver.FindElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"));
-        private IWebElement _orderNumberInAccount => _driver.FindElement(By.CssSelector("#post-7 > div > div > div > table > tbody > tr:nth-child(1) > td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number > a"));
+        private IWebElement _orderNumber => _driver.FindElement(By.CssSelector(".woocommerce-order-overview__order.order strong"));
+        private IWebElement _orderNumberInAccount => _driver.FindElement(By.CssSelector(".woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number a:first-of-type"));
 
 
         //Method to recieve order number value from the order details page
@@ -27,7 +27,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Waiting for the order number to be available 
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"), 10);
+            myHelper.WaitForElement(By.CssSelector(".woocommerce-order-overview__order.order strong"), 10);
             //Break the text down and convert it to integer value
             int orderNumberValue = int.Parse(_orderNumber.Text);
             return orderNumberValue;

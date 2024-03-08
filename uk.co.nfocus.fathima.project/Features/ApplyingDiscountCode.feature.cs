@@ -36,8 +36,8 @@ namespace uk.co.nfocus.fathima.project.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Applying Discount Code", "This feature will login to an e-commerce site as a registered user, \r\npurchase an" +
-                    " item of clothing, apply a \r\ndiscount code and check that the total is correct \r" +
-                    "\nafter the discount & shipping is applied.", ProgrammingLanguage.CSharp, featureTags);
+                    " item of clothing, apply a discount code and verify the \r\ncorrect application of" +
+                    " the discount codes.", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         

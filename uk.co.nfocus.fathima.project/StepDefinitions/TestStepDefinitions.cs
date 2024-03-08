@@ -69,36 +69,28 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Then(@"I should see the discount of (.*)% is applied correctly")]
         public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
         {
-            //Waiting for the discount to be applied succesfully
-            HelperLib myHelper = new HelperLib(_driver); 
-            myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
-            DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
-
-            //Getting the discount code from ScenarioContext
-            string discountName = (string)_scenarioContext["DiscountCode"];
-            //Checking to see that discount is 15% of total value
+            
             try
             {
-                decimal discountDecimal = (decimal) discount / 100m;//Casting 100 to decimal for accurate division
-                Assert.That(discountDetails.GetDiscountValue(discountName), Is.EqualTo((discountDetails.GetPreviousTotalValue() * discountDecimal)));
-                Console.WriteLine(":) The discount code works");
+                //Wait for the discount to be applied successfully
+                HelperLib myHelper = new HelperLib(_driver);
+                myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
+                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
+                //Getting discount code from ScenarioContext
+                string discountName = (string)_scenarioContext["DiscountCode"];
+                //Checking to see if the discount is the correct percentage
+                decimal discountDecimal = (decimal)discount / 100m;
+                decimal expectedDiscountValue = discountDetails.GetPreviousTotalValue() * discountDecimal;
+                Assert.That(discountDetails.GetDiscountValue(discountName), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
+                //Check to see if new total value is correctly calculated
+                decimal expectedNewTotalValue = discountDetails.GetPreviousTotalValue() - expectedDiscountValue + discountDetails.GetShippingCostValue();
+                Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(expectedNewTotalValue), $"The total is not correctly calculated");
             }
-            catch (AssertionException)
+            catch (AssertionException ex)
             {
-                Console.WriteLine(":( The discount code does not work");
-                throw; //Rethrow the exception to ensure its caught by SpecFlow
+                Console.WriteLine($":( {ex.Message}");
+                throw; // Rethrow the exception to ensure it's caught by SpecFlow
             }
-            //Checking to see if new total value is correctly calculated
-            try
-            {
-                Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(discountDetails.GetPreviousTotalValue() - discountDetails.GetDiscountValue(discountName) + discountDetails.GetShippingCostValue()));
-                Console.WriteLine(":) The total is correctly calculated");
-            }
-            catch (AssertionException)
-            {
-                Console.WriteLine(":( The total is not correctly calculated");
-                throw; //Rethrow the exception to ensure its caught by SpecFlow
-            }    
         }
 
         //Test2

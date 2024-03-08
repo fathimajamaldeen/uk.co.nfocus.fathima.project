@@ -1,9 +1,9 @@
 ﻿Feature: Applying Discount Code
 
 This feature will login to an e-commerce site as a registered user, 
-purchase an item of clothing, apply a 
-discount code and check that the total is correct 
-after the discount & shipping is applied.
+purchase an item of clothing, apply a discount code and verify the 
+correct application of the discount codes.
+
 
 @Test1
 Scenario: Applying different discount codes to the cart

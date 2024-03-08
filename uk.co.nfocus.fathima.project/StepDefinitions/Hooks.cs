@@ -18,12 +18,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
-       
-        [ThreadStatic]
-        static AventStack.ExtentReports.ExtentReports s_extent;
-        AventStack.ExtentReports.ExtentTest s_scenario, s_step;
-        static AventStack.ExtentReports.ExtentTest s_feature;
-        static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
+        private static AventStack.ExtentReports.ExtentReports s_extent;
+        private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
+        private static AventStack.ExtentReports.ExtentTest s_feature;
+        private static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 

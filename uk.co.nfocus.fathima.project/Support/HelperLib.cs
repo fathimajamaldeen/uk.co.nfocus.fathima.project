@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gherkin.CucumberMessages.Types;
 using AventStack.ExtentReports;
+using OpenQA.Selenium.Interactions;
 
 namespace uk.co.nfocus.fathima.project.Support
 {
@@ -21,18 +22,28 @@ namespace uk.co.nfocus.fathima.project.Support
         }
 
         //Method to scroll the page vertically by the specified amount
-        public void ScrollOnPage(int amount)
+        public void ScrollOnPageVertically(int amount)
         {
             //Using JavaScriptExecutor to scroll the page
             IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
             executor.ExecuteScript($"window.scrollTo(0, {amount});");
         }
+
+        //Method to increas the click target if theres elements nearby thats clickable
+        public void IncreaseClickTarget(string elementID)
+        {
+            IWebElement element = _driver.FindElement(By.LinkText(elementID));
+            Actions actions = new Actions(_driver);
+            actions.MoveToElement(element).Perform();
+            element.Click();
+        }
+
         //Method to wait for an element identified by the locator to become enabled
         public void WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
         {
             // Initializing WebDriverWait to wait for the element to be enabled
-            WebDriverWait myWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
-            myWait.Until(drv => drv.FindElement(locator).Enabled);
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            wait.Until(driver => driver.FindElement(locator).Enabled);
         }
 
         //Method to wait for the page to load completely
@@ -41,9 +52,9 @@ namespace uk.co.nfocus.fathima.project.Support
             //Wait for page to load completely
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(loadInSeconds));
             wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
-
         }
 
+        //Method to make the page wait to scroll adding a delay
         public void WaitForPageToScroll(int waitSeconds)
         {
             // Wait until scrolling action is completed
@@ -58,11 +69,11 @@ namespace uk.co.nfocus.fathima.project.Support
             try
             {
                 //Waiting until the element is disabled or timeout occurs
-                return wait.Until(drv =>
+                return wait.Until(driver =>
                 {
                     try
                     {
-                        var element = drv.FindElement(locator);
+                        var element = driver.FindElement(locator);
                         return !element.Enabled;//Return true if the element is disabled
                     }
                     catch (NoSuchElementException)

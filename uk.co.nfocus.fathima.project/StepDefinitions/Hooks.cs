@@ -9,6 +9,8 @@ using uk.co.nfocus.fathima.project.Support.POMClasses;
 using NUnit.Framework.Interfaces;
 using uk.co.nfocus.fathima.project.Support;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
@@ -46,8 +48,28 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
-            //Initialise WebDriver
-            _driver = new EdgeDriver();
+            string browser = Environment.GetEnvironmentVariable("BROWSER");
+
+            Console.WriteLine("Browser set to: " + browser);
+            if (browser == null) //Sanitising the input that was fetched from envirnomental variable
+            {
+                browser = "edge";
+                Console.WriteLine("BROWSER env not set: Setting to Edge");
+            }
+            //Instantiate a browser based on variable
+            switch (browser)
+            {
+                case "edge":
+                    _driver = new EdgeDriver();
+                    break;
+                case "firefox":
+                    _driver = new FirefoxDriver();
+                    break;
+                default:
+                    _driver = new ChromeDriver();
+                    break;
+            }
+            //Make the window full screen
             _driver.Manage().Window.Maximize();
             _scenarioContext["myDriver"] = _driver;
         }
@@ -82,7 +104,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     string screenshotPath = Path.Combine(s_reportpath, screenshotName);
                     HelperLib myHelper = new HelperLib(_driver);
                     //Move the page down to get a clearer screenshot
-                    myHelper.ScrollOnPage(250);
+                    myHelper.ScrollOnPageVertically(250);
                     // Wait until scrolling action is completed
                     myHelper.WaitForPageToScroll(10);
                     //Actually captures the screenshot
@@ -122,19 +144,22 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             CartPOM cart = new CartPOM(_driver);
             cart.RemoveCouponCode();
             cart.RemoveItemFromCart();
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForPageToLoad(5);
         }
 
         //Runs after each scenario
         [AfterScenario]
         public void TearDown()
         {
-            //Waits for page to fully load
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(15);
             //Perform cleanup actions
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();
-            _driver.Quit();
+            if (_driver != null)
+            {
+                _driver.Quit();
+                _driver.Dispose();
+            }
         }
 
     }

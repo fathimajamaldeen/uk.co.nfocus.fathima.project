@@ -30,6 +30,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
+            //Waits for page to load
+            myHelper.WaitForPageToLoad(10);
             //Wait for the 'View cart' link to appear and then click it
             myHelper.WaitForElement(By.LinkText("View cart"), 15);
             _viewCart.Click();
@@ -68,7 +70,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Wait for the remove button to appear
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
+            myHelper.WaitForPageToLoad(15);
+            myHelper.WaitForElementDisabled(By.LinkText("[Remove]"), 2);
             _removeCode.Click();
         }
 
@@ -77,7 +80,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             //Wait for the remove button to appear
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.LinkText("×"), 5);
+            myHelper.WaitForPageToLoad(10);
+            myHelper.WaitForElementDisabled(By.LinkText("×"), 2);
             _removeItem.Click();
         }
 

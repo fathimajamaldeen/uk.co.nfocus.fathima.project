@@ -20,6 +20,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             this._driver = (IWebDriver)_scenarioContext["myDriver"];
         }
 
+        //Common to Test1 and Test2
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
@@ -30,6 +31,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             loginpage.SetUsername(TestContext.Parameters["WebAppUsername"]).SetPassword(TestContext.Parameters["WebAppPassword"]).SubmitForm();
         }
 
+        //Common to Test1 and Test2
         [When(@"I add a belt to my cart")]
         public void WhenIAddABeltToMyCart()
         {
@@ -42,6 +44,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             Console.WriteLine("Added belt to cart");
         }
 
+        //Test1
         [When(@"I view my cart")]
         public void WhenIViewMyCart()
         {
@@ -50,6 +53,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.ViewCart();
         }
 
+        //Test1
         [When(@"I apply a discount code '(.*)'")]
         public void WhenIApplyADiscountCode(string discountCode)
         {
@@ -61,6 +65,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             Console.WriteLine("Applied discount code");
         }
 
+        //Test1
         [Then(@"I should see the discount of (.*)% is applied correctly")]
         public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
         {
@@ -96,6 +101,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             }    
         }
 
+        //Test2
         [When(@"I proceed to checkout")]
         public void WhenIProceedToCheckout()
         {
@@ -104,6 +110,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.ProceedToCheckout();
         }
 
+        //Test2
         [When(@"I fill in billing details, to place the order, with")]
         public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table table)
         {
@@ -113,6 +120,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             billing.PlaceOrder();
         }
 
+        //Test2
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {

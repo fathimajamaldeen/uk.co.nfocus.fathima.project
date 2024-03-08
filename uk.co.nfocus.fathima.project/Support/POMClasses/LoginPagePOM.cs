@@ -63,15 +63,15 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to log out from the website
         public void LogOut()
         {
-            //Create an instance of the HelperLib
             HelperLib myHelper = new HelperLib(_driver);
-            // Scroll to the top of the page again
-            myHelper.ScrollOnPage(0);
             //Navigate to my account page
+            myHelper.WaitForElementDisabled(By.LinkText("My account"), 3);
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();
             //Wait for the logout link to appear
-            myHelper.WaitForElement(By.LinkText("Log out"), 20);
+            
+            myHelper.WaitForPageToLoad(10);
+            myHelper.WaitForElement(By.LinkText("Log out"), 10);
             _logoutButton.Click();
             Console.WriteLine("Completed Log out process");
         }

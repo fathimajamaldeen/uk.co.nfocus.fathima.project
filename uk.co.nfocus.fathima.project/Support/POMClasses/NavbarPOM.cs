@@ -40,7 +40,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoMyAccountPage()
         {
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElement(By.LinkText("My account"), 10);
+            myHelper.WaitForPageToLoad(10);
+            myHelper.ScrollOnPageVertically(-0);
             MyAccount.Click();
         }
 

@@ -29,15 +29,6 @@ namespace uk.co.nfocus.fathima.project.Support
             executor.ExecuteScript($"window.scrollTo(0, {amount});");
         }
 
-        //Method to increas the click target if theres elements nearby thats clickable
-        public void IncreaseClickTarget(string elementID)
-        {
-            IWebElement element = _driver.FindElement(By.LinkText(elementID));
-            Actions actions = new Actions(_driver);
-            actions.MoveToElement(element).Perform();
-            element.Click();
-        }
-
         //Method to wait for an element identified by the locator to become enabled
         public void WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
         {

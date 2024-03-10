@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Locators - Finding elements on the page
         private IWebElement _orderNumber => _driver.FindElement(By.CssSelector(".woocommerce-order-overview__order.order strong"));
         private IWebElement _orderNumberInAccount => _driver.FindElement(By.CssSelector(".woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number a:first-of-type"));
-
+        private IWebElement _myOrders => _driver.FindElement(By.LinkText("Orders"));
 
         //Method to recieve order number value from the order details page
         public int GetOrderNumberValue()
@@ -33,20 +33,22 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             return orderNumberValue;
         }
 
+        //Method to recieve order number value in the account page
+        public int GetOrderNumberInAccountValue()
+        {
+            //Break the text down and convert it to integer value and get rid of the '#' at the start in order to be able to compare
+            int orderNumberInAccountValue = int.Parse(_orderNumberInAccount.Text.Replace("#", ""));
+            return orderNumberInAccountValue;
+        }
+
         //Method to go to my orders page
         public void GoToMyOrders()
         {
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();
-            _driver.FindElement(By.LinkText("Orders")).Click();
+            _myOrders.Click();
     }
 
-        //Method to recieve order number value in the account page
-        public int GetOrderNumberInAccountValue()
-        {
-            //Break the text down and convert it to integer value and get rid of the '#' at the start
-            int orderNumberInAccountValue = int.Parse(_orderNumberInAccount.Text.Replace("#", ""));
-            return orderNumberInAccountValue;
-        }
+        
     }
 }

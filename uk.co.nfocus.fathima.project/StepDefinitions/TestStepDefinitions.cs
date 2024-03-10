@@ -125,12 +125,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Check if both values are equal or not and output correct line in console
             try
             {
-                Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue));
-                Console.WriteLine(":) The order numbers are the same");
+                Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue), $"The order values are not the same");
             }
             catch (AssertionException)
             {
-                Console.WriteLine(":( The order numbers are not the same");
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
         }

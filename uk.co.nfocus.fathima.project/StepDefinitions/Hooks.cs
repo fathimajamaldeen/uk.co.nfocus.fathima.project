@@ -80,7 +80,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             s_step = s_scenario.CreateNode(context.StepContext.StepInfo.Text);
         }
 
-
+        //Runs after each step
         [AfterStep]
         public void AfterStep(ScenarioContext context)
         {
@@ -109,7 +109,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     screenshotHelper.TakeScreenshot(screenshotPath);
                     //Add the screenshot to the Extent Report
                     s_step.AddScreenCaptureFromPath(screenshotPath);
-                    Console.WriteLine($"Screenshot saved to: {screenshotPath}");
                     break;
                 case ScenarioExecutionStatus.UndefinedStep:
                     s_step.Log(Status.Warning, $"{context.StepContext.StepInfo.Text} - Step status: {stepStatus}");
@@ -143,7 +142,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.RemoveCouponCode();
             cart.RemoveItemFromCart();
             HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(5);
+            myHelper.WaitForPageToLoad(3);
         }
 
         //Runs after each scenario

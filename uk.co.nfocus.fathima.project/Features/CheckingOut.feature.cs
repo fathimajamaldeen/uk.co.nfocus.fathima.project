@@ -98,29 +98,36 @@ namespace uk.co.nfocus.fathima.project.Features
    testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 12
-   testRunner.When("I add a belt to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+   testRunner.When("I add a \'Belt\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 13
         testRunner.And("I proceed to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "First Name",
-                            "Last Name",
-                            "Address",
-                            "City",
-                            "Postcode",
-                            "Phone Number"});
+                            "Field",
+                            "Value"});
                 table1.AddRow(new string[] {
-                            "hello",
-                            "example",
-                            "64 zoo lane",
-                            "Zootopia",
-                            "SW1A 1AA",
+                            "First Name",
+                            "hello"});
+                table1.AddRow(new string[] {
+                            "Last Name",
+                            "example"});
+                table1.AddRow(new string[] {
+                            "Address",
+                            "64 Zoo Lane"});
+                table1.AddRow(new string[] {
+                            "City",
+                            "Zootopia"});
+                table1.AddRow(new string[] {
+                            "Postcode",
+                            "SW1A 1AA"});
+                table1.AddRow(new string[] {
+                            "Phone Number",
                             "555 564 2211"});
 #line 14
         testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
-#line 17
+#line 22
     testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
                         "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

@@ -43,13 +43,13 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Clear the discount code input field and enter the provided code
             _couponCodeField.Clear();
             _couponCodeField.SendKeys(discountCode);
-
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
-
             //Wait for the 'Apply coupon' button to appear then click it
             myHelper.WaitForElement(By.Name("apply_coupon"), 15);
             _applyCouponButton.Click();
+            //To ensure the coupon has been succesfully applied
+            myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
         }
 
         //Method to proceed to checkout from the cart

@@ -107,7 +107,7 @@ this.ScenarioInitialize(scenarioInfo);
     testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
-    testRunner.When("I add a belt to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I add a \'Beanie\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
         testRunner.And("I view my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

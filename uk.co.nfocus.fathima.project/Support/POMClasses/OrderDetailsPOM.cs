@@ -37,7 +37,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public int GetOrderNumberInAccountValue()
         {
             //Break the text down and convert it to integer value and get rid of the '#' at the start in order to be able to compare
-            int orderNumberInAccountValue = int.Parse(_orderNumberInAccount.Text.Replace("#", ""));
+            int orderNumberInAccountValue = int.Parse(_orderNumberInAccount.Text.TrimStart('#'));
             return orderNumberInAccountValue;
         }
 

@@ -11,6 +11,7 @@ using uk.co.nfocus.fathima.project.Support;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using NUnit.Framework;
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]
@@ -70,6 +71,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Make the window full screen
             _driver.Manage().Window.Maximize();
             _scenarioContext["myDriver"] = _driver;
+
+            //Get the starting URL from the runsettings file and set the driver to it
+            string startURL = TestContext.Parameters["WebAppURL"];
+            _driver.Url = startURL;
         }
 
         //Runs before each step
@@ -137,21 +142,31 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [AfterScenario("@Test1")]
         public void Cleanup()
         {
-            //Removes the coupon and item from the cart 
-            CartPOM cart = new CartPOM(_driver);
-            cart.RemoveCouponCode();
-            cart.RemoveItemFromCart();
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(3);
+            if (ScenarioContext.Current.TestError == null)
+            {
+                //Removes the coupon and item from the cart 
+                CartPOM cart = new CartPOM(_driver);
+                cart.RemoveCouponCode();
+                cart.RemoveItemFromCart();
+                HelperLib myHelper = new HelperLib(_driver);
+                myHelper.WaitForPageToLoad(3);
+            }
+            else
+            {
+                TearDown();
+            }
         }
 
         //Runs after each scenario
         [AfterScenario]
         public void TearDown()
         {
-            //Perform cleanup actions
-            LoginPagePOM loginpage = new LoginPagePOM(_driver);
-            loginpage.LogOut();
+            if (ScenarioContext.Current.TestError == null)
+            {
+                //Perform cleanup actions
+                LoginPagePOM loginpage = new LoginPagePOM(_driver);
+                loginpage.LogOut();
+            }
             if (_driver != null)
             {
                 _driver.Quit();

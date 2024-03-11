@@ -24,24 +24,33 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
-            //Going to login page
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
+            //Going to login page
             loginpage.NavigateToLoginPage();
-            //Logging into the wbesite
-            loginpage.SetUsername(TestContext.Parameters["WebAppUsername"]).SetPassword(TestContext.Parameters["WebAppPassword"]).SubmitForm();
+            //Logging into the website with error checking
+            string username = TestContext.Parameters["WebAppUsername"];
+            string password = TestContext.Parameters["WebAppPassword"];
+            if (!string.IsNullOrEmpty(username) || !string.IsNullOrEmpty(password))
+            {
+                loginpage.SetUsername(username).SetPassword(password).SubmitForm();
+
+            }
+            else
+            {
+                Assert.Fail("There is no valid username or password therefore Test cannot continue");
+            }
         }
 
-        //Common to Test1 and Test2
-        [When(@"I add a belt to my cart")]
-        public void WhenIAddABeltToMyCart()
+        [When(@"I add a '(.*)' to my cart")]
+        public void WhenIAddAToMyCart(string itemName)
         {
             //Going to shop page
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoShopPage();
             //Adding belt to cart
-            ProductPagePOM product = new ProductPagePOM(_driver);
-            product.AddBeltToCart();
-            Console.WriteLine("Added belt to cart");
+            ProductPagePOM product = new ProductPagePOM(_driver, itemName);
+            product.AddItemToCart();
+            Console.WriteLine($"Added {itemName} to cart");
         }
 
         //Test1
@@ -72,9 +81,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             
             try
             {
-                //Wait for the discount to be applied successfully
-                HelperLib myHelper = new HelperLib(_driver);
-                myHelper.WaitForElement(By.LinkText("[Remove]"), 5);
                 DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
                 //Getting discount code from ScenarioContext
                 string discountName = (string)_scenarioContext["DiscountCode"];
@@ -108,7 +114,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Filling in the billing details with the table details from the test
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
-            billing.SetFirstName(table.Rows[0]["First Name"]).SetLastName(table.Rows[0]["Last Name"]).SetAddress(table.Rows[0]["Address"]).SetCity(table.Rows[0]["City"]).SetPostcode(table.Rows[0]["Postcode"]).SetPhoneNumber(table.Rows[0]["Phone Number"]);
+            billing.SetFirstName(table.Rows[0]["First Name"])
+                .SetLastName(table.Rows[0]["Last Name"])
+                .SetAddress(table.Rows[0]["Address"])
+                .SetCity(table.Rows[0]["City"])
+                .SetPostcode(table.Rows[0]["Postcode"])
+                .SetPhoneNumber(table.Rows[0]["Phone Number"]);
             billing.PlaceOrder();
         }
 

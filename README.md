@@ -22,7 +22,7 @@ Prerequisites
 
 To get started
 1. Clone the repositry to your local machine using Git:
-     git clone https://github.com/fathimajamaldeen/uk.co.nfocus.fathima.project.git
+     'git clone https://github.com/fathimajamaldeen/uk.co.nfocus.fathima.project.git'
 2. Open the cloned repositry in Visual Studio
 3. Buil the solectuion to ensure all dependencies are resolved
 

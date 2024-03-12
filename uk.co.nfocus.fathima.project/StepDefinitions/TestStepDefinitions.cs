@@ -20,7 +20,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             this._driver = (IWebDriver)_scenarioContext["myDriver"];
         }
 
-        //Common to Test1 and Test2
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
@@ -53,7 +52,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             Console.WriteLine($"Added {itemName} to cart");
         }
 
-        //Test1
         [When(@"I view my cart")]
         public void WhenIViewMyCart()
         {
@@ -62,7 +60,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.ViewCart();
         }
 
-        //Test1
         [When(@"I apply a discount code '(.*)'")]
         public void WhenIApplyADiscountCode(string discountCode)
         {
@@ -74,7 +71,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             Console.WriteLine("Applied discount code");
         }
 
-        //Test1
         [Then(@"I should see the discount of (.*)% is applied correctly")]
         public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
         {
@@ -99,7 +95,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             }
         }
 
-        //Test2
         [When(@"I proceed to checkout")]
         public void WhenIProceedToCheckout()
         {
@@ -108,22 +103,18 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             cart.ProceedToCheckout();
         }
 
-        //Test2
         [When(@"I fill in billing details, to place the order, with")]
-        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table table)
+        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table billingDetailsTable)
         {
-            //Filling in the billing details with the table details from the test
+
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
-            billing.SetFirstName(table.Rows[0]["First Name"])
-                .SetLastName(table.Rows[0]["Last Name"])
-                .SetAddress(table.Rows[0]["Address"])
-                .SetCity(table.Rows[0]["City"])
-                .SetPostcode(table.Rows[0]["Postcode"])
-                .SetPhoneNumber(table.Rows[0]["Phone Number"]);
+            //Create billing details with the information passed from the feature table
+            BillingTablePOCO billingTable = billing.CreateBillingDetail(billingDetailsTable);
+            //Filling in the billing details with the table details from the test
+            billing.FillInBillingDetails(billingTable);
             billing.PlaceOrder();
         }
 
-        //Test2
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {

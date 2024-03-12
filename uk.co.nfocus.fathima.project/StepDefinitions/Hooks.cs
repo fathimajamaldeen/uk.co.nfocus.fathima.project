@@ -73,7 +73,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             _scenarioContext["myDriver"] = _driver;
 
             //Get the starting URL from the runsettings file and set the driver to it
-            string startURL = TestContext.Parameters["WebAppURL"];
+            string startURL = null;
+            startURL = TestContext.Parameters["WebAppURL"];
             _driver.Url = startURL;
         }
 

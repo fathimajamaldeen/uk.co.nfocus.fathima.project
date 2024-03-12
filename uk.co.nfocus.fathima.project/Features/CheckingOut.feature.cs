@@ -104,30 +104,23 @@ namespace uk.co.nfocus.fathima.project.Features
         testRunner.And("I proceed to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Field",
-                            "Value"});
-                table1.AddRow(new string[] {
                             "First Name",
-                            "hello"});
-                table1.AddRow(new string[] {
                             "Last Name",
-                            "example"});
-                table1.AddRow(new string[] {
                             "Address",
-                            "64 Zoo Lane"});
-                table1.AddRow(new string[] {
                             "City",
-                            "Zootopia"});
-                table1.AddRow(new string[] {
                             "Postcode",
-                            "SW1A 1AA"});
+                            "Phone Number"});
                 table1.AddRow(new string[] {
-                            "Phone Number",
+                            "hello",
+                            "example",
+                            "64 zoo lane",
+                            "Zootopia",
+                            "SW1A 1AA",
                             "555 564 2211"});
 #line 14
         testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
-#line 22
+#line 17
     testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
                         "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

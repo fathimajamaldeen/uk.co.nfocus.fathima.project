@@ -71,7 +71,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Wait for the remove button to appear
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForPageToLoad(15);
-            myHelper.WaitForElementDisabled(By.LinkText("[Remove]"), 1);
+            myHelper.WaitForElementDisabled(By.LinkText("[Remove]"), 2);
             _removeCode.Click();
         }
 
@@ -81,7 +81,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Wait for the remove button to appear
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForPageToLoad(10);
-            myHelper.WaitForElementDisabled(By.LinkText("×"), 1);
+            myHelper.WaitForElementDisabled(By.LinkText("×"), 2);
             _removeItem.Click();
         }
 

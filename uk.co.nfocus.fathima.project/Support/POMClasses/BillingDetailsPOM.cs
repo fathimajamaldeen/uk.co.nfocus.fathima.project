@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechTalk.SpecFlow;
 
 namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
@@ -87,6 +88,30 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             _placeOrderButton.Click();
             return this;
+        }
+
+        //Method to fill in the billing details
+        public void FillInBillingDetails(BillingTablePOCO BillingInformation)
+        {
+            SetFirstName(BillingInformation._firstName);
+            SetLastName(BillingInformation._lastName);
+            SetAddress(BillingInformation._address);
+            SetCity(BillingInformation._city);
+            SetPostcode(BillingInformation._postcode);
+            SetPhoneNumber(BillingInformation._phoneNumber);
+        }
+
+        //Create a BillingTablePOCO object using the provided feature table
+        public BillingTablePOCO CreateBillingDetail(Table BillingInfo)
+        {
+            string firstName = BillingInfo.Rows[0]["First Name"];
+            string lastName = BillingInfo.Rows[0]["Last Name"];
+            string address = BillingInfo.Rows[0]["Address"];
+            string city = BillingInfo.Rows[0]["City"];
+            string postcode = BillingInfo.Rows[0]["Postcode"];
+            string phoneNumber = BillingInfo.Rows[0]["Phone Number"];
+
+            return new BillingTablePOCO(firstName, lastName, address, city, postcode, phoneNumber);
         }
 
 

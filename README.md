@@ -7,7 +7,7 @@ Test Case 1 - This test will login to an e-commerce site as a registered user, p
 Test Case 2 -This test will login to an e-commerce site as a registered user, purchase an item of clothing and go through checkout. It will capture the order number and check the order is also present in the ‘My Orders’ section of the site.
 
 Prerequisites
-* Visual Studio with the following extenstions installed via NuGet Pacakge Manager:
+* Visual Studio with the following extenstions installed via NuGet Pacakge Manager for the project:
     * ExtentReports.Core
     * FluentAssertions
     * Microsoft.NET.Test.Sdk

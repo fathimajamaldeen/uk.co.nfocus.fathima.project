@@ -18,6 +18,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class Hooks
     {
         private IWebDriver _driver;
+        private WebDriverWrapper _driverWrapper;
+
         private readonly ScenarioContext _scenarioContext;
         private static AventStack.ExtentReports.ExtentReports s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
@@ -26,9 +28,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 
-        public Hooks(ScenarioContext scenarioContext)
+        public Hooks(ScenarioContext scenarioContext, WebDriverWrapper driverWrapper)
         {
             _scenarioContext = scenarioContext;
+            _driverWrapper = driverWrapper;
         }
 
         //Runs once before all tests
@@ -59,23 +62,22 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             switch (browser)
             {
                 case "edge":
-                    _driver = new EdgeDriver();
+                    _driverWrapper.Driver = new EdgeDriver();
                     break;
                 case "firefox":
-                    _driver = new FirefoxDriver();
+                    _driverWrapper.Driver = new FirefoxDriver();
                     break;
                 default:
-                    _driver = new ChromeDriver();
+                    _driverWrapper.Driver = new ChromeDriver();
                     break;
             }
             //Make the window full screen
-            _driver.Manage().Window.Maximize();
-            _scenarioContext["myDriver"] = _driver;
+            _driverWrapper.Driver.Manage().Window.Maximize();
 
             //Get the starting URL from the runsettings file and set the driver to it
             string startURL = null;
             startURL = TestContext.Parameters["WebAppURL"];
-            _driver.Url = startURL;
+            _driverWrapper.Driver.Url = startURL;
         }
 
         //Runs before each step
@@ -101,12 +103,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     //When the test fails 
                     s_step.Log(Status.Fail, $"{context.StepContext.StepInfo.Text}. Test failure reason: {context.TestError.Message}");
                     //Creates a screenshot instance
-                    Screenshots screenshotHelper = new Screenshots(_driver);
+                    Screenshots screenshotHelper = new Screenshots(_driverWrapper.Driver);
                     //Make a unique name for the screenshot
                     string screenshotName = $"{context.StepContext.StepInfo.Text}_{DateTime.Now:yyyyMMddHHmm}.png";
                     //Constructs full path for saving screenshot to the same folder as where the report is
                     string screenshotPath = Path.Combine(s_reportpath, screenshotName);
-                    HelperLib myHelper = new HelperLib(_driver);
+                    HelperLib myHelper = new HelperLib(_driverWrapper.Driver);
                     //Move the page down to get a clearer screenshot
                     myHelper.ScrollOnPageVertically(250);
                     // Wait until scrolling action is completed
@@ -146,10 +148,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             if (ScenarioContext.Current.TestError == null)
             {
                 //Removes the coupon and item from the cart 
-                CartPOM cart = new CartPOM(_driver);
+                CartPOM cart = new CartPOM(_driverWrapper.Driver);
                 cart.RemoveCouponCode();
                 cart.RemoveItemFromCart();
-                HelperLib myHelper = new HelperLib(_driver);
+                HelperLib myHelper = new HelperLib(_driverWrapper.Driver);
                 myHelper.WaitForPageToLoad(3);
             }
             else
@@ -165,13 +167,13 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             if (ScenarioContext.Current.TestError == null)
             {
                 //Perform cleanup actions
-                LoginPagePOM loginpage = new LoginPagePOM(_driver);
+                LoginPagePOM loginpage = new LoginPagePOM(_driverWrapper.Driver);
                 loginpage.LogOut();
             }
-            if (_driver != null)
+            if (_driverWrapper.Driver != null)
             {
-                _driver.Quit();
-                _driver.Dispose();
+                _driverWrapper.Driver.Quit();
+                _driverWrapper.Driver.Dispose();
             }
         }
 

@@ -91,7 +91,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Method to fill in the billing details
-        public void FillInBillingDetails(BillingTablePOCO BillingInformation)
+        public void FillInBillingDetails(BillingTable BillingInformation)
         {
             SetFirstName(BillingInformation._firstName);
             SetLastName(BillingInformation._lastName);
@@ -102,7 +102,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Create a BillingTablePOCO object using the provided feature table
-        public BillingTablePOCO CreateBillingDetail(Table BillingInfo)
+        public BillingTable CreateBillingDetail(Table BillingInfo)
         {
             string firstName = BillingInfo.Rows[0]["First Name"];
             string lastName = BillingInfo.Rows[0]["Last Name"];
@@ -111,7 +111,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             string postcode = BillingInfo.Rows[0]["Postcode"];
             string phoneNumber = BillingInfo.Rows[0]["Phone Number"];
 
-            return new BillingTablePOCO(firstName, lastName, address, city, postcode, phoneNumber);
+            return new BillingTable(firstName, lastName, address, city, postcode, phoneNumber);
         }
 
 

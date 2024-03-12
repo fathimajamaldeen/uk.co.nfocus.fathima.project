@@ -12,18 +12,18 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver _driver;
+        private WebDriverWrapper _driver;
 
-        public TestStepDefinitions(ScenarioContext scenarioContext)
+        public TestStepDefinitions(ScenarioContext scenarioContext, WebDriverWrapper driverWrapper)
         {
             _scenarioContext = scenarioContext;
-            this._driver = (IWebDriver)_scenarioContext["myDriver"];
+            this._driver = driverWrapper;
         }
 
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
-            LoginPagePOM loginpage = new LoginPagePOM(_driver);
+            LoginPagePOM loginpage = new LoginPagePOM(_driver.Driver);
             //Going to login page
             loginpage.NavigateToLoginPage();
             //Logging into the website with error checking
@@ -44,10 +44,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIAddAToMyCart(string itemName)
         {
             //Going to shop page
-            NavbarPOM navbar = new NavbarPOM(_driver);
+            NavbarPOM navbar = new NavbarPOM(_driver.Driver);
             navbar.GoShopPage();
             //Adding belt to cart
-            ProductPagePOM product = new ProductPagePOM(_driver, itemName);
+            ProductPagePOM product = new ProductPagePOM(_driver.Driver, itemName);
             product.AddItemToCart();
             Console.WriteLine($"Added {itemName} to cart");
         }
@@ -56,7 +56,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIViewMyCart()
         {
             //Going to view the cart
-            CartPOM cart = new CartPOM(_driver);
+            CartPOM cart = new CartPOM(_driver.Driver);
             cart.ViewCart();
         }
 
@@ -66,7 +66,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Storing the discount code
             _scenarioContext["DiscountCode"] = discountCode;
             //Applying the discount code set in the test
-            CartPOM cart = new CartPOM(_driver);
+            CartPOM cart = new CartPOM(_driver.Driver);
             cart.ApplyDiscountCode(discountCode);
             Console.WriteLine("Applied discount code");
         }
@@ -77,7 +77,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             
             try
             {
-                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
+                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver.Driver);
                 //Getting discount code from ScenarioContext
                 string discountName = (string)_scenarioContext["DiscountCode"];
                 //Checking to see if the discount is the correct percentage
@@ -99,17 +99,16 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIProceedToCheckout()
         {
             //Proceeding to checkout
-            CartPOM cart = new CartPOM(_driver);
+            CartPOM cart = new CartPOM(_driver.Driver);
             cart.ProceedToCheckout();
         }
 
         [When(@"I fill in billing details, to place the order, with")]
         public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table billingDetailsTable)
         {
-
-            BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
+            BillingDetailsPOM billing = new BillingDetailsPOM(_driver.Driver);
             //Create billing details with the information passed from the feature table
-            BillingTablePOCO billingTable = billing.CreateBillingDetail(billingDetailsTable);
+            BillingTable billingTable = billing.CreateBillingDetail(billingDetailsTable);
             //Filling in the billing details with the table details from the test
             billing.FillInBillingDetails(billingTable);
             billing.PlaceOrder();
@@ -118,7 +117,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
         public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {
-            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
+            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver.Driver);
             //Getting order number from order recieved post ordering item
             int orderNumberValue = orderDetails.GetOrderNumberValue();
             orderDetails.GoToMyOrders();

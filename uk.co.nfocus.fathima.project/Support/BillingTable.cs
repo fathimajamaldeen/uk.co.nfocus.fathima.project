@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace uk.co.nfocus.fathima.project.Support
 {
-    internal class BillingTablePOCO
+    internal class BillingTable
     {
         internal string _firstName { get; set; }
         internal string _lastName { get; set; }
@@ -15,7 +15,7 @@ namespace uk.co.nfocus.fathima.project.Support
         internal string _postcode { get; set; }
         internal string _phoneNumber { get; set; }
 
-        public BillingTablePOCO(string firstName, string lastName, string address, string city, string postcode, string phoneNumber)
+        public BillingTable(string firstName, string lastName, string address, string city, string postcode, string phoneNumber)
         {
             this._firstName = firstName;
             this._lastName = lastName;

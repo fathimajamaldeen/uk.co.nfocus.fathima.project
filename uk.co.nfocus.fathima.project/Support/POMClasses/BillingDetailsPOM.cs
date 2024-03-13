@@ -17,6 +17,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _cityField => _driver.FindElement(By.CssSelector("#billing_city"));
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
+        private IWebElement _emailField => _driver.FindElement(By.CssSelector("#billing_email"));
+
         private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
 
         //Method to set the first name field whilst clearing the field first and returns the instance
@@ -73,6 +75,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             return this;
         }
 
+        public BillingDetailsPOM SetEmail(string email)
+        {
+            _emailField.Clear();
+            _emailField.SendKeys(email);
+            Console.WriteLine("Added email");
+            return this;
+        }
+
         //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
@@ -93,6 +103,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             SetCity(BillingInformation._city);
             SetPostcode(BillingInformation._postcode);
             SetPhoneNumber(BillingInformation._phoneNumber);
+            SetEmail(BillingInformation._email);
         }
 
         //Create a BillingTable object using the provided feature table

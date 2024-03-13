@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 
@@ -8,20 +9,21 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
-        private WebDriverWrapper _driver;
+        private IWebDriver _driver;
 
-        public TestStepDefinitions(ScenarioContext scenarioContext, WebDriverWrapper driverWrapper)
+        public TestStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
-            this._driver = driverWrapper;
+            this._driver = (IWebDriver)_scenarioContext["myDriver"];
         }
 
         [Given(@"I am logged in on the shopping website")]
         public void GivenIAmLoggedInOnTheShoppingWebsite()
         {
-            LoginPagePOM loginpage = new LoginPagePOM(_driver.Driver);
+            NavbarPOM navbar = new NavbarPOM(_driver);
             //Going to login page
-            loginpage.NavigateToLoginPage();
+            navbar.NavigateToLoginPage();
+            LoginPagePOM loginpage = new LoginPagePOM(_driver);
             //Logging into the website with error checking
             string username = TestContext.Parameters["WebAppUsername"];
             string password = TestContext.Parameters["WebAppPassword"];
@@ -40,10 +42,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIAddAToMyCart(string itemName)
         {
             //Going to shop page
-            NavbarPOM navbar = new NavbarPOM(_driver.Driver);
+            NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoShopPage();
             //Adding belt to cart
-            ProductPagePOM product = new ProductPagePOM(_driver.Driver, itemName);
+            ProductPagePOM product = new ProductPagePOM(_driver, itemName);
             product.AddItemToCart();
             Console.WriteLine($"Added {itemName} to cart");
         }
@@ -52,7 +54,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIViewMyCart()
         {
             //Going to view the cart
-            CartPOM cart = new CartPOM(_driver.Driver);
+            CartPOM cart = new CartPOM(_driver);
             cart.ViewCart();
         }
 
@@ -62,18 +64,18 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Storing the discount code
             _scenarioContext["DiscountCode"] = discountCode;
             //Applying the discount code set in the test
-            CartPOM cart = new CartPOM(_driver.Driver);
+            CartPOM cart = new CartPOM(_driver);
             cart.ApplyDiscountCode(discountCode);
             Console.WriteLine("Applied discount code");
         }
 
         [Then(@"I should see the discount of (.*)% is applied correctly")]
-        public void VerifyDiscountApplication(int discount)
+        public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
         {
-            
+
             try
             {
-                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver.Driver);
+                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
                 //Getting discount code from ScenarioContext
                 string discountName = (string)_scenarioContext["DiscountCode"];
                 //Checking to see if the discount is the correct percentage
@@ -95,26 +97,26 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIProceedToCheckout()
         {
             //Proceeding to checkout
-            CartPOM cart = new CartPOM(_driver.Driver);
+            CartPOM cart = new CartPOM(_driver);
             cart.ProceedToCheckout();
         }
 
         [When(@"I fill in billing details, to place the order, with")]
-        public void FillingInBillingDetailsToPlaceOrder(Table billingDetailsTable)
+        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table billingDetailsTable)
         {
-            BillingDetailsPOM billing = new BillingDetailsPOM(_driver.Driver);
+
+            BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
             //Create billing details with the information passed from the feature table
             BillingTable billingTable = billing.CreateBillingDetail(billingDetailsTable);
             //Filling in the billing details with the table details from the test
             billing.FillInBillingDetails(billingTable);
             billing.PlaceOrder();
-
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
-        public void VerifyingOrderNumberConsistency()
+        public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
         {
-            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver.Driver);
+            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             //Getting order number from order recieved post ordering item
             int orderNumberValue = orderDetails.GetOrderNumberValue();
             orderDetails.GoToMyOrders();

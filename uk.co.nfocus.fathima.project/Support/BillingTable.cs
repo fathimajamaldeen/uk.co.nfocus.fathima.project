@@ -1,5 +1,4 @@
-﻿
-namespace uk.co.nfocus.fathima.project.Support
+﻿namespace uk.co.nfocus.fathima.project.Support
 {
     internal class BillingTable
     {

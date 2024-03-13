@@ -46,6 +46,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Cart.Click();
         }
 
+        //Method to navigate to login page
+        public void NavigateToLoginPage()
+        {
+            GoMyAccountPage();
+            DismissPopup();
+        }
+
+
         public void DismissPopup()
         {
             _dismissButton.Click();

@@ -17,7 +17,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _cityField => _driver.FindElement(By.CssSelector("#billing_city"));
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
-        private IWebElement _emailField => _driver.FindElement(By.CssSelector("#billing_email"));
         private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
 
         //Method to set the first name field whilst clearing the field first and returns the instance
@@ -26,7 +25,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _firstNameField.Clear();
             _firstNameField.SendKeys(firstName);
             Console.WriteLine("Added first name");
-            return this; 
+            return this;
         }
 
         //Method to set the last name field whilst clearing the field first and returns the instance
@@ -74,19 +73,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             return this;
         }
 
-        //Method to set the billing email field whilst clearing the field first and return the instance
-        public BillingDetailsPOM SetEmail(string email)
-        {
-            _emailField.Clear();
-            _emailField.SendKeys(email);
-            Console.WriteLine("Added email address");
-            return this;
-        }
-        
         //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
             //Waiting for the place order button to be clickable
+
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             _placeOrderButton.Click();
@@ -102,7 +93,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             SetCity(BillingInformation._city);
             SetPostcode(BillingInformation._postcode);
             SetPhoneNumber(BillingInformation._phoneNumber);
-            SetEmail(BillingInformation._email);
         }
 
         //Create a BillingTable object using the provided feature table

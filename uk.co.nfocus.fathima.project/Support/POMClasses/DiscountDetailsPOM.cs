@@ -14,7 +14,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _previousTotal => _driver.FindElement(By.CssSelector(".cart-subtotal bdi"));
         private IWebElement _newTotal => _driver.FindElement(By.CssSelector(".order-total bdi"));
         private IWebElement _shippingCost => _driver.FindElement(By.CssSelector(".shipping bdi"));
-      
+
 
         //Method to recieve the previous total value
         public decimal GetPreviousTotalValue()
@@ -24,10 +24,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Returns the value extracted
             return previousTotalValue;
         }
-              
+
         //Method to recieve the new total value after applying the discount
         public decimal GetNewTotalValue()
-        { 
+        {
             //Break the text down and convert it to decimal value and removes the pound sign to compare the values
             decimal newTotalValue = decimal.Parse(_newTotal.Text.TrimStart('£'));
             //Returns the value extracted

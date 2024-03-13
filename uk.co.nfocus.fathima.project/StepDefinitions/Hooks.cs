@@ -14,8 +14,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class Hooks
     {
         private IWebDriver _driver;
-        private WebDriverWrapper _driverWrapper;
-
         private readonly ScenarioContext _scenarioContext;
         private static AventStack.ExtentReports.ExtentReports s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
@@ -24,10 +22,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 
-        public Hooks(ScenarioContext scenarioContext, WebDriverWrapper driverWrapper)
+        public Hooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
-            _driverWrapper = driverWrapper;
         }
 
         //Runs once before all tests
@@ -46,7 +43,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
-
             string browser = Environment.GetEnvironmentVariable("BROWSER");
 
             Console.WriteLine("Browser set to: " + browser);
@@ -59,43 +55,23 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             switch (browser)
             {
                 case "edge":
-                    _driverWrapper.Driver = new EdgeDriver();
+                    _driver = new EdgeDriver();
                     break;
                 case "firefox":
-                    _driverWrapper.Driver = new FirefoxDriver();
-                    break;
-                case "chromeheadless":
-                    ChromeOptions chromeOptions = new ChromeOptions();
-                    chromeOptions.AddArgument("--headless"); //Chrome *used* to have a seperate rendering engine for headless. https://developer.chrome.com/docs/chromium/new-headless
-                    _driverWrapper.Driver = new ChromeDriver(chromeOptions);
-                    //You may want to set a defined window size...
-                    break;
-                case "firefoxheadless":
-                    FirefoxOptions firefoxoptions = new FirefoxOptions();
-                    firefoxoptions.AddArgument("--headless");
-                    _driverWrapper.Driver = new FirefoxDriver(firefoxoptions);
+                    _driver = new FirefoxDriver();
                     break;
                 default:
-                    _driverWrapper.Driver = new ChromeDriver();
+                    _driver = new ChromeDriver();
                     break;
             }
             //Make the window full screen
-            _driverWrapper.Driver.Manage().Window.Maximize();
+            _driver.Manage().Window.Maximize();
+            _scenarioContext["myDriver"] = _driver;
 
-            //Get the starting URL from the runsettings file 
+            //Get the starting URL from the runsettings file and set the driver to it
             string startURL = null;
             startURL = TestContext.Parameters["WebAppURL"];
-            //If there is no value then failing the test and adding to report 
-            //Else set the driver url to it 
-            if (startURL == null)
-            {
-                s_scenario.Fail("There is no URL for the website");
-                Assert.Fail("There is no URL for the website");
-            }
-            else
-            {
-                _driverWrapper.Driver.Url = startURL;
-            }
+            _driver.Url = startURL;
         }
 
         //Runs before each step
@@ -121,12 +97,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     //When the test fails 
                     s_step.Log(Status.Fail, $"{context.StepContext.StepInfo.Text}. Test failure reason: {context.TestError.Message}");
                     //Creates a screenshot instance
-                    Screenshots screenshotHelper = new Screenshots(_driverWrapper.Driver);
+                    Screenshots screenshotHelper = new Screenshots(_driver);
                     //Make a unique name for the screenshot
                     string screenshotName = $"{context.StepContext.StepInfo.Text}_{DateTime.Now:yyyyMMddHHmm}.png";
                     //Constructs full path for saving screenshot to the same folder as where the report is
                     string screenshotPath = Path.Combine(s_reportpath, screenshotName);
-                    HelperLib myHelper = new HelperLib(_driverWrapper.Driver);
+                    HelperLib myHelper = new HelperLib(_driver);
                     //Move the page down to get a clearer screenshot
                     myHelper.ScrollOnPageVertically(250);
                     // Wait until scrolling action is completed
@@ -166,10 +142,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             if (ScenarioContext.Current.TestError == null)
             {
                 //Removes the coupon and item from the cart 
-                CartPOM cart = new CartPOM(_driverWrapper.Driver);
+                CartPOM cart = new CartPOM(_driver);
                 cart.RemoveCouponCode();
                 cart.RemoveItemFromCart();
-                HelperLib myHelper = new HelperLib(_driverWrapper.Driver);
+                HelperLib myHelper = new HelperLib(_driver);
                 myHelper.WaitForPageToLoad(3);
             }
             else
@@ -185,13 +161,13 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             if (ScenarioContext.Current.TestError == null)
             {
                 //Perform cleanup actions
-                LoginPagePOM loginpage = new LoginPagePOM(_driverWrapper.Driver);
+                LoginPagePOM loginpage = new LoginPagePOM(_driver);
                 loginpage.LogOut();
             }
-            if (_driverWrapper.Driver != null)
+            if (_driver != null)
             {
-                _driverWrapper.Driver.Quit();
-                _driverWrapper.Driver.Dispose();
+                _driver.Quit();
+                _driver.Dispose();
             }
         }
 

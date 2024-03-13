@@ -18,7 +18,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _loginButton => _driver.FindElement(By.Name("login"));
         private IWebElement _logoutButton => _driver.FindElement(By.LinkText("Logout"));
 
-        
+
         //Method to set the username by clearing the field and setting the input and returning the instance
         public LoginPagePOM SetUsername(string username)
         {
@@ -42,17 +42,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             return this;
         }
 
-        
-
-        //Method to navigate to login page
-        public void NavigateToLoginPage()
-        {
-            //Navigate to my account page
-            NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.GoMyAccountPage();
-            navbar.DismissPopup();
-        }
-
         //Method to log out from the website
         public void LogOut()
         {
@@ -62,7 +51,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();
             //Wait for the logout link to appear
-            
+
             myHelper.WaitForPageToLoad(10);
             myHelper.WaitForElement(By.LinkText("Logout"), 10);
             _logoutButton.Click();

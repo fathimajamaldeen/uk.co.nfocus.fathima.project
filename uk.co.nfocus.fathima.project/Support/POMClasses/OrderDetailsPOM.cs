@@ -42,8 +42,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoMyAccountPage();
             _myOrders.Click();
-    }
+        }
 
-        
+
     }
 }

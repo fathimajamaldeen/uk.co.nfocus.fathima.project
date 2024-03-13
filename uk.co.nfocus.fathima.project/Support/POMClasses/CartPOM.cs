@@ -5,7 +5,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     internal class CartPOM
     {
         private IWebDriver _driver; //Field to store the WebDriver functionality
-        
+
         //Construct to intialise the WebDriver instance
         public CartPOM(IWebDriver driver)
         {

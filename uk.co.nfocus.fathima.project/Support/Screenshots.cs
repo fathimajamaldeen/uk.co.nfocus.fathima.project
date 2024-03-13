@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using AventStack.ExtentReports;
 
 namespace uk.co.nfocus.fathima.project.Support
 {

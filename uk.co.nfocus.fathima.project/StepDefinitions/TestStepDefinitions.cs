@@ -1,9 +1,4 @@
-﻿using AventStack.ExtentReports;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using System;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+﻿using NUnit.Framework;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 
@@ -73,7 +68,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
         [Then(@"I should see the discount of (.*)% is applied correctly")]
-        public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
+        public void VerifyDiscountApplication(int discount)
         {
             
             try
@@ -105,7 +100,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
         [When(@"I fill in billing details, to place the order, with")]
-        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table billingDetailsTable)
+        public void FillingInBillingDetailsToPlaceOrder(Table billingDetailsTable)
         {
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver.Driver);
             //Create billing details with the information passed from the feature table
@@ -117,7 +112,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
-        public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
+        public void VerifyingOrderNumberConsistency()
         {
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver.Driver);
             //Getting order number from order recieved post ordering item

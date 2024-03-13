@@ -1,17 +1,13 @@
-﻿using System;
-using System.IO;
-using TechTalk.SpecFlow;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
-using NUnit.Framework.Interfaces;
 using uk.co.nfocus.fathima.project.Support;
-using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using NUnit.Framework;
+
 namespace uk.co.nfocus.fathima.project.StepDefinitions
 {
     [Binding]

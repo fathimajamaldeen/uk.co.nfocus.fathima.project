@@ -23,6 +23,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _cityField => _driver.FindElement(By.CssSelector("#billing_city"));
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
+        private IWebElement _emailField => _driver.FindElement(By.CssSelector("#billing_email"));
         private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
 
         //Method to set the first name field whilst clearing the field first and returns the instance
@@ -78,12 +79,20 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             Console.WriteLine("Added billing phone number");
             return this;
         }
+
+        //Method to set the billing email field whilst clearing the field first and return the instance
+        public BillingDetailsPOM SetEmail(string email)
+        {
+            _emailField.Clear();
+            _emailField.SendKeys(email);
+            Console.WriteLine("Added email address");
+            return this;
+        }
         
         //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
             //Waiting for the place order button to be clickable
-            
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
             _placeOrderButton.Click();
@@ -99,19 +108,23 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             SetCity(BillingInformation._city);
             SetPostcode(BillingInformation._postcode);
             SetPhoneNumber(BillingInformation._phoneNumber);
+            SetEmail(BillingInformation._email);
         }
 
-        //Create a BillingTablePOCO object using the provided feature table
+        //Create a BillingTable object using the provided feature table
         public BillingTable CreateBillingDetail(Table BillingInfo)
         {
-            string firstName = BillingInfo.Rows[0]["First Name"];
-            string lastName = BillingInfo.Rows[0]["Last Name"];
-            string address = BillingInfo.Rows[0]["Address"];
-            string city = BillingInfo.Rows[0]["City"];
-            string postcode = BillingInfo.Rows[0]["Postcode"];
-            string phoneNumber = BillingInfo.Rows[0]["Phone Number"];
-
-            return new BillingTable(firstName, lastName, address, city, postcode, phoneNumber);
+            //Extracts individual field values using the GetFieldValue method from the helperlib
+            HelperLib myHelper = new HelperLib(_driver);
+            string firstName = myHelper.GetFieldValue(BillingInfo, "First Name");
+            string lastName = myHelper.GetFieldValue(BillingInfo, "Last Name");
+            string address = myHelper.GetFieldValue(BillingInfo, "Address");
+            string city = myHelper.GetFieldValue(BillingInfo, "City");
+            string postcode = myHelper.GetFieldValue(BillingInfo, "Postcode");
+            string phoneNumber = myHelper.GetFieldValue(BillingInfo, "Phone Number");
+            string email = myHelper.GetFieldValue(BillingInfo, "Email");
+            //Creates a new BillingTable object with the extracted field values
+            return new BillingTable(firstName, lastName, address, city, postcode, phoneNumber, email);
         }
 
 

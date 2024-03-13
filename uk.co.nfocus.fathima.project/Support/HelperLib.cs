@@ -83,6 +83,13 @@ namespace uk.co.nfocus.fathima.project.Support
             }
         }
 
+        //Method to find the row in the table where the "Field" column matches the given fieldName,
+        //and return the value from the corresponding "Value" column
+        public string GetFieldValue(Table table, string fieldName)
+        {
+            return table.Rows.Single(row => row["Field"] == fieldName)["Value"];
+        }
+
 
     }
 }

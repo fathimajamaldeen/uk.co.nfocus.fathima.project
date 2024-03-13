@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
 
@@ -112,6 +113,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Filling in the billing details with the table details from the test
             billing.FillInBillingDetails(billingTable);
             billing.PlaceOrder();
+
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]

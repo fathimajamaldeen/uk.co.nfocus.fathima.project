@@ -50,6 +50,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
+
             string browser = Environment.GetEnvironmentVariable("BROWSER");
 
             Console.WriteLine("Browser set to: " + browser);
@@ -67,6 +68,17 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 case "firefox":
                     _driverWrapper.Driver = new FirefoxDriver();
                     break;
+                case "chromeheadless":
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.AddArgument("--headless"); //Chrome *used* to have a seperate rendering engine for headless. https://developer.chrome.com/docs/chromium/new-headless
+                    _driverWrapper.Driver = new ChromeDriver(chromeOptions);
+                    //You may want to set a defined window size...
+                    break;
+                case "firefoxheadless":
+                    FirefoxOptions firefoxoptions = new FirefoxOptions();
+                    firefoxoptions.AddArgument("--headless");
+                    _driverWrapper.Driver = new FirefoxDriver(firefoxoptions);
+                    break;
                 default:
                     _driverWrapper.Driver = new ChromeDriver();
                     break;
@@ -74,10 +86,20 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Make the window full screen
             _driverWrapper.Driver.Manage().Window.Maximize();
 
-            //Get the starting URL from the runsettings file and set the driver to it
+            //Get the starting URL from the runsettings file 
             string startURL = null;
             startURL = TestContext.Parameters["WebAppURL"];
-            _driverWrapper.Driver.Url = startURL;
+            //If there is no value then failing the test and adding to report 
+            //Else set the driver url to it 
+            if (startURL == null)
+            {
+                s_scenario.Fail("There is no URL for the website");
+                Assert.Fail("There is no URL for the website");
+            }
+            else
+            {
+                _driverWrapper.Driver.Url = startURL;
+            }
         }
 
         //Runs before each step

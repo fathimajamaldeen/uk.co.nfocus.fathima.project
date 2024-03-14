@@ -15,6 +15,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
+
         private static AventStack.ExtentReports.ExtentReports s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
         private static AventStack.ExtentReports.ExtentTest s_feature;
@@ -71,7 +72,15 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Get the starting URL from the runsettings file and set the driver to it
             string startURL = null;
             startURL = TestContext.Parameters["WebAppURL"];
-            _driver.Url = startURL;
+            if (startURL != null)
+            {
+                _driver.Url = startURL;
+            }
+            else
+            {
+                s_scenario.Fail("Start up failure as there is no starting URL");
+                Assert.Fail("There is no starting URL to proceed");
+            }
         }
 
         //Runs before each step

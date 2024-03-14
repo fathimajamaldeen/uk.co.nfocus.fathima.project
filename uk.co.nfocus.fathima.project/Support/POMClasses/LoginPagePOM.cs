@@ -5,11 +5,13 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     internal class LoginPagePOM
     {
         private IWebDriver _driver; //Field to store the WebDriver functionality
+        private NavbarPOM _navbar; //Field to store the navbar as it is within this page
 
         //Construct to intialise the WebDriver instance
         public LoginPagePOM(IWebDriver driver)
         {
             _driver = driver; //Assigning the WebDriver instance passed in to the field
+            _navbar = new NavbarPOM(_driver); //Initialise here as it is within the login page
         }
 
         //Locators - finding elements on the page
@@ -48,10 +50,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             HelperLib myHelper = new HelperLib(_driver);
             //Navigate to my account page
             myHelper.WaitForElementDisabled(By.LinkText("My account"), 3);
-            NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.GoMyAccountPage();
+            _navbar.GoMyAccountPage();
             //Wait for the logout link to appear
-
             myHelper.WaitForPageToLoad(10);
             myHelper.WaitForElement(By.LinkText("Logout"), 10);
             _logoutButton.Click();

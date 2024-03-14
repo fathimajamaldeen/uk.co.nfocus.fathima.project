@@ -5,11 +5,13 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     internal class OrderDetailsPOM
     {
         private IWebDriver _driver; //Field to store the WebDriver functionality
+        private NavbarPOM _navbar; //Field to store the navbar as it is within this page
 
         //Construct to intialise the WebDriver instance
         public OrderDetailsPOM(IWebDriver driver)
         {
             _driver = driver; //Assigning the WebDriver instance passed in to the field
+            _navbar = new NavbarPOM(_driver); //Initialise here as it is within the order details page
         }
 
         //Locators - Finding elements on the page
@@ -39,8 +41,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to go to my orders page
         public void GoToMyOrders()
         {
-            NavbarPOM navbar = new NavbarPOM(_driver);
-            navbar.GoMyAccountPage();
+            _navbar.GoMyAccountPage();
             _myOrders.Click();
         }
 

@@ -22,7 +22,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         private static AventStack.ExtentReports.ExtentTest s_feature;
         private static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
             + Path.DirectorySeparatorChar + "Reports"
-            + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
+            + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") 
+            + Path.DirectorySeparatorChar;
 
         public Hooks(ScenarioContext scenarioContext, WDWrapper wrapper)
         {
@@ -72,7 +73,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             _wrapper.Driver = _driver;
             //Make the window full screen
             _wrapper.Driver.Manage().Window.Maximize();
-            //_scenarioContext["myDriver"] = _driver;
 
             //Get the starting URL from the runsettings file and set the driver to it
             string startURL = TestContext.Parameters["WebAppURL"];

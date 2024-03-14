@@ -70,7 +70,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
         [Then(@"I should see the discount of (.*)% is applied correctly")]
-        public void ThenIShouldSeeTheDiscountOfIsAppliedCorrectly(int discount)
+        public void VerifyDiscountApplied(int discount)
         {
 
             try
@@ -102,7 +102,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
         [When(@"I fill in billing details, to place the order, with")]
-        public void WhenIFillInBillingDetailsToPlaceTheOrderWith(Table billingDetailsTable)
+        public void FillBillingDetailsAndPlaceOrder(Table billingDetailsTable)
         {
 
             BillingDetailsPOM billing = new BillingDetailsPOM(_driver);
@@ -110,11 +110,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             BillingTable billingTable = billing.CreateBillingDetail(billingDetailsTable);
             //Filling in the billing details with the table details from the test
             billing.FillInBillingDetails(billingTable);
+            //Placing the order 
             billing.PlaceOrder();
         }
 
         [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
-        public void ThenIShouldSeeTheSameOrderNumberInMyAccountOrdersAsTheOneDisplayedAfterPlacingTheOrder()
+        public void VerifyOrderNumbers()
         {
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             //Getting order number from order recieved post ordering item

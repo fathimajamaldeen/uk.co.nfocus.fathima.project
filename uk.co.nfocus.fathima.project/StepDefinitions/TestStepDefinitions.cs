@@ -11,10 +11,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver;
 
-        public TestStepDefinitions(ScenarioContext scenarioContext)
+        public TestStepDefinitions(ScenarioContext scenarioContext, WDWrapper wrapper)
         {
             _scenarioContext = scenarioContext;
-            this._driver = (IWebDriver)_scenarioContext["myDriver"];
+            _driver = wrapper.Driver; 
         }
 
         [Given(@"I am logged in on the shopping website")]

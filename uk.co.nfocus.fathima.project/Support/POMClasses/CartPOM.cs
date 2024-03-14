@@ -80,5 +80,15 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _removeItem.Click();
         }
 
+        //Method which implements cart clean up
+        public void CartCleanUp()
+        {
+            RemoveCouponCode();
+            RemoveItemFromCart();
+            HelperLib myHelper = new HelperLib(_driver);
+            myHelper.WaitForPageToLoad(3);
+        }
+
+
     }
 }

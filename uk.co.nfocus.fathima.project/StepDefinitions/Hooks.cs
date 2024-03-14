@@ -15,6 +15,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     {
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
+        private WDWrapper _wrapper;
 
         private static AventStack.ExtentReports.ExtentReports s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
@@ -23,9 +24,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.DirectorySeparatorChar;
 
-        public Hooks(ScenarioContext scenarioContext)
+        public Hooks(ScenarioContext scenarioContext, WDWrapper wrapper)
         {
             _scenarioContext = scenarioContext;
+            _wrapper = wrapper;
         }
 
         //Runs once before all tests
@@ -36,12 +38,14 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(s_reportpath);
             s_extent = new AventStack.ExtentReports.ExtentReports();
             s_extent.AttachReporter(htmlReporter);
+            
         }
 
         //Runs before each scenario
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext context)
         {
+            
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
             string browser = Environment.GetEnvironmentVariable("BROWSER");
@@ -65,16 +69,16 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     _driver = new ChromeDriver();
                     break;
             }
+            _wrapper.Driver = _driver;
             //Make the window full screen
-            _driver.Manage().Window.Maximize();
-            _scenarioContext["myDriver"] = _driver;
+            _wrapper.Driver.Manage().Window.Maximize();
+            //_scenarioContext["myDriver"] = _driver;
 
             //Get the starting URL from the runsettings file and set the driver to it
-            string startURL = null;
-            startURL = TestContext.Parameters["WebAppURL"];
+            string startURL = TestContext.Parameters["WebAppURL"];
             if (startURL != null)
             {
-                _driver.Url = startURL;
+                _wrapper.Driver.Url = startURL;
             }
             else
             {
@@ -152,10 +156,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             {
                 //Removes the coupon and item from the cart 
                 CartPOM cart = new CartPOM(_driver);
-                cart.RemoveCouponCode();
-                cart.RemoveItemFromCart();
-                HelperLib myHelper = new HelperLib(_driver);
-                myHelper.WaitForPageToLoad(3);
+                cart.CartCleanUp();
             }
             else
             {
@@ -173,10 +174,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 LoginPagePOM loginpage = new LoginPagePOM(_driver);
                 loginpage.LogOut();
             }
-            if (_driver != null)
+            if (_wrapper.Driver != null)
             {
-                _driver.Quit();
-                _driver.Dispose();
+                _wrapper.Driver.Quit();
+                _wrapper.Driver.Dispose();
             }
         }
 

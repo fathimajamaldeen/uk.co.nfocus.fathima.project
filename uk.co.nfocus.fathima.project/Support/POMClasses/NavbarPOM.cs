@@ -56,7 +56,17 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
 
         public void DismissPopup()
         {
-            _dismissButton.Click();
+            //Dismiss the store demo banner if present
+            try
+            {
+                _dismissButton.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                //Log that the banner was not found
+                Console.WriteLine("Store demo banner not found.");
+                //Proceed without failing the test
+            }
         }
     }
 }

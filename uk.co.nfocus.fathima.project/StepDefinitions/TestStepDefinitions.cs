@@ -45,7 +45,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             NavbarPOM navbar = new NavbarPOM(_driver);
             navbar.GoShopPage();
             //Adding belt to cart
-            ProductPagePOM product = new ProductPagePOM(_driver, itemName);
+            ShopPOM product = new ShopPOM(_driver, itemName);
             product.AddItemToCart();
             Console.WriteLine($"Added {itemName} to cart");
         }

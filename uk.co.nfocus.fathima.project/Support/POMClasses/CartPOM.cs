@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _applyCouponButton => _helper.WaitForElement(By.Name("apply_coupon"), 15);
         private IWebElement _proceedToCheckout => _helper.WaitForElement(By.LinkText("Proceed to checkout"),10);
         private IWebElement _removeCode => _helper.WaitForElement(By.LinkText("[Remove]"), 5);
-        private IWebElement _removeItem => _helper.WaitForElement(By.LinkText("×"), 2);
+        private IWebElement _removeItem => _helper.WaitForElement(By.LinkText("×"), 5);
 
         
 

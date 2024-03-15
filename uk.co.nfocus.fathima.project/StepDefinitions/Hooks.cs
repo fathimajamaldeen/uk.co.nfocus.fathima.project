@@ -171,6 +171,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             if (ScenarioContext.Current.TestError == null)
             {
                 //Perform cleanup actions
+                NavbarPOM navbar = new NavbarPOM(_driver);
+                navbar.GoMyAccountPage();
                 LoginPagePOM loginpage = new LoginPagePOM(_driver);
                 loginpage.LogOut();
             }

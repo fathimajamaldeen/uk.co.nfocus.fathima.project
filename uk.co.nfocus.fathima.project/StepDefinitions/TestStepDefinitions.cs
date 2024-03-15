@@ -117,9 +117,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [Then(@"an order number is shown")]
         public void ThenAnOrderNumberIsShown()
         {
-            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
+            PlacedOrderPOM placedOrder = new PlacedOrderPOM(_driver);
             //Getting order number from order recieved post ordering item
-            int orderNumberValue = orderDetails.GetOrderNumberValue();
+            int orderNumberValue = placedOrder.GetOrderNumberValue();
             //Storing the order number value
             _scenarioContext["OrderNumberValue"] = orderNumberValue;
         }
@@ -130,10 +130,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Retriving order number value 
             int orderNumberValue = (int)_scenarioContext["OrderNumberValue"];
             //Going to my orders section of the account
-            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
+            OrderPagePOM orderDetails = new OrderPagePOM(_driver);
             orderDetails.GoToMyOrders();
+            AccountOrderHistoryPOM accountOrderHistory = new AccountOrderHistoryPOM(_driver);
             //Getting order number from orders in account
-            int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue();
+            int orderNumberInAccountValue = accountOrderHistory.GetOrderNumberInAccountValue();
             //Check if both values are equal or not and output correct line in console
             try
             {

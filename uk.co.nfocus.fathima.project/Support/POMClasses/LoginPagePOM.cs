@@ -49,10 +49,16 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to log out from the website
         public void LogOut()
         {
-            _navbar.GoMyAccountPage();
-            _helper.WaitForPageToLoad(10);
-            _logoutButton.Click();
-            Console.WriteLine("Completed Log out process");
+            try
+            {
+                _logoutButton.Click();
+                Console.WriteLine("Completed Log out process");
+            }
+            catch
+            {
+                _logoutButton.Click();
+                Console.WriteLine("Completed Log out process");
+            }
         }
 
     }

@@ -26,7 +26,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _firstNameField.Clear();
             _firstNameField.SendKeys(firstName);
-            Console.WriteLine("Added first name");
+            Console.WriteLine($"Added first name: {firstName}");
             return this;
         }
 
@@ -35,7 +35,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _lastNameField.Clear();
             _lastNameField.SendKeys(lastName);
-            Console.WriteLine("Added last name");
+            Console.WriteLine($"Added last name: {lastName}");
             return this;
         }
 
@@ -44,7 +44,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _addressField.Clear();
             _addressField.SendKeys(address);
-            Console.WriteLine("Added billing addres");
+            Console.WriteLine($"Added billing address: {address}");
             return this;
         }
 
@@ -53,7 +53,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _cityField.Clear();
             _cityField.SendKeys(city);
-            Console.WriteLine("Added billing city");
+            Console.WriteLine($"Added billing city: {city}");
             return this;
         }
 
@@ -62,7 +62,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _postcodeField.Clear();
             _postcodeField.SendKeys(postcode);
-            Console.WriteLine("Added billing postcode");
+            Console.WriteLine($"Added billing postcode: {postcode}");
             return this;
         }
 
@@ -71,7 +71,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _phoneNumberField.Clear();
             _phoneNumberField.SendKeys(phoneNumber);
-            Console.WriteLine("Added billing phone number");
+            Console.WriteLine($"Added billing phone number: {phoneNumber}");
             return this;
         }
 
@@ -79,7 +79,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _emailField.Clear();
             _emailField.SendKeys(email);
-            Console.WriteLine("Added email");
+            Console.WriteLine($"Added email: {email}");
             return this;
         }
 

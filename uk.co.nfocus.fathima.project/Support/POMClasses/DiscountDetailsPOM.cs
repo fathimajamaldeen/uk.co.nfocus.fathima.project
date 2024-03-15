@@ -19,28 +19,22 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve the previous total value
         public decimal GetPreviousTotalValue()
         {
-            //Break the text down and convert it to decimal value and removes the pound sign to compare the values
-            decimal previousTotalValue = decimal.Parse(_previousTotal.Text.TrimStart('£'));
-            //Returns the value extracted
-            return previousTotalValue;
+            //Break the text down and convert it to decimal value and returns the value extracted
+            return ConversionHelper.StringToDecimal(_previousTotal.Text);
         }
 
         //Method to recieve the new total value after applying the discount
         public decimal GetNewTotalValue()
         {
-            //Break the text down and convert it to decimal value and removes the pound sign to compare the values
-            decimal newTotalValue = decimal.Parse(_newTotal.Text.TrimStart('£'));
-            //Returns the value extracted
-            return newTotalValue;
+            //Break the text down and convert it to decimal value and returns the value extracted     
+            return ConversionHelper.StringToDecimal(_newTotal.Text);
         }
 
         //Method to recieve the shipping cost value after applying the discount
         public decimal GetShippingCostValue()
         {
-            //Break the text down and convert it to decimal value and removes the pound sign to compare the values 
-            decimal shippingCostValue = decimal.Parse(_shippingCost.Text.TrimStart('£'));
-            //Returns the value extracted
-            return shippingCostValue;
+            //Break the text down and convert it to decimal value and rReturns the value extracted
+            return ConversionHelper.StringToDecimal(_shippingCost.Text);
         }
 
         //Method to recieve the discount value
@@ -51,10 +45,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             myHelper.WaitForElement(By.CssSelector($".cart-discount.coupon-{discountName} td span"), 5);
             //Locate the element containing the discount value and turn it into text
             string discount = _driver.FindElement(By.CssSelector($".cart-discount.coupon-{discountName} td span")).Text;
-            //Break the text down and convert it to decimal value and removes the pound sign
-            decimal discountValue = decimal.Parse(discount.TrimStart('£'));
-            //Returns the value extracted
-            return discountValue;
+            //Break the text down and convert it to decimal value and returns the value extracted
+            return ConversionHelper.StringToDecimal(discount);
         }
     }
 }

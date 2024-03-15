@@ -81,7 +81,5 @@ namespace uk.co.nfocus.fathima.project.Support
         {
             return table.Rows.Single(row => row["Field"] == fieldName)["Value"];
         }
-
-
     }
 }

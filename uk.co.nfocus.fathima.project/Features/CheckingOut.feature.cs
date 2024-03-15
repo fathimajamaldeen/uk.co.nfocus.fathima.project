@@ -35,9 +35,7 @@ namespace uk.co.nfocus.fathima.project.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Checking Out", "This feature will login to an e-commerce site \r\nas a registered user, purchase an" +
-                    " item of clothing and go \r\nthrough checkout. It will capture the order number an" +
-                    "d \r\ncheck the order is also present in the ‘My \r\nOrders’ section of the site.", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Checking Out", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -83,8 +81,12 @@ namespace uk.co.nfocus.fathima.project.Features
             string[] tagsOfScenario = new string[] {
                     "Test2"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 10
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", @"            This feature will login to an e-commerce site 
+            as a registered user, purchase an item of clothing and go 
+            through checkout. It will capture the order number and 
+            check the order is also present in the ‘My 
+            Orders’ section of the site.", tagsOfScenario, argumentsOfScenario, featureTags);
+#line 4
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -94,13 +96,13 @@ namespace uk.co.nfocus.fathima.project.Features
             else
             {
                 this.ScenarioStart();
-#line 11
+#line 10
    testRunner.Given("I am logged in on the shopping website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 12
+#line 11
    testRunner.When("I add a \'Belt\' to my cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 12
         testRunner.And("I proceed to checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -127,10 +129,10 @@ namespace uk.co.nfocus.fathima.project.Features
                 table1.AddRow(new string[] {
                             "Email",
                             "hello@example.com"});
-#line 14
+#line 13
         testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
-#line 23
+#line 22
     testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
                         "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

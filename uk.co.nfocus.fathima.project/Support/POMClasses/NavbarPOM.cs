@@ -5,19 +5,21 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     internal class NavbarPOM
     {
         private IWebDriver _driver; //Field to store the WebDriver functionality
+        private HelperLib _helper; //Field to store the HelperLib functionality
 
         //Construct to intialise the WebDriver instance
         public NavbarPOM(IWebDriver driver)
         {
             _driver = driver; //Assigning the WebDriver instance passed in to the field
+            _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned
         }
 
-        //Locators - Finding elements on the page
+        //Locators - Finding elements on the page and waiting for certain elements to appear first
         public IWebElement Home => _driver.FindElement(By.LinkText("Home"));
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
-        private IWebElement _viewCart => _driver.FindElement(By.LinkText("View cart"));
+        private IWebElement _viewCart => _helper.WaitForElement(By.LinkText("View cart"), 15);
         private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
 
         //Method to get to the home page
@@ -55,8 +57,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             HelperLib myHelper = new HelperLib(_driver);
             //Waits for page to load
             myHelper.WaitForPageToLoad(10);
-            //Wait for the 'View cart' link to appear and then click it
-            myHelper.WaitForElement(By.LinkText("View cart"), 15);
+            //Click on the 'View cart' link 
             _viewCart.Click();
         }
 

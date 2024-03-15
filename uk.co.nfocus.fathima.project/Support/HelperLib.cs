@@ -22,11 +22,11 @@ namespace uk.co.nfocus.fathima.project.Support
         }
 
         //Method to wait for an element identified by the locator to become enabled
-        public void WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
+        public IWebElement WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
         {
             // Initializing WebDriverWait to wait for the element to be enabled
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
-            wait.Until(driver => driver.FindElement(locator).Enabled);
+            return wait.Until(driver => driver.FindElement(locator));
         }
 
         //Method to wait for the page to load completely to prevent synchronisation issues

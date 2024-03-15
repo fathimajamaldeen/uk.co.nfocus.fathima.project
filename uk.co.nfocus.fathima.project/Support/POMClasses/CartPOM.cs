@@ -13,24 +13,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Locators - finding elements on the page
-        private IWebElement _viewCart => _driver.FindElement(By.LinkText("View cart"));
+        
         private IWebElement _couponCodeField => _driver.FindElement(By.CssSelector("#coupon_code"));
         private IWebElement _applyCouponButton => _driver.FindElement(By.Name("apply_coupon"));
         private IWebElement _proceedToCheckout => _driver.FindElement(By.LinkText("Proceed to checkout"));
         private IWebElement _removeCode => _driver.FindElement(By.LinkText("[Remove]"));
         private IWebElement _removeItem => _driver.FindElement(By.LinkText("×"));
 
-        //Method to navigate to the cart page
-        public void ViewCart()
-        {
-            //Create an instance of HelperLib to use the helper method 
-            HelperLib myHelper = new HelperLib(_driver);
-            //Waits for page to load
-            myHelper.WaitForPageToLoad(10);
-            //Wait for the 'View cart' link to appear and then click it
-            myHelper.WaitForElement(By.LinkText("View cart"), 15);
-            _viewCart.Click();
-        }
+        
 
         //Method to apply a discount code in the cart
         public void ApplyDiscountCode(string discountCode)
@@ -50,8 +40,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to proceed to checkout from the cart
         public void ProceedToCheckout()
         {
-            //Navigate to the cart page 
-            ViewCart();
+
             //Create an instance of HelperLib to use the helper method 
             HelperLib myHelper = new HelperLib(_driver);
             //Wait for the 'Proceed to checkout' to appear then click it

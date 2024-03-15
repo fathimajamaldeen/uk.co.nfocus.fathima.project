@@ -17,6 +17,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
         public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
+        private IWebElement _viewCart => _driver.FindElement(By.LinkText("View cart"));
         private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
 
         //Method to get to the home page
@@ -45,6 +46,18 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoCartPage()
         {
             Cart.Click();
+        }
+
+        //Method to navigate to the "View cart" page
+        public void ViewCart()
+        {
+            //Create an instance of HelperLib to use the helper method 
+            HelperLib myHelper = new HelperLib(_driver);
+            //Waits for page to load
+            myHelper.WaitForPageToLoad(10);
+            //Wait for the 'View cart' link to appear and then click it
+            myHelper.WaitForElement(By.LinkText("View cart"), 15);
+            _viewCart.Click();
         }
 
         //Method to navigate to login page

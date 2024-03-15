@@ -54,8 +54,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         public void WhenIViewMyCart()
         {
             //Going to view the cart
-            CartPOM cart = new CartPOM(_driver);
-            cart.ViewCart();
+            NavbarPOM navbar = new NavbarPOM(_driver);
+            navbar.ViewCart();
         }
 
         [When(@"I apply a discount code '(.*)'")]
@@ -96,6 +96,9 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [When(@"I proceed to checkout")]
         public void WhenIProceedToCheckout()
         {
+            NavbarPOM navbar = new NavbarPOM(_driver);
+            //Navigate to the cart page 
+            navbar.ViewCart();
             //Proceeding to checkout
             CartPOM cart = new CartPOM(_driver);
             cart.ProceedToCheckout();

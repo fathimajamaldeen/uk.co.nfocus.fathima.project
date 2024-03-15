@@ -36,7 +36,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForPageToLoad(10);
-            myHelper.ScrollOnPageVertically(-0);
+            //Scrolls the page back to the top 
+            myHelper.ScrollOnPageVertically(0);
             MyAccount.Click();
         }
 

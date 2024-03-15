@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _applyCouponButton => _helper.WaitForElement(By.Name("apply_coupon"), 15);
         private IWebElement _proceedToCheckout => _helper.WaitForElement(By.LinkText("Proceed to checkout"),10);
         private IWebElement _removeCode => _helper.WaitForElement(By.LinkText("[Remove]"), 5);
-        private IWebElement _removeItem => _driver.FindElement(By.LinkText("×"));
+        private IWebElement _removeItem => _helper.WaitForElement(By.LinkText("×"), 2);
 
         
 
@@ -45,8 +45,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void RemoveCouponCode()
         {
             //Wait for the remove button to appear
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(15);
+            _helper.WaitForPageToLoad(15);
             _removeCode.Click();
         }
 
@@ -54,9 +53,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void RemoveItemFromCart()
         {
             //Wait for the remove button to appear
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(10);
-            myHelper.WaitForElementDisabled(By.LinkText("×"), 2);
+            _helper.WaitForPageToLoad(10);
             _removeItem.Click();
         }
 
@@ -65,8 +62,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             RemoveCouponCode();
             RemoveItemFromCart();
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(3);
+            _helper.WaitForPageToLoad(3);
         }
 
 

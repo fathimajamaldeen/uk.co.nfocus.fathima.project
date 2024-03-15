@@ -17,7 +17,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Locators - Finding elements on the page and waiting for certain elements to appear first
         public IWebElement Home => _driver.FindElement(By.LinkText("Home"));
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
-        public IWebElement MyAccount => _driver.FindElement(By.PartialLinkText("My account"));
+        public IWebElement MyAccount => _helper.WaitForElement(By.PartialLinkText("My account"), 5);
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
         private IWebElement _viewCart => _helper.WaitForElement(By.LinkText("View cart"), 15);
         private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
@@ -37,11 +37,17 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to get to my account page
         public void GoMyAccountPage()
         {
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForPageToLoad(10);
+            _helper.WaitForPageToLoad(10);
             //Scrolls the page back to the top 
-            myHelper.ScrollOnPageVertically(0);
-            MyAccount.Click();
+            _helper.ScrollOnPageVertically(0);
+            try
+            {
+                MyAccount.Click();
+            }
+            catch
+            {
+                MyAccount.Click();
+            }
         }
 
         //Method to get to cart page
@@ -53,10 +59,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to navigate to the "View cart" page
         public void ViewCart()
         {
-            //Create an instance of HelperLib to use the helper method 
-            HelperLib myHelper = new HelperLib(_driver);
             //Waits for page to load
-            myHelper.WaitForPageToLoad(10);
+            _helper.WaitForPageToLoad(10);
             //Click on the 'View cart' link 
             _viewCart.Click();
         }

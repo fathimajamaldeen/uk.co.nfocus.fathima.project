@@ -16,7 +16,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned
         }
 
-        //Locators - finding elements on the page and waiting for certain elements to appear first
+        //Locators - finding elements on the page
         private IWebElement _usernameField => _driver.FindElement(By.CssSelector("#username"));
         private IWebElement _passwordField => _driver.FindElement(By.CssSelector("#password"));
         private IWebElement _loginButton => _driver.FindElement(By.Name("login"));
@@ -49,12 +49,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to log out from the website
         public void LogOut()
         {
-            HelperLib myHelper = new HelperLib(_driver);
-            //Navigate to my account page
-            myHelper.WaitForElementDisabled(By.LinkText("My account"), 3);
             _navbar.GoMyAccountPage();
-            //Wait for the logout link to appear
-            myHelper.WaitForPageToLoad(10);
+            _helper.WaitForPageToLoad(10);
             _logoutButton.Click();
             Console.WriteLine("Completed Log out process");
         }

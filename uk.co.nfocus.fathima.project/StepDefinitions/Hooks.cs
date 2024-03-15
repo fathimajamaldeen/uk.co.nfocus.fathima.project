@@ -117,7 +117,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     string screenshotPath = Path.Combine(s_reportpath, screenshotName);
                     HelperLib myHelper = new HelperLib(_driver);
                     //Move the page down to get a clearer screenshot
-                    myHelper.ScrollOnPageVertically(250);
+                    myHelper.ScrollOnPageVertically(300);
                     // Wait until scrolling action is completed
                     myHelper.WaitForPageToScroll(10);
                     //Actually captures the screenshot

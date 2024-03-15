@@ -5,9 +5,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     internal class BillingDetailsPOM
     {
         private IWebDriver _driver; //Field to store WebDriver instance
+        private HelperLib _helper; //Field to store the HelperLib functionality
         public BillingDetailsPOM(IWebDriver driver) //Constructor to intitalise the WebDriver instance
         {
-            _driver = driver; //Assign the WebDriver instance passed into the field
+            _driver = driver; //Assigning the WebDriver instance passed into the field
+            _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned
         }
 
         //Locators - finding elements on the page
@@ -18,8 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
         private IWebElement _emailField => _driver.FindElement(By.CssSelector("#billing_email"));
-
-        private IWebElement _placeOrderButton => _driver.FindElement(By.CssSelector("#place_order"));
+        private IWebElement _placeOrderButton => _helper.WaitForElement(By.CssSelector("#place_order"), 2);
 
         //Method to set the first name field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetFirstName(string firstName)
@@ -86,11 +87,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to click on the place order button and returns the instance
         public BillingDetailsPOM PlaceOrder()
         {
-            //Waiting for the place order button to be clickable
-
-            HelperLib myHelper = new HelperLib(_driver);
-            myHelper.WaitForElementDisabled(By.CssSelector("#place_order"), 2);
-            _placeOrderButton.Click();
+            try
+            {
+                _placeOrderButton.Click();
+            }
+            catch
+            {
+                _placeOrderButton.Click();
+            }
             return this;
         }
 
@@ -110,14 +114,13 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public BillingTable CreateBillingDetail(Table BillingInfo)
         {
             //Extracts individual field values using the GetFieldValue method from the helperlib
-            HelperLib myHelper = new HelperLib(_driver);
-            string firstName = myHelper.GetFieldValue(BillingInfo, "First Name");
-            string lastName = myHelper.GetFieldValue(BillingInfo, "Last Name");
-            string address = myHelper.GetFieldValue(BillingInfo, "Address");
-            string city = myHelper.GetFieldValue(BillingInfo, "City");
-            string postcode = myHelper.GetFieldValue(BillingInfo, "Postcode");
-            string phoneNumber = myHelper.GetFieldValue(BillingInfo, "Phone Number");
-            string email = myHelper.GetFieldValue(BillingInfo, "Email");
+            string firstName = _helper.GetFieldValue(BillingInfo, "First Name");
+            string lastName = _helper.GetFieldValue(BillingInfo, "Last Name");
+            string address = _helper.GetFieldValue(BillingInfo, "Address");
+            string city = _helper.GetFieldValue(BillingInfo, "City");
+            string postcode = _helper.GetFieldValue(BillingInfo, "Postcode");
+            string phoneNumber = _helper.GetFieldValue(BillingInfo, "Phone Number");
+            string email = _helper.GetFieldValue(BillingInfo, "Email");
             //Creates a new BillingTable object with the extracted field values
             return new BillingTable(firstName, lastName, address, city, postcode, phoneNumber, email);
         }

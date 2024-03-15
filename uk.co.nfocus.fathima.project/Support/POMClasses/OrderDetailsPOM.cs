@@ -25,17 +25,15 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             //Waiting for the order number to be available 
             HelperLib myHelper = new HelperLib(_driver);
             myHelper.WaitForElement(By.CssSelector(".woocommerce-order-overview__order.order strong"), 10);
-            //Break the text down and convert it to integer value
-            int orderNumberValue = int.Parse(_orderNumber.Text);
-            return orderNumberValue;
+            //Return the converted value
+            return ConversionHelper.StringToInt(_orderNumber.Text);
         }
 
         //Method to recieve order number value in the account page
         public int GetOrderNumberInAccountValue()
         {
-            //Break the text down and convert it to integer value and get rid of the '#' at the start in order to be able to compare
-            int orderNumberInAccountValue = int.Parse(_orderNumberInAccount.Text.TrimStart('#'));
-            return orderNumberInAccountValue;
+            //Return the converted value 
+            return ConversionHelper.StringToInt(_orderNumberInAccount.Text);
         }
 
         //Method to go to my orders page

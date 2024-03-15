@@ -29,12 +29,12 @@ namespace uk.co.nfocus.fathima.project.Support
             wait.Until(driver => driver.FindElement(locator).Enabled);
         }
 
-        //Method to wait for the page to load completely
+        //Method to wait for the page to load completely to prevent synchronisation issues
         public void WaitForPageToLoad(int loadInSeconds)
         {
-            //Wait for page to load completely
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(loadInSeconds));
-            wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
+            //Wait for page to load completely using Selenium built in page load
+            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(loadInSeconds);
+            //WebDriver will throw a timeout exception if not loaded within the time
         }
 
         //Method to make the page wait to scroll adding a delay

@@ -61,8 +61,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [When(@"I apply a discount code '(.*)'")]
         public void WhenIApplyADiscountCode(string discountCode)
         {
-            //Storing the discount code
-            _scenarioContext["DiscountCode"] = discountCode;
             //Applying the discount code set in the test
             CartPOM cart = new CartPOM(_driver);
             cart.ApplyDiscountCode(discountCode);
@@ -75,13 +73,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
             try
             {
-                DiscountDetailsPOM discountDetails = new DiscountDetailsPOM(_driver);
-                //Getting discount code from ScenarioContext
-                string discountName = (string)_scenarioContext["DiscountCode"];
+                CartTotalsPOM discountDetails = new CartTotalsPOM(_driver);
                 //Checking to see if the discount is the correct percentage
                 decimal discountDecimal = (decimal)discount / 100m;
                 decimal expectedDiscountValue = discountDetails.GetPreviousTotalValue() * discountDecimal;
-                Assert.That(discountDetails.GetDiscountValue(discountName), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
+                Assert.That(discountDetails.GetDiscountValue(), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
                 //Check to see if new total value is correctly calculated
                 decimal expectedNewTotalValue = discountDetails.GetPreviousTotalValue() - expectedDiscountValue + discountDetails.GetShippingCostValue();
                 Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(expectedNewTotalValue), $"The total is not correctly calculated");

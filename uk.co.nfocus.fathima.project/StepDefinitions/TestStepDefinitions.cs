@@ -114,12 +114,24 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             billing.PlaceOrder();
         }
 
-        [Then(@"I should see the same order number in my account orders as the one displayed after placing the order")]
-        public void VerifyOrderNumbers()
+
+        [Then(@"an order number is shown")]
+        public void ThenAnOrderNumberIsShown()
         {
             OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             //Getting order number from order recieved post ordering item
             int orderNumberValue = orderDetails.GetOrderNumberValue();
+            //Storing the order number value
+            _scenarioContext["OrderNumberValue"] = orderNumberValue;
+        }
+
+        [Then(@"that order number is displayed in order history")]
+        public void ThenThatOrderNumberIsDisplayedInOrderHistory()
+        {
+            //Retriving order number value 
+            int orderNumberValue = (int)_scenarioContext["OrderNumberValue"];
+            //Going to my orders section of the account
+            OrderDetailsPOM orderDetails = new OrderDetailsPOM(_driver);
             orderDetails.GoToMyOrders();
             //Getting order number from orders in account
             int orderNumberInAccountValue = orderDetails.GetOrderNumberInAccountValue();
@@ -133,7 +145,5 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                 throw; //Rethrow the exception to ensure its caught by SpecFlow
             }
         }
-
-
     }
 }

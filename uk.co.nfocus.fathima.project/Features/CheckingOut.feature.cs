@@ -133,8 +133,10 @@ namespace uk.co.nfocus.fathima.project.Features
         testRunner.And("I fill in billing details, to place the order, with", ((string)(null)), table1, "And ");
 #line hidden
 #line 22
-    testRunner.Then("I should see the same order number in my account orders as the one displayed afte" +
-                        "r placing the order", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("an order number is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 23
+        testRunner.And("that order number is displayed in order history", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

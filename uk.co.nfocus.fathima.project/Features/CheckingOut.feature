@@ -19,4 +19,5 @@
             | Postcode     | SW1 1AA           |
             | Phone Number | 555 564 2211      |
             | Email        | hello@example.com |
-    Then I should see the same order number in my account orders as the one displayed after placing the order
+    Then an order number is shown
+        And that order number is displayed in order history

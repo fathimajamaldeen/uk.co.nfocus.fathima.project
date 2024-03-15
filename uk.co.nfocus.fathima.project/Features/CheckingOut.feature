@@ -2,11 +2,11 @@
 
 @Test2
  Scenario: Checking if order numbers are consistent
-            This feature will login to an e-commerce site 
-            as a registered user, purchase an item of clothing and go 
-            through checkout. It will capture the order number and 
-            check the order is also present in the ‘My 
-            Orders’ section of the site.
+    This feature will login to an e-commerce site 
+    as a registered user, purchase an item of clothing and go 
+    through checkout. It will capture the order number and 
+    check the order is also present in the ‘My 
+    Orders’ section of the site.
    Given I am logged in on the shopping website
    When I add a 'Belt' to my cart
         And I proceed to checkout
@@ -19,5 +19,5 @@
             | Postcode     | SW1 1AA           |
             | Phone Number | 555 564 2211      |
             | Email        | hello@example.com |
-    Then an order number is shown
-        And that order number is displayed in order history
+    Then I see an order number
+        And that order number is same in order history

@@ -106,7 +106,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         }
 
 
-        [Then(@"an order number is shown")]
+        [Then(@"I see an order number")]
         public void ThenAnOrderNumberIsShown()
         {
             PlacedOrderPOM placedOrder = new PlacedOrderPOM(_driver);
@@ -116,7 +116,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             _scenarioContext["OrderNumberValue"] = orderNumberValue;
         }
 
-        [Then(@"that order number is displayed in order history")]
+        [Then(@"that order number is same in order history")]
         public void ThenThatOrderNumberIsDisplayedInOrderHistory()
         {
             //Retriving order number value 

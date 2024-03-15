@@ -69,24 +69,16 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
         [Then(@"I should see the discount of (.*)% is applied correctly")]
         public void VerifyDiscountApplied(int discount)
-        {
-
-            try
-            {
-                CartTotalsPOM discountDetails = new CartTotalsPOM(_driver);
-                //Checking to see if the discount is the correct percentage
-                decimal discountDecimal = (decimal)discount / 100m;
-                decimal expectedDiscountValue = discountDetails.GetPreviousTotalValue() * discountDecimal;
-                Assert.That(discountDetails.GetDiscountValue(), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
-                //Check to see if new total value is correctly calculated
-                decimal expectedNewTotalValue = discountDetails.GetPreviousTotalValue() - expectedDiscountValue + discountDetails.GetShippingCostValue();
-                Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(expectedNewTotalValue), $"The total is not correctly calculated");
-            }
-            catch (AssertionException ex)
-            {
-                Console.WriteLine($":( {ex.Message}");
-                throw; // Rethrow the exception to ensure it's caught by SpecFlow
-            }
+        {       
+            CartTotalsPOM discountDetails = new CartTotalsPOM(_driver);
+            //Checking to see if the discount is the correct percentage
+            decimal discountDecimal = (decimal)discount / 100m;
+            decimal expectedDiscountValue = discountDetails.GetPreviousTotalValue() * discountDecimal;
+            Assert.That(discountDetails.GetDiscountValue(), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
+            //Check to see if new total value is correctly calculated
+            decimal expectedNewTotalValue = discountDetails.GetPreviousTotalValue() - expectedDiscountValue + discountDetails.GetShippingCostValue();
+            Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(expectedNewTotalValue), $"The total is not correctly calculated");
+            
         }
 
         [When(@"I proceed to checkout")]
@@ -136,14 +128,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Getting order number from orders in account
             int orderNumberInAccountValue = accountOrderHistory.GetOrderNumberInAccountValue();
             //Check if both values are equal or not and output correct line in console
-            try
-            {
-                Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue), $"The order values are not the same");
-            }
-            catch (AssertionException)
-            {
-                throw; //Rethrow the exception to ensure its caught by SpecFlow
-            }
+            Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue), $"The order values are not the same");
+            
         }
     }
 }

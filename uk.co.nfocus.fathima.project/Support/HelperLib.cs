@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
+using SeleniumExtras.WaitHelpers;
 
 namespace uk.co.nfocus.fathima.project.Support
 {
@@ -21,12 +22,13 @@ namespace uk.co.nfocus.fathima.project.Support
             executor.ExecuteScript($"window.scrollTo(0, {amount});");
         }
 
-        //Method to wait for an element identified by the locator to become enabled
-        public IWebElement WaitForElement(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
+        //Method to wait for an element identified by the locator to become visible
+        public IWebElement WaitForElementToBeVisible(By locator, int timeoutInSeconds) //A helper method using the IWebDriver field
         {
             // Initializing WebDriverWait to wait for the element to be enabled
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
-            return wait.Until(driver => driver.FindElement(locator));
+            IWebElement div =  wait.Until(ExpectedConditions.ElementIsVisible(locator));
+            return div;
         }
 
         //Method to wait for the page to load completely to prevent synchronisation issues
@@ -51,5 +53,7 @@ namespace uk.co.nfocus.fathima.project.Support
         {
             return table.Rows.Single(row => row["Field"] == fieldName)["Value"];
         }
+
+
     }
 }

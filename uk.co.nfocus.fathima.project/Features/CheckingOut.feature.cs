@@ -81,11 +81,11 @@ namespace uk.co.nfocus.fathima.project.Features
             string[] tagsOfScenario = new string[] {
                     "Test2"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", @"            This feature will login to an e-commerce site 
-            as a registered user, purchase an item of clothing and go 
-            through checkout. It will capture the order number and 
-            check the order is also present in the ‘My 
-            Orders’ section of the site.", tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Checking if order numbers are consistent", @"    This feature will login to an e-commerce site 
+    as a registered user, purchase an item of clothing and go 
+    through checkout. It will capture the order number and 
+    check the order is also present in the ‘My 
+    Orders’ section of the site.", tagsOfScenario, argumentsOfScenario, featureTags);
 #line 4
  this.ScenarioInitialize(scenarioInfo);
 #line hidden

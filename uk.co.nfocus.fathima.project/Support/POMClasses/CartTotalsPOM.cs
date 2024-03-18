@@ -13,9 +13,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned
         }
 
-        //Locators - finding elements on the page
-        private IWebElement _discountAmount => _helper.WaitForElement(By.CssSelector($".cart-discount .amount"), 5);
-        private IWebElement _previousTotal => _driver.FindElement(By.CssSelector(".cart-subtotal bdi"));
+        //Locators - finding elements on the page with waits for certain values
+        private IWebElement _discountAmount => _helper.WaitForElementToBeVisible(By.CssSelector($".cart-discount .amount"), 5);
+        private IWebElement _previousTotal => _helper.WaitForElementToBeVisible(By.CssSelector(".cart-subtotal bdi"), 5);
         private IWebElement _newTotal => _driver.FindElement(By.CssSelector(".order-total bdi"));
         private IWebElement _shippingCost => _driver.FindElement(By.CssSelector(".shipping bdi"));
 

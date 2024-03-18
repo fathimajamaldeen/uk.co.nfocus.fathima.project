@@ -19,7 +19,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
 
         private static AventStack.ExtentReports.ExtentReports s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
-        private static AventStack.ExtentReports.ExtentTest s_feature;
         private static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") 
@@ -51,11 +50,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
             string browser = Environment.GetEnvironmentVariable("BROWSER");
 
-            Console.WriteLine("Browser set to: " + browser);
+            s_scenario.Info("Browser set to: " + browser);
             if (browser == null) //Sanitising the input that was fetched from envirnomental variable
             {
                 browser = "edge";
-                Console.WriteLine("BROWSER env not set: Setting to Edge");
+                s_scenario.Warning("BROWSER env not set: Setting to Edge");
             }
             //Instantiate a browser based on variable
             switch (browser)
@@ -152,30 +151,20 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [AfterScenario("@Test1")]
         public void Cleanup()
         {
-            if (ScenarioContext.Current.TestError == null)
-            {
-                //Removes the coupon and item from the cart 
-                CartPOM cart = new CartPOM(_driver);
-                cart.CartCleanUp();
-            }
-            else
-            {
-                TearDown();
-            }
+            //Removes the coupon and item from the cart 
+            CartPOM cart = new CartPOM(_driver);
+            cart.CartCleanUp();
         }
 
         //Runs after each scenario
         [AfterScenario]
         public void TearDown()
         {
-            if (ScenarioContext.Current.TestError == null)
-            {
-                //Perform cleanup actions
-                NavbarPOM navbar = new NavbarPOM(_driver);
-                navbar.GoMyAccountPage();
-                LoginPagePOM loginpage = new LoginPagePOM(_driver);
-                loginpage.LogOut();
-            }
+            //Perform cleanup actions
+            NavbarPOM navbar = new NavbarPOM(_driver);
+            navbar.GoMyAccountPage();
+            LoginPagePOM loginpage = new LoginPagePOM(_driver);
+            loginpage.LogOut();
             if (_wrapper.Driver != null)
             {
                 _wrapper.Driver.Quit();

@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _usernameField => _driver.FindElement(By.CssSelector("#username"));
         private IWebElement _passwordField => _driver.FindElement(By.CssSelector("#password"));
         private IWebElement _loginButton => _driver.FindElement(By.Name("login"));
-        private IWebElement _logoutButton => _helper.WaitForElement(By.LinkText("Logout"), 10);
+        private IWebElement _logoutButton => _helper.WaitForElementToBeVisible(By.LinkText("Logout"), 10);
 
 
         //Method to set the username by clearing the field and setting the input and returning the instance

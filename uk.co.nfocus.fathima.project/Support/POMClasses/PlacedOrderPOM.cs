@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         }
 
         //Locators - finding elements on the page and waiting for certain elements to appear first
-        private IWebElement _orderNumber => _helper.WaitForElement(By.CssSelector(".woocommerce-order-overview__order.order strong"), 10);
+        private IWebElement _orderNumber => _helper.WaitForElementToBeVisible(By.CssSelector(".woocommerce-order-overview__order.order strong"), 10);
 
         //Method to recieve order number value from the placing order page
         public int GetOrderNumberValue()

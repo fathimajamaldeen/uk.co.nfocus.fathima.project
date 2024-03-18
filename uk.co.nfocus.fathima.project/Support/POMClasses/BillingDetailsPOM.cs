@@ -20,7 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneNumberField => _driver.FindElement(By.CssSelector("#billing_phone"));
         private IWebElement _emailField => _driver.FindElement(By.CssSelector("#billing_email"));
-        private IWebElement _placeOrderButton => _helper.WaitForElement(By.CssSelector("#place_order"), 2);
+        private IWebElement _placeOrderButton => _helper.WaitForElementToBeVisible(By.CssSelector("#place_order"), 2);
 
         //Method to set the first name field whilst clearing the field first and returns the instance
         public BillingDetailsPOM SetFirstName(string firstName)

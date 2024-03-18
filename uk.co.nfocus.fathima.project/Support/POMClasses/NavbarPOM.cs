@@ -17,9 +17,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Locators - Finding elements on the page and waiting for certain elements to appear first
         public IWebElement Home => _driver.FindElement(By.LinkText("Home"));
         public IWebElement Shop => _driver.FindElement(By.LinkText("Shop"));
-        public IWebElement MyAccount => _helper.WaitForElement(By.PartialLinkText("My account"), 5);
+        public IWebElement MyAccount => _helper.WaitForElementToBeVisible(By.PartialLinkText("My account"), 9);
         public IWebElement Cart => _driver.FindElement(By.LinkText("Cart"));
-        private IWebElement _viewCart => _helper.WaitForElement(By.LinkText("View cart"), 15);
+        private IWebElement _viewCart => _helper.WaitForElementToBeVisible(By.LinkText("View cart"), 15);
         private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
 
         //Method to get to the home page
@@ -39,7 +39,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _helper.WaitForPageToLoad(15);
             //Scrolls the page back to the top 
-            _helper.ScrollOnPageVertically(0);
+            _helper.ScrollOnPageVertically(-100);
+            _helper.WaitForPageToScroll(10);
             try
             {
                 MyAccount.Click();

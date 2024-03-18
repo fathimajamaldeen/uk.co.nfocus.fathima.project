@@ -17,13 +17,11 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Locators - finding elements on the page and waiting for certain elements to appear first
         
         private IWebElement _couponCodeField => _driver.FindElement(By.CssSelector("#coupon_code"));
-        private IWebElement _applyCouponButton => _helper.WaitForElement(By.Name("apply_coupon"), 15);
-        private IWebElement _proceedToCheckout => _helper.WaitForElement(By.LinkText("Proceed to checkout"),10);
-        private IWebElement _removeCode => _helper.WaitForElement(By.LinkText("[Remove]"), 5);
-        private IWebElement _removeItem => _helper.WaitForElement(By.LinkText("×"), 5);
-
+        private IWebElement _applyCouponButton => _helper.WaitForElementToBeVisible(By.Name("apply_coupon"), 15);
+        private IWebElement _proceedToCheckout => _helper.WaitForElementToBeVisible(By.LinkText("Proceed to checkout"),10);
+        private IWebElement _removeCoupon => _helper.WaitForElementToBeVisible(By.LinkText("[Remove]"), 10);
+        private IWebElement _removeItem => _helper.WaitForElementToBeVisible(By.LinkText("×"), 10);
         
-
         //Method to apply a discount code in the cart
         public void ApplyDiscountCode(string discountCode)
         {
@@ -45,8 +43,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void RemoveCouponCode()
         {
             //Wait for the remove button to appear
-            _helper.WaitForPageToLoad(15);
-            _removeCode.Click();
+            _helper.WaitForPageToLoad(10);
+            _removeCoupon.Click();
         }
 
         //Method to remove the item from cart
@@ -60,11 +58,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method which implements cart clean up
         public void CartCleanUp()
         {
+            _helper.WaitForPageToLoad(10);
             RemoveCouponCode();
             RemoveItemFromCart();
-            _helper.WaitForPageToLoad(3);
         }
-
-
     }
 }

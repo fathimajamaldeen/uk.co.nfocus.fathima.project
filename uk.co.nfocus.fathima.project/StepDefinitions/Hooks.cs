@@ -17,7 +17,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         private readonly ScenarioContext _scenarioContext;
         private WDWrapper _wrapper;
 
-        private static AventStack.ExtentReports.ExtentReports s_extent;
+        private static AventStack.ExtentReports.ExtentReports? s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario, s_step;
         private static string s_reportpath = System.IO.Directory.GetParent(@"../../../").FullName
             + Path.DirectorySeparatorChar + "Reports"
@@ -146,15 +146,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             // Flush the report after all scenarios are executed
             s_extent.Flush();
         }
-
-        ////Runs after Test 1 only to clean up the cart
-        //[AfterScenario("@Test1")]
-        //public void Cleanup()
-        //{
-        //    //Removes the coupon and item from the cart 
-        //    CartPOM cart = new CartPOM(_driver);
-        //    cart.CartCleanUp();
-        //}
 
         //Runs after each scenario
         [AfterScenario]

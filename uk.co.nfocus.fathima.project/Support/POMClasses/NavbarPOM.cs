@@ -37,10 +37,10 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to get to my account page
         public void GoMyAccountPage()
         {
-            _helper.WaitForPageToLoad(15);
+            _helper.WaitForPageToLoad(5);
             //Scrolls the page back to the top 
             _helper.ScrollOnPageVertically(-100);
-            _helper.WaitForPageToScroll(10);
+            _helper.WaitForPageToScroll(5);
             try
             {
                 MyAccount.Click();

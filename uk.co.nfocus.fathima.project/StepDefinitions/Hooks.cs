@@ -147,14 +147,14 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             s_extent.Flush();
         }
 
-        //Runs after Test 1 only to clean up the cart
-        [AfterScenario("@Test1")]
-        public void Cleanup()
-        {
-            //Removes the coupon and item from the cart 
-            CartPOM cart = new CartPOM(_driver);
-            cart.CartCleanUp();
-        }
+        ////Runs after Test 1 only to clean up the cart
+        //[AfterScenario("@Test1")]
+        //public void Cleanup()
+        //{
+        //    //Removes the coupon and item from the cart 
+        //    CartPOM cart = new CartPOM(_driver);
+        //    cart.CartCleanUp();
+        //}
 
         //Runs after each scenario
         [AfterScenario]
@@ -162,6 +162,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Perform cleanup actions
             NavbarPOM navbar = new NavbarPOM(_driver);
+            navbar.GoCartPage();
+            //Removes the coupon and item from the cart 
+            CartPOM cart = new CartPOM(_driver);
+            cart.CartCleanUp();
             navbar.GoMyAccountPage();
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();

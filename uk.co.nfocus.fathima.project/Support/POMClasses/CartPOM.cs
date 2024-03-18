@@ -58,9 +58,16 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method which implements cart clean up
         public void CartCleanUp()
         {
-            _helper.WaitForPageToLoad(10);
-            RemoveCouponCode();
-            RemoveItemFromCart();
+            try
+            {
+                _helper.WaitForPageToLoad(10);
+                RemoveCouponCode();
+                RemoveItemFromCart();
+            }
+            catch
+            {
+                Console.WriteLine("There is nothing within the cart!");
+            }
         }
     }
 }

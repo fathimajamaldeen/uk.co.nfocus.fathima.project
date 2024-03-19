@@ -19,6 +19,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void AddItemToCart()
         {
             Item.Click();
+            Console.WriteLine($"Added {_item} to cart");
         }
 
     }

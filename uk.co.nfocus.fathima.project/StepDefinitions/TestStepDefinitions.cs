@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AventStack.ExtentReports;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;
@@ -9,12 +10,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
     public class TestStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver _driver;
-
+        private readonly IWebDriver _driver;
+        
         public TestStepDefinitions(ScenarioContext scenarioContext, WDWrapper wrapper)
         {
             _scenarioContext = scenarioContext;
-            _driver = wrapper.Driver; 
+            _driver = wrapper.Driver;
         }
 
         [Given(@"I am logged in on the shopping website")]
@@ -47,7 +48,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Adding belt to cart
             ShopPOM product = new ShopPOM(_driver, itemName);
             product.AddItemToCart();
-            Console.WriteLine($"Added {itemName} to cart");
         }
 
         [When(@"I view my cart")]
@@ -64,7 +64,6 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Applying the discount code set in the test
             CartPOM cart = new CartPOM(_driver);
             cart.ApplyDiscountCode(discountCode);
-            Console.WriteLine("Applied discount code");
         }
 
         [Then(@"I should see the discount of (.*)% is applied correctly")]
@@ -128,8 +127,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Getting order number from orders in account
             int orderNumberInAccountValue = accountOrderHistory.GetOrderNumberInAccountValue();
             //Check if both values are equal or not and output correct line in console
-            Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue), $"The order values are not the same");
-            
+            Assert.That(orderNumberInAccountValue, Is.EqualTo(orderNumberValue), $"The order values are not the same"); 
         }
     }
 }

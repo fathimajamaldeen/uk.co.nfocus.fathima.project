@@ -30,6 +30,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _couponCodeField.SendKeys(discountCode);
             //Click the apply coupon button
             _applyCouponButton.Click();
+            Console.WriteLine($"Applied '{discountCode}' as the coupon code");
         }
 
         //Method to proceed to checkout from the cart

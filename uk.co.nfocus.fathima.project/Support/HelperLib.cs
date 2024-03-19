@@ -6,7 +6,7 @@ namespace uk.co.nfocus.fathima.project.Support
 {
     internal class HelperLib
     {
-        private IWebDriver _driver; //Field to work with passed driver in class methods
+        private readonly IWebDriver _driver; //Field to work with passed driver in class methods
         
         //Construct to initialize the HelperLib with a WebDriver instance
         public HelperLib(IWebDriver driver) 
@@ -27,7 +27,7 @@ namespace uk.co.nfocus.fathima.project.Support
         {
             // Initializing WebDriverWait to wait for the element to be enabled
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeoutInSeconds));
-            IWebElement div =  wait.Until(ExpectedConditions.ElementIsVisible(locator));
+            var div =  wait.Until(ExpectedConditions.ElementIsVisible(locator));
             return div;
         }
 
@@ -53,7 +53,5 @@ namespace uk.co.nfocus.fathima.project.Support
         {
             return table.Rows.Single(row => row["Field"] == fieldName)["Value"];
         }
-
-
     }
 }

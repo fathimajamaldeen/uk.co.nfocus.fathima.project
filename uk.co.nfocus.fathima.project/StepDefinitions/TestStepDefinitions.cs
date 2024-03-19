@@ -1,5 +1,4 @@
-﻿using AventStack.ExtentReports;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using uk.co.nfocus.fathima.project.Support;
 using uk.co.nfocus.fathima.project.Support.POMClasses;

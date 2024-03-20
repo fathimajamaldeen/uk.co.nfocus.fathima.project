@@ -19,6 +19,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public int GetOrderNumberInAccountValue()
         {
             //Return the converted value 
+            Console.WriteLine($"The order number in account is {_orderNumberInAccount.Text}");
             return ConversionHelper.StringToInt(_orderNumberInAccount.Text);
         }
     }

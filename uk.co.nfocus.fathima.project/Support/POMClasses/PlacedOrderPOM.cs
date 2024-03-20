@@ -20,6 +20,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve order number value from the placing order page
         public int GetOrderNumberValue()
         {
+            Console.WriteLine($"The order number value is {_orderNumber.Text}");
             //Return the converted value
             return ConversionHelper.StringToInt(_orderNumber.Text);
         }

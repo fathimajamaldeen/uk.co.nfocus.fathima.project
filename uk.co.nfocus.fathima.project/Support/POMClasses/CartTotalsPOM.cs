@@ -19,8 +19,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebElement _newTotal => _driver.FindElement(By.CssSelector(".order-total bdi"));
         private IWebElement _shippingCost => _driver.FindElement(By.CssSelector(".shipping bdi"));
 
-        
-
         //Method to recieve the previous total value
         public decimal GetPreviousTotalValue()
         {
@@ -45,7 +43,6 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve the discount value
         public decimal GetDiscountValue()
         {
-
             //Break the text down and convert it to decimal value and returns the value extracted
             return ConversionHelper.StringToDecimal(_discountAmount.Text);
         }

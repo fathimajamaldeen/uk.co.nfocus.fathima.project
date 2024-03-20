@@ -26,12 +26,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoHomePage()
         {
             Home.Click();
+            Console.WriteLine("Navigated to Home");
         }
 
         //Method to get to the shop page
         public void GoShopPage()
         {
             Shop.Click();
+            Console.WriteLine("Navigated to Shop");
         }
 
         //Method to get to my account page
@@ -44,10 +46,12 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             try
             {
                 MyAccount.Click();
+                Console.WriteLine("Navigated to My Account");
             }
             catch
             {
                 MyAccount.Click();
+                Console.WriteLine("Navigated to My Account");
             }
         }
 
@@ -55,6 +59,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public void GoCartPage()
         {
             Cart.Click();
+            Console.WriteLine("Navigated to Cart");
         }
 
         //Method to navigate to the "View cart" page
@@ -64,6 +69,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             _helper.WaitForPageToLoad(10);
             //Click on the 'View cart' link 
             _viewCart.Click();
+            Console.WriteLine("Navigated to View Cart");
         }
 
         //Method to navigate to login page
@@ -71,6 +77,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             GoMyAccountPage();
             DismissPopup();
+            Console.WriteLine("Navigated to Login");
         }
 
         //Method to dismiss the pop up
@@ -80,6 +87,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             try
             {
                 _dismissButton.Click();
+                Console.WriteLine("Dismissed pop up");
             }
             catch (NoSuchElementException)
             {

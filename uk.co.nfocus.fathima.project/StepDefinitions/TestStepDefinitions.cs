@@ -72,9 +72,11 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             //Checking to see if the discount is the correct percentage
             decimal discountDecimal = (decimal)discount / 100m;
             decimal expectedDiscountValue = discountDetails.GetPreviousTotalValue() * discountDecimal;
+            Console.WriteLine($"The expected discount value is £{expectedDiscountValue:F2}");
             Assert.That(discountDetails.GetDiscountValue(), Is.EqualTo(expectedDiscountValue), $"Expected discount of {discount}% is not applied correctly");
             //Check to see if new total value is correctly calculated
             decimal expectedNewTotalValue = discountDetails.GetPreviousTotalValue() - expectedDiscountValue + discountDetails.GetShippingCostValue();
+            Console.WriteLine($"The expected new total value is £{expectedNewTotalValue:F2}");
             Assert.That(discountDetails.GetNewTotalValue(), Is.EqualTo(expectedNewTotalValue), $"The total is not correctly calculated");
             
         }

@@ -45,6 +45,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _helper.WaitForPageToLoad(10);
             _removeCoupon.Click();
+            Console.WriteLine("Removed the coupon code from the cart");
         }
 
         //Method to remove the item from cart
@@ -52,6 +53,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _helper.WaitForPageToLoad(10);
             _removeItem.Click();
+            Console.WriteLine("Removed item from the cart");
         }
 
         //Method which implements cart clean up

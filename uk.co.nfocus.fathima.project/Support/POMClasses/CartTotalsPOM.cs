@@ -29,6 +29,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve the new total value after applying the discount
         public decimal GetNewTotalValue()
         {
+            Console.WriteLine($"The actual new total value is {_newTotal.Text}");
             //Break the text down and convert it to decimal value and returns the value extracted     
             return ConversionHelper.StringToDecimal(_newTotal.Text);
         }
@@ -43,6 +44,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method to recieve the discount value
         public decimal GetDiscountValue()
         {
+            Console.WriteLine($"The actual discount value is {_discountAmount.Text}");
             //Break the text down and convert it to decimal value and returns the value extracted
             return ConversionHelper.StringToDecimal(_discountAmount.Text);
         }

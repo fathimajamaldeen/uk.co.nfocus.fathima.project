@@ -148,6 +148,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             {
                 s_step.Log(Status.Info, line);
             }
+            // Clear the captured output from the CustomTextWriter
+            _customWriter.ClearCapturedOutput();
         }
 
         //Runs after each feature

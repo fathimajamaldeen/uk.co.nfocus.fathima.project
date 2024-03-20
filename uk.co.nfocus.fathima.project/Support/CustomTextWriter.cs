@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 public class CustomTextWriter : TextWriter
 {
@@ -22,5 +23,10 @@ public class CustomTextWriter : TextWriter
     public string[] GetCapturedOutput()
     {
         return _outputLines.ToArray();
+    }
+
+    public void ClearCapturedOutput()
+    {
+        _outputLines.Clear();
     }
 }

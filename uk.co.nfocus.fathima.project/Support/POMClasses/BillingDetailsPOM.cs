@@ -27,7 +27,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _firstNameField.Clear();
             _firstNameField.SendKeys(firstName);
-            Console.WriteLine($"Added first name: {firstName}");
+            Console.WriteLine($"Added billing first name: {firstName}");
             return this;
         }
 
@@ -36,7 +36,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _lastNameField.Clear();
             _lastNameField.SendKeys(lastName);
-            Console.WriteLine($"Added last name: {lastName}");
+            Console.WriteLine($"Added billing last name: {lastName}");
             return this;
         }
 
@@ -80,7 +80,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             _emailField.Clear();
             _emailField.SendKeys(email);
-            Console.WriteLine($"Added email: {email}");
+            Console.WriteLine($"Added billing email: {email}");
             return this;
         }
 

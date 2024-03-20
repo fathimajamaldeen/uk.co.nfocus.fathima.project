@@ -59,16 +59,34 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         //Method which implements cart clean up
         public void CartCleanUp()
         {
-            try
+            //Perform cleanup only if there are items in the cart
+            if (AreThereItemsInCart())
             {
-                _helper.WaitForPageToLoad(10);
-                RemoveCouponCode();
-                RemoveItemFromCart();
+                try
+                {
+                    _helper.WaitForPageToLoad(10);
+                    RemoveCouponCode();
+                    RemoveItemFromCart();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred during cart cleanup: {ex.Message}");
+                }
             }
-            catch
+            else
             {
-                Console.WriteLine("There is nothing within the cart!");
+                Console.WriteLine("There are no items in the cart. Skipping cart cleanup.");
             }
+        }
+
+        //Method to check if there are any items in the cart
+        private bool AreThereItemsInCart()
+        {
+            //Find elements representing items in the cart
+            var cartItems = _driver.FindElements(By.LinkText("×"));
+
+            //Check if any elements were found
+            return cartItems.Count > 0;
         }
     }
 }

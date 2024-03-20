@@ -73,7 +73,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
             DismissPopup();
         }
 
-
+        //Method to dismiss the pop up
         public void DismissPopup()
         {
             //Dismiss the store demo banner if present

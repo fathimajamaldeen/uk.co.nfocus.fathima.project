@@ -2,7 +2,7 @@
 
 namespace uk.co.nfocus.fathima.project.Support.POMClasses
 {
-    public class ShopPOM
+    internal class ShopPOM
     {
         private IWebDriver _driver; //Field to store WebDriver instance
         private string _item;

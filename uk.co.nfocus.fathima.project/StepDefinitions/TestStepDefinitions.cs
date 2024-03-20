@@ -110,14 +110,14 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             PlacedOrderPOM placedOrder = new PlacedOrderPOM(_driver);
             //Getting order number from order recieved post ordering item
             int orderNumberValue = placedOrder.GetOrderNumberValue();
-            //Storing the order number value
+            //Storing the order number value to be used in next method
             _scenarioContext["OrderNumberValue"] = orderNumberValue;
         }
 
         [Then(@"that order number is same in order history")]
         public void ThenThatOrderNumberIsDisplayedInOrderHistory()
         {
-            //Retriving order number value 
+            //Retriving order number value from previous method
             int orderNumberValue = (int)_scenarioContext["OrderNumberValue"];
             //Going to my orders section of the account
             OrderPagePOM orderDetails = new OrderPagePOM(_driver);

@@ -16,7 +16,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         private IWebDriver _driver;
         private readonly ScenarioContext _scenarioContext;
         private WDWrapper _wrapper;
-
+        //Variables for the Extent Report
         private static AventStack.ExtentReports.ExtentReports? s_extent;
         private AventStack.ExtentReports.ExtentTest s_scenario;
         private AventStack.ExtentReports.ExtentTest s_step;
@@ -24,7 +24,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             + Path.DirectorySeparatorChar + "Reports"
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") 
             + Path.DirectorySeparatorChar;
-
+        //Variable for storing the console write lines
         private CustomTextWriter _customWriter = new CustomTextWriter();
 
         public Hooks(ScenarioContext scenarioContext, WDWrapper wrapper)
@@ -93,7 +93,7 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         {
             //Create a new ExtentTest node for the step
             s_step = s_scenario.CreateNode(context.StepContext.StepInfo.Text);
-            //Redirect console output
+            //Redirects console output
             Console.SetOut(_customWriter);
         }
 
@@ -140,17 +140,13 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     s_step.Log(Status.Info, $"Step status: {stepStatus}");
                     break;
             }
-
             //Revert console output
             Console.SetOut(Console.Out);
             //Log the captured output
             string[] capturedOutput = _customWriter.GetCapturedOutput();
             foreach (string line in capturedOutput)
             {
-                if (!string.IsNullOrEmpty(line))
-                {
-                    s_step.Log(Status.Info, line);
-                }
+                s_step.Log(Status.Info, line);
             }
         }
 

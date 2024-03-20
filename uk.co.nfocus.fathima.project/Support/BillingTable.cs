@@ -10,7 +10,6 @@
         internal string _phoneNumber { get; set; }
         internal string _email { get; set; }
 
-
         public BillingTable(string firstName, string lastName, string address, string city, string postcode, string phoneNumber, string email)
         {
             this._firstName = firstName;
@@ -22,5 +21,4 @@
             this._email = email;
         }
     }
-
 }

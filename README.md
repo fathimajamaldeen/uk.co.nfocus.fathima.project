@@ -39,6 +39,7 @@ To get started
 ## Run settings
 
 Create a '.runsettings' file with the following format and fill in the ___ with your login details for the website that you made and call it "runsettings.runsettings":
+
         ```xml
         <?xml version="1.0" encoding="utf-8" ?>
       <RunSettings>
@@ -56,7 +57,8 @@ Create a '.runsettings' file with the following format and fill in the ___ with 
       	</TestRunParameters>
       </RunSettings>
       ```
-      (This currently sets the browser to edge and can be changed to chrome or firefox)
+      
+   (This currently sets the browser to edge and can be changed to chrome or firefox)
 Save this file within the project file you have cloned
 
 ## Running tests
@@ -74,7 +76,8 @@ Save this file within the project file you have cloned
 1. Open a new terminal and navigate to `.\uk.co.nfocus.fathima.project\uk.co.nfocus.fathima.project`
 2. Run the command
    ```powershell
-   dotnet test --settings runsettings.runsettings```
+   dotnet test --settings "runsettings.runsettings"
+   ```
    
 ### View Testing Report
 * Go into the 'Reports' folder that was generated and open the 'Results_'(timeoftest) folder generated

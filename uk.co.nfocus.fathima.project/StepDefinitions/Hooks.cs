@@ -25,6 +25,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             + Path.DirectorySeparatorChar + "Result_" + DateTime.Now.ToString("ddMMyyyyHHmmss") 
             + Path.DirectorySeparatorChar;
 
+        private CustomTextWriter _customWriter = new CustomTextWriter();
+
         public Hooks(ScenarioContext scenarioContext, WDWrapper wrapper)
         {
             _scenarioContext = scenarioContext;
@@ -39,14 +41,12 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(s_reportpath);
             s_extent = new AventStack.ExtentReports.ExtentReports();
             s_extent.AttachReporter(htmlReporter);
-            
         }
 
         //Runs before each scenario
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext context)
         {
-            
             //Create a new ExtentTest for the scenario
             s_scenario = s_extent.CreateTest(context.ScenarioInfo.Title);
             string browser = Environment.GetEnvironmentVariable("BROWSER");
@@ -91,6 +91,8 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [BeforeStep]
         public void BeforeStep(ScenarioContext context)
         {
+            //Redirect console output
+            Console.SetOut(_customWriter);
             //Create a new ExtentTest node for the step
             s_step = s_scenario.CreateNode(context.StepContext.StepInfo.Text);
         }
@@ -99,6 +101,10 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [AfterStep]
         public void AfterStep(ScenarioContext context)
         {
+            //Log the captured output
+            string capturedOutput = _customWriter.GetCapturedOutput();
+            s_step.Log(Status.Info, capturedOutput);
+
             //Log the status of the step based on the scenario execution status
             var stepStatus = context.ScenarioExecutionStatus;
             switch (stepStatus)

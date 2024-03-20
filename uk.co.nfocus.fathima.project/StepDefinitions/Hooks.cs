@@ -91,20 +91,16 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
         [BeforeStep]
         public void BeforeStep(ScenarioContext context)
         {
-            //Redirect console output
-            Console.SetOut(_customWriter);
             //Create a new ExtentTest node for the step
             s_step = s_scenario.CreateNode(context.StepContext.StepInfo.Text);
+            //Redirect console output
+            Console.SetOut(_customWriter);
         }
 
         //Runs after each step
         [AfterStep]
         public void AfterStep(ScenarioContext context)
         {
-            //Log the captured output
-            string capturedOutput = _customWriter.GetCapturedOutput();
-            s_step.Log(Status.Info, capturedOutput);
-
             //Log the status of the step based on the scenario execution status
             var stepStatus = context.ScenarioExecutionStatus;
             switch (stepStatus)
@@ -144,6 +140,18 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
                     s_step.Log(Status.Info, $"Step status: {stepStatus}");
                     break;
             }
+
+            //Revert console output
+            Console.SetOut(Console.Out);
+            //Log the captured output
+            string[] capturedOutput = _customWriter.GetCapturedOutput();
+            foreach (string line in capturedOutput)
+            {
+                if (!string.IsNullOrEmpty(line))
+                {
+                    s_step.Log(Status.Info, line);
+                }
+            }
         }
 
         //Runs after each feature
@@ -165,14 +173,15 @@ namespace uk.co.nfocus.fathima.project.StepDefinitions
             CartPOM cart = new CartPOM(_driver);
             cart.CartCleanUp();
             navbar.GoMyAccountPage();
+            //Logs the account out
             LoginPagePOM loginpage = new LoginPagePOM(_driver);
             loginpage.LogOut();
+            //As long as theres a driver it quits and disposes
             if (_wrapper.Driver != null)
             {
                 _wrapper.Driver.Quit();
                 _wrapper.Driver.Dispose();
             }
         }
-        //TODO: Try to add cws to extentreport 
     }
 }

@@ -31,7 +31,7 @@ To get started
 
 1. Clone the repositry to your local machine using Git:
      ```powershell
-   git clone https://github.com/fathimajamaldeen/uk.co.nfocus.fathima.project.git```
+   git clone https://github.com/fathimajamaldeen/uk.co.nfocus.fathima.project.git
 2. Create an account on the nfocus shop website https://www.edgewordstraining.co.uk/demo-site/ and record your username and password used    
 3. Open the cloned repositry in Visual Studio
 4. Buil the solectuion to ensure all dependencies are resolved

@@ -1,9 +1,9 @@
 ﻿using System.Text;
 
-/**This custom text writer is designed to capture 
+/** This custom text writer is designed to capture 
  * and store text output (both individual characters 
  * and strings followed by newline characters) written 
- * to it.**/
+ * to it **/
 public class CustomTextWriter : TextWriter
 {
     //List will be used to store the lines of text written to the custom text writer

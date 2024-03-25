@@ -6,7 +6,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     {
         private IWebDriver _driver; //Field to store WebDriver instance
         private HelperLib _helper; //Field to store the HelperLib functionality
-        public BillingDetailsPOM(IWebDriver driver) //Constructor to intitalise the WebDriver instance
+
+        //Constructor to intitalise the WebDriver instance
+        public BillingDetailsPOM(IWebDriver driver) 
         {
             _driver = driver; //Assigning the WebDriver instance passed into the field
             _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned

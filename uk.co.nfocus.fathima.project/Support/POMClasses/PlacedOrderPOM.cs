@@ -22,7 +22,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             Console.WriteLine($"The order number shown is {_orderNumber.Text}");
             //Return the converted value
-            return ConversionHelper.StringToInt(_orderNumber.Text);
+            return ConversionHelper.ConvertStringToInt(_orderNumber.Text);
         }
 
 

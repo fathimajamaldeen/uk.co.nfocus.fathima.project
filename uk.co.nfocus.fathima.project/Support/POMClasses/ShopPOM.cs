@@ -6,7 +6,9 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
     {
         private IWebDriver _driver; //Field to store WebDriver instance
         private string _item;
-        public ShopPOM(IWebDriver driver, string item) //Constructor to intitalise the WebDriver instance
+
+        //Constructor to intitalise the WebDriver instance
+        public ShopPOM(IWebDriver driver, string item) 
         {
             _driver = driver; //Assign the WebDriver instance passed into the field
             _item = item;

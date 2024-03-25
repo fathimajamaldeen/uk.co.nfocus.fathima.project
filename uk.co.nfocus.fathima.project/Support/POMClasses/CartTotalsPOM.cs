@@ -7,7 +7,8 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         private IWebDriver _driver; //Field to store WebDriver instance
         private HelperLib _helper; //Field to store the HelperLib functionality
 
-        public CartTotalsPOM(IWebDriver driver) //Constructor to intitalise the WebDriver instance
+        //Constructor to intitalise the WebDriver instance
+        public CartTotalsPOM(IWebDriver driver) 
         {
             _driver = driver; //Assign the WebDriver instance passed into the field
             _helper = new HelperLib(_driver); //Assigning the helper after driver is assigned
@@ -23,7 +24,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         public decimal GetPreviousTotalValue()
         {
             //Break the text down and convert it to decimal value and returns the value extracted
-            return ConversionHelper.StringToDecimal(_previousTotal.Text);
+            return ConversionHelper.ConvertStringToDecimal(_previousTotal.Text);
         }
 
         //Method to recieve the new total value after applying the discount
@@ -31,14 +32,14 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             Console.WriteLine($"The actual new total value is {_newTotal.Text}");
             //Break the text down and convert it to decimal value and returns the value extracted     
-            return ConversionHelper.StringToDecimal(_newTotal.Text);
+            return ConversionHelper.ConvertStringToDecimal(_newTotal.Text);
         }
 
         //Method to recieve the shipping cost value after applying the discount
         public decimal GetShippingCostValue()
         {
             //Break the text down and convert it to decimal value and rReturns the value extracted
-            return ConversionHelper.StringToDecimal(_shippingCost.Text);
+            return ConversionHelper.ConvertStringToDecimal(_shippingCost.Text);
         }
 
         //Method to recieve the discount value
@@ -46,7 +47,7 @@ namespace uk.co.nfocus.fathima.project.Support.POMClasses
         {
             Console.WriteLine($"The actual discount value is {_discountAmount.Text}");
             //Break the text down and convert it to decimal value and returns the value extracted
-            return ConversionHelper.StringToDecimal(_discountAmount.Text);
+            return ConversionHelper.ConvertStringToDecimal(_discountAmount.Text);
         }
     }
 }

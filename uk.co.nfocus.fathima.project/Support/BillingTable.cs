@@ -1,7 +1,7 @@
 ﻿namespace uk.co.nfocus.fathima.project.Support
 {
 
-    //This class represents a support billing table with
+    //This POCO class represents a support billing table with
     //internal properties for storing billing information.
     internal class BillingTable
     {

@@ -80,6 +80,7 @@ Save this file within the project file you have cloned
    ```
    
 ### View Testing Report
+
 * Go into the 'Reports' folder that was generated and open the 'Results_'(timeoftest) folder generated
 * Click on 'dashboard.html' to view the overall dashboard for the tests generated
 * Click on 'index.html' to see each tests individual report
